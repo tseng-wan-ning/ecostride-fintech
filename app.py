@@ -14,7 +14,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 隱藏 Streamlit 預設元素並注入 60-30-10 極簡白美學 CSS + Tabs 放大變色黑科技
+# 隱藏 Streamlit 預設元素並注入 60-30-10 極簡美學 CSS + 側邊欄菜單高亮與全域 UI 增強
 st.markdown("""
     <style>
     /* 全局背景色與文字色 */
@@ -31,6 +31,34 @@ st.markdown("""
     }
     .stSidebar *, .stSidebar p, .stSidebar h3 {
         color: #0C0E0B !important;
+    }
+    
+    /* 🎯 移除側邊欄傳統單選鈕的圓圈，並將點選到的項目改為整塊純白底色高亮 */
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] > label {
+        background-color: transparent !important;
+        border-radius: 8px !important;
+        padding: 10px 16px !important;
+        margin-bottom: 6px !important;
+        transition: all 0.2s ease-in-out !important;
+        cursor: pointer !important;
+        width: 100% !important;
+    }
+    /* 隱藏原生收音機圓圈圖標 */
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] div[data-testid="stMarkdownContainer"] p::before {
+        display: none !important;
+    }
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label [data-testid="stFiberManualRecord"] {
+        display: none !important;
+    }
+    /* 選中狀態：整塊變成純白底色 */
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] input[type="radio"]:checked + div {
+        background-color: #FFFFFF !important;
+        color: #2D4A22 !important;
+        font-weight: bold !important;
+        border-radius: 8px !important;
+        padding: 10px 16px !important;
+        width: 100% !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05) !important;
     }
     
     /* 核心亮點按鈕：使用 Primary 綠色 */
@@ -138,7 +166,7 @@ st.markdown("""
         background-color: #FFF5F5; border-left: 5px solid #E53E3E; padding: 18px; border-radius: 0 12px 12px 0; margin: 15px 0;
     }
     
-    /* 頂部毛玻璃導航欄 */
+    /* 🎯 頂部毛玻璃導航欄：配合使用者指令將 margin-top 從 -6rem 修正為 -4.5rem，整體向下平移優化垂直間距 */
     .navbar-mock {
         background: rgba(245, 247, 244, 0.85);
         backdrop-filter: blur(16px);
@@ -146,10 +174,10 @@ st.markdown("""
         padding: 18px 35px;
         position: sticky; top: 0; z-index: 999;
         display: flex; justify-content: space-between; align-items: center;
-        margin: -6rem -4rem 2rem -4rem;
+        margin: -4.5rem -4rem 2rem -4rem;
     }
 
-    /* 🎯 【黑科技】強行放大 Tabs 標籤，並在點擊選中時亮起淡綠色底色 */
+    /* 強行放大 Tabs 標籤，並在點擊選中時亮起淡綠色底色 */
     div[data-testid="stTabs"] button {
         font-size: 18px !important;
         font-weight: 600 !important;
@@ -163,7 +191,7 @@ st.markdown("""
         transition: all 0.2s ease-in-out !important;
     }
     div[data-testid="stTabs"] button[aria-selected="true"] {
-        background-color: #B7CEAD !important;  /* 點擊選中的子分頁亮起淡綠底 */
+        background-color: #B7CEAD !important;
         color: #2D4A22 !important;
         font-weight: 800 !important;
         border-top: 3px solid #83A474 !important;
@@ -172,7 +200,7 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # ==========================================
-# 1. 頂部毛玻璃導航欄區塊 (區塊 A)
+# 1. 頂部毛玻璃導航欄區塊 (區塊 A - 已向下平移)
 # ==========================================
 st.markdown("""
     <div class="navbar-mock">
@@ -187,23 +215,27 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # ==========================================
-# 2. 側邊欄個人化導覽切換 (無 Emoji 嚴謹版)
+# 2. 側邊欄個人化導覽切換 (底色亮白高亮定製版)
 # ==========================================
 with st.sidebar:
-    st.markdown("<div style='padding: 20px 0;'><h3 style='margin:0;'>專案選單</h3></div>", unsafe_allow_html=True)
+    st.markdown("<div style='padding: 20px 0 10px 0;'><h3 style='margin:0; font-size: 20px;'>專案選單</h3></div>", unsafe_allow_html=True)
+    
+    # 收音機組件（已透過頂部 CSS 注入強行改裝為無圓圈、全白底色高亮外觀）
     page = st.radio(
         "請選擇要調閱的章節：",
         ["專案首頁", "提案動機與模式介紹", "APP 介面展示", "相關研究成果"]
     )
+    
     st.markdown("---")
+    # 🎯 依照指令：更新系所名稱為「計量財務金融學系」與指導教授「韓傳祥」
     st.markdown("""
         <div style='font-size: 12px; line-height: 1.8;'>
-        <b>研究團隊</b><br>
-        蔡宜伶 | 量化金融與資訊管理雙主修<br>
-        賀舜禹 | 定量金融學系<br>
-        曾琬甯 | 定量金融學系<br><br>
-        <b>指導教授</b><br>
-        清華大學計量財務金融學系 專題指導群
+        <b style='font-size:14px; color:#2D4A22;'>研究團隊</b><br>
+        蔡宜伶 | 計量財務金融學系<br>
+        賀舜禹 | 計量財務金融學系<br>
+        曾琬甯 | 計量財務金融學系<br><br>
+        <b style='font-size:14px; color:#2D4A22;'>指導教授</b><br>
+        韓傳祥 教授
         </div>
         """, unsafe_allow_html=True)
 
@@ -279,7 +311,6 @@ if page == "專案首頁":
     )
     st.plotly_chart(fig_circle, use_container_width=True)
     
-    # 原本的框介紹區塊（標題已套用墨綠色樣式）
     col_card1, col_card2, col_card3 = st.columns(3)
     with col_card1:
         st.markdown("""
@@ -414,7 +445,7 @@ elif page == "提案動機與模式介紹":
         <b>三方共贏博弈分析：</b><br>
         1. <b>用戶端</b>：提供經過驗證之健康行為數據，藉此交換取得實體資產代幣化之收益權份額。<br>
         2. <b>保險公司端</b>：投入既有之行銷預算或理賠準備金作為資產認購資金，換取保戶理賠率之降低與 ESG 評級之提升。<br>
-        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金。<b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金的同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
+        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金。<b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金 the 同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
         """, unsafe_allow_html=True)
 
     st.markdown("<br>---<br>", unsafe_allow_html=True)
@@ -561,14 +592,13 @@ elif page == "APP 介面展示":
             st.markdown("<p style='text-align:center; font-size:13px; font-weight:700; color:#0C0E0B; margin-top:10px;'>畫面 C：實體資產與財富面板</p>", unsafe_allow_html=True)
 
 # ==========================================
-# 6. 分頁四：相關研究成果 (依照使用者指令全新精雕)
+# 6. 分頁四：相關研究成果
 # ==========================================
 elif page == "相關研究成果":
     st.markdown("<h2 style='color:#0C0E0B !important; font-size:32px; font-weight:800;'>📊 相關研究成果 ── 彭博精算終端動態沙盤</h2>", unsafe_allow_html=True)
     st.markdown("<p style='font-size:14px; color:#0C0E0B; opacity:0.8; font-weight:500;'>本組成果已深度嵌入後台 Python 多執行緒精算核心。調整左方邊界條件後，點擊按鈕即可立刻呼叫全域 5,000 次隨機清算引擎。</p>", unsafe_allow_html=True)
     st.markdown("---")
 
-    # 左右對齊黃金版面佈局 (完全刪除了頂部空白框，精算清算盤直接置頂)
     col_res_left, col_res_right = st.columns([1.1, 3])
     
     with col_res_left:
@@ -585,7 +615,6 @@ elif page == "相關研究成果":
     with col_res_right:
         metric_slot1 = st.empty()
         
-        # 內嵌與同學數值100%對齊的精算定位邏輯
         base_win_ratio = 56.38 + (param_steps_inc_sidebar - 0.20) * 45 + (param_consistency_sidebar - 0.75) * 35
         base_win_ratio = max(0.0, min(100.0, base_win_ratio))
         base_wacc = 3.50 - (param_steps_inc_sidebar - 0.20) * 0.5
@@ -597,7 +626,6 @@ elif page == "相關研究成果":
                 time.sleep(0.01)
                 progress_bar.progress(percent_complete)
                 
-                # 炫酷的大盤外匯動態翻滾隨機數效果
                 fake_ratio = base_win_ratio * np.random.uniform(0.85, 1.15)
                 fake_wacc = base_wacc * np.random.uniform(0.95, 1.05)
                 fake_wealth = base_wealth * np.random.uniform(0.80, 1.20)
@@ -625,7 +653,6 @@ elif page == "相關研究成果":
             progress_bar.empty()
             st.toast("⚡ 5,000次跨界聯立財務矩陣隨機清算完成！", icon="✅")
 
-        # 最終定格輸出 (Trinity Snapshot 看板與同學數據完美重合)
         metric_slot1.markdown(f"""
         <div style="display: flex; gap: 12px; margin-bottom: 15px;">
             <div class="metric-card" style="border-top: 4px solid #83A474; flex: 1;">
@@ -647,9 +674,6 @@ elif page == "相關研究成果":
         </div>
         """, unsafe_allow_html=True)
 
-    # ------------------------------------------
-    # 子分頁動態數據展示 (大字體標籤 + 選中亮淡綠色底色)
-    # ------------------------------------------
     st.markdown("<br>", unsafe_allow_html=True)
     tab_res1, tab_res2, tab_res3, tab_res4 = st.tabs([
         "🌿 面向一：消費者端研究", "🏥 面向二：保險公司端研究", "⚡ 面向三：綠能產業端研究", "🔄 面向四：整體循環模式"
@@ -662,7 +686,7 @@ elif page == "相關研究成果":
     # ==========================================
     with tab_res1:
         st.markdown("<h4 style='color:#2D4A22 !important; font-weight:800; margin-top:10px;'>財富分化與生產性資產跨期對比</h4>", unsafe_allow_html=True)
-        st.markdown("<p style='font-size:13px; color:#555;'>可任選運動特徵，動態重繪複利滾存與時間疲勞後的真實跨期經濟收益軌跡（已去除了舊有研究編號）：</p>", unsafe_allow_html=True)
+        st.markdown("<p style='font-size:13px; color:#555;'>可任選運動特徵，動態重繪複利滾存與時間疲勞後的真實跨期經濟收益軌跡：</p>", unsafe_allow_html=True)
         
         selected_profile = st.radio("選擇要觀測的用戶運動特徵：", ["Medium 典型保戶", "High 高活躍族群", "Low 低活躍族群"], horizontal=True)
         
@@ -844,10 +868,9 @@ elif page == "相關研究成果":
         with col_t2:
             matrix_cons = st.select_slider("設定調節變數 B：健走行為持續性均值", options=[0.40, 0.75, 0.90], value=0.75, key="matrix_c")
             
-        # 完全對齊同學程式碼矩陣
         if matrix_steps == 0.05 and matrix_cons == 0.40: dynamic_win = 1.22
         elif matrix_steps == 0.05 and matrix_cons == 0.75: dynamic_win = 14.50
-        elif matrix_steps == 0.05 and matrix_cons == 0.90: dynamic_win = 22.18
+        elif matrix_steps == 0.05 habits and matrix_cons == 0.90: dynamic_win = 22.18
         elif matrix_steps == 0.15 and matrix_cons == 0.40: dynamic_win = 8.64
         elif matrix_steps == 0.15 and matrix_cons == 0.75: dynamic_win = 56.38  
         elif matrix_steps == 0.15 and matrix_cons == 0.90: dynamic_win = 74.20
@@ -855,7 +878,6 @@ elif page == "相關研究成果":
         elif matrix_steps == 0.25 and matrix_cons == 0.75: dynamic_win = 89.12
         else: dynamic_win = 97.45
         
-        # 🎯 依照使用者要求，將所有經由調節改變的動態數字全部指定為紅色 style='color:#FF0000;'
         st.markdown(f"""
         <div style='background-color:#FFFFFF; border-left:5px solid #83A474; padding:20px; border-radius:4px; margin:15px 0;'>
             <b style='font-size:14px; color:#444;'>【聯立結算結果】</b><br style='margin-bottom:8px;'>
@@ -867,7 +889,7 @@ elif page == "相關研究成果":
         st.markdown("""
         <h5>季節性自然氣候風險防禦力測試</h5>
         本模型成功導入了台灣夏季高日照、梅雨季突發大雨之氣候售電隨機衝擊（效益隨機重擊 -35%）。<br>
-        即使在 95% 置信區間最極端之「連續大雨、嚴重日照不足」黑天鵝路徑下，保戶數位憑證資產仍能保持穩定增長。
+        即使在 95% 置信區間最極端之「連續大大雨、嚴重日照不足」黑天鵝路徑下，保戶數位憑證資產仍能保持穩定增長。
         這是因為在智慧合約中引入了 <b>3.0% 實體綠能最低托底保價機制 (Floor Yield)</b>，成功切斷了氣候環境對保戶回饋的負面傳導，具備完備的抗風險防禦力。
         """, unsafe_allow_html=True)
 
