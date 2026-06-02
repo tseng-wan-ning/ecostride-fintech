@@ -2,11 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
-
-import streamlit as st
-import pandas as pd
-import numpy as np
-import plotly.graph_objects as go
 import time
 
 # ==========================================
@@ -131,7 +126,7 @@ st.markdown("""
             <span style="font-size: 18px; font-weight: 700; letter-spacing: 2px; color: #0F172A;">ECOSTRIDE</span>
         </div>
         <div style="font-size: 13px; color: #64748B; font-weight: 500;">
-            國立清華大學 金融科技專題研究研究成果展示大盤
+            國立清華大學 金融科技專題研究成果展示大盤
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -149,7 +144,7 @@ with st.sidebar:
     st.markdown("""
         <div style='font-size: 12px; color: #64748B; line-height: 1.8;'>
         <b>研究團隊</b><br>
-        蔡宜伶 | 量量金融與資訊管理雙主修<br>
+        蔡宜伶 | 量化金融與資訊管理雙主修<br>
         賀舜禹 | 定量金融學系<br>
         曾琬甯 | 定量金融學系<br><br>
         <b>指導教授</b><br>
@@ -174,14 +169,7 @@ if page == "專案首頁":
         </div>
         """, unsafe_allow_html=True)
     
-    # 點擊直接引流按鈕
-    col_btn1, col_btn2, col_btn3 = st.columns([2, 1, 2])
-    with col_btn2:
-        st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
-        st.write("進入系統核心 ➔")
-        st.markdown("</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
-    
     st.markdown("---")
     
     # 區塊 C：三位一體願景摘要 (Ecosystem Glimpse)
@@ -277,7 +265,7 @@ elif page == "提案動機與模式介紹":
         st.markdown("""
             <div class="alert-card">
                 <b>邊際效用遞減與長期價值缺失</b><br>
-                現行點數或現金券在核發與使用的瞬間，其經濟價值即告終結，缺乏資產增值所需之<b>複利效應</b>。
+                現行點數 or 現金券在核發與使用的瞬間，其經濟價值即告終結，缺乏資產增值所需之<b>複利效應</b>。
                 由於獎勵無法轉化為長期資本，用戶難以將健康行為視為一種「投資」，誘因隨時間呈對數曲線下滑。
             </div>
             """, unsafe_allow_html=True)
@@ -327,7 +315,7 @@ elif page == "提案動機與模式介紹":
         <b>三方共贏博弈分析：</b><br>
         1. <b>用戶端</b>：提供經過驗證之健康行為數據，藉此交換取得實體資產代幣化之收益權份額。<br>
         2. <b>保險公司端</b>：投入既有之行銷預算或理賠準備金作為資產認購資金，換取保戶理賠率之降低與 ESG 評級之提升。<br>
-        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金。<b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金的同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
+        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金。<b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金 the 同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
         """, unsafe_allow_html=True)
 
     st.markdown("<br>---<br>", unsafe_allow_html=True)
@@ -387,14 +375,14 @@ elif page == "APP 介面展示":
         for _ in range(10):
             calc_eco = (calc_eco + total_daily_val * 365) * (1 + (0.035 * 0.75) + 0.05)
             
-        st.markdown("""
+        st.markdown(f"""
             <div style='background-color:#F8FAFC; border:1px solid #E2E8F0; padding:15px; border-radius:8px; font-size:11px; color:#64748B;'>
                 <b>即時清算反饋：</b><br>
-                Engine A (健康補貼): NT$ {:.2f} / 天<br>
-                Engine B (理賠折現): NT$ {:.4f} / 天<br>
-                當日總生成資本: NT$ {:.2f} / 天
+                Engine A (健康補貼): NT$ {engine_A_val:.2f} / 天<br>
+                Engine B (理賠折現): NT$ {engine_B_val:.4f} / 天<br>
+                當日總生成資本: NT$ {total_daily_val:.2f} / 天
             </div>
-            """. Poy, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
 
     with col_ui_right:
         col_m1, col_m2, col_m3 = st.columns(3)
@@ -505,7 +493,7 @@ elif page == "相關研究成果":
         if param_steps_inc >= 0.20 and param_consistency >= 0.70:
             st.markdown("<div style='color:#059669; font-size:13px; font-weight:600;'>🔥 系統提示：當前行為特徵已成功啟動生產性複利飛輪，三方正和博弈達成。</div>", unsafe_allow_html=True)
         else:
-            st.markdown("<div style='color:#D97706; font-size:13px; font-weight:600;'>⚠️ 系統提示：意願或持續性不足，保險公司陷入行銷流失泥淖，請嘗試調高參數。</div>", unsafe_allow_html=True)
+            st.markdown("<div style='color:#D97706; font-size:13px; font-weight:600;'>⚠️ 系統提示：誘因或持續性不足，保險公司陷入行銷流失泥淖，請嘗試調高參數。</div>", unsafe_allow_html=True)
 
     with col_res_right:
         # 點擊重跑按鈕後的 Fancy 動態進度條
@@ -516,7 +504,7 @@ elif page == "相關研究成果":
                 time.sleep(0.01)
                 progress_bar.progress(percent_complete + 1)
                 status_text.text(f"正在執行 5,000 次隨機氣候與 Gamma 分佈理賠路徑清算中... {percent_complete+1}%")
-            status_text.success("⚡ 5,000 次跨跨界聯立矩陣隨機清算完成！")
+            status_text.success("⚡ 5,000 次跨界聯立矩陣隨機清算完成！")
             
         # 區塊 A：大盤指標快報板 (Metrics Banner)
         col_m1, col_m2, col_m3, col_m4 = st.columns(4)
@@ -575,7 +563,7 @@ elif page == "相關研究成果":
         low_path = [0]
         trad_path = [0]
         
-        curr_h, curr_m, ... = 0, 0, 0, 0
+        curr_h, curr_m, curr_l, curr_t = 0, 0, 0, 0
         for y in range(1, 11):
             curr_h = (curr_h + base_inv * 1.5) * (1 + 0.035 * 0.75 + 0.05)
             curr_m = (curr_m + base_inv * (param_steps_inc/0.20)) * (1 + 0.035 * 0.75 + 0.05)
@@ -596,8 +584,8 @@ elif page == "相關研究成果":
         
         st.markdown("""
             <b>學術解讀與誠實揭露修正：</b><br>
-            定量模擬顯示，高活躍用戶與低活躍用戶最終累積財富差高達數倍，證實行為持續性因子（Stability Factor）對個人財富具有顯著的放大放大效應。
-            然而，精算模型誠實揭露：若以台灣常見的 NT$ 10,000 作為理財門檻，中度活躍用戶單靠走路在 10 年內解鎖的成功率極低。
+            定量模擬顯示，高活躍用戶與低活躍用戶最終累積財富差高達數倍，證實行為持續性因子（Stability Factor）對個人財富具有顯著的放大效應。<br>
+            然而，精算模型誠實揭露：若以台灣常見的 NT$ 10,000 作為理財門檻，中度活躍用戶單靠走路在 10 年內解鎖的成功率極低。<br>
             因此，本專案在白皮書中正式倡議<b>「將 RWA 起投門檻下探至 NT$ 5,000」</b>，如此可使普惠覆蓋率顯著攀升，落實普惠金融。
             """, unsafe_allow_html=True)
 
@@ -619,7 +607,7 @@ elif page == "相關研究成果":
         st.markdown("""
             <b>精算折讓 (Actuarial Haircut) 與風險控制：</b><br>
             本模型設定之健康-風險彈性係數（-0.15）雖具備公衛頂級文獻支撐，但考量保戶計步作弊、逆選擇等道德風險，
-            模型採取保守主義，<b>進行了 3.4 倍之精算折讓 (Haircut)</b>，確保保險大盤擁有 80% 的風險剩餘，抵抗黑天鵝理賠。
+            模型採取保守主義，<b>進行了 3.4 倍之精算折讓 (Haircut)</b>，確保保險大盤擁有 80% 的風險剩餘，抵抗黑天鵝理賠。<br>
             敏感度測試證明：步數提升若低於 5% 專案將嚴重虧損，唯有超過 20% 門檻方可衝破 1.03 ROI。
             且整體回饋精確控制在 3.4% ~ 7.1%，<b>完美遵從金管會 10% 的附加費用監管紅線</b>。
             """, unsafe_allow_html=True)
@@ -639,9 +627,9 @@ elif page == "相關研究成果":
         
         st.markdown("""
             <b>籌資擴展性與資產韌性：</b><br>
-            10,000 人保戶規模下，需 5.64 年可滿額募集 3,000 萬元的太陽能案場。
-            <b>拓展情境分析：</b>若拓展至全台 10 萬名保戶，碎金流募集規模效應爆發，<b>滿額筹資天數將暴縮短至 7 個月（205.9天）</b>！<br>
-            在資金成本方面，WACC 從銀行貸款的 4.2% 降至 3.5%，顯著優於傳統渠道。
+            10,000 人保戶規模下，需 5.64 年可滿額募集 3,000 萬元的太陽能案場。<br>
+            <b>拓展情境分析：</b>若拓展至全台 10 萬名保戶，碎金流募集規模效應爆發，<b>滿額籌資天數將縮短至 7 個月（205.9天）</b>！<br>
+            在資金成本方面，WACC 從銀行貸款的 4.2% 降至 3.5%，顯著優於傳統渠道。<br>
             即使第 8 年遭遇台灣高溫高濕導致<b>變流器集體老化損壞、產生 200 萬元 CapEx 衝擊</b>，得益於前幾年資產池滾存的蓄水池，填補率仍能維持在 78.4% 穩健水位，流動性風險完全消弭。
             """, unsafe_allow_html=True)
 
@@ -649,12 +637,12 @@ elif page == "相關研究成果":
     with tab_res4:
         st.markdown("<h4 style='color:#0F172A !important;'>【研究 15, 16 & 17】三位一體全局穩定性與自然氣候防禦</h4>", unsafe_allow_html=True)
         st.markdown(f"""
-            根據 5,000 次全局跨界聯立蒙地卡羅清算，三方同時達成正向飛輪之<b>全域共贏比例 (Win-Win Ratio) 精確定格在 {dynamic_win_ratio:.2f}%</b>。
+            根據 5,000 次全局跨界聯立蒙地卡羅清算，三方同時達成正向飛輪之<b>全域共贏比例 (Win-Win Ratio) 精確定格在 {dynamic_win_ratio:.2f}%</b>。<br>
             這是在「保險公司利潤不低於傳統模式 95%」的合理商業讓渡門檻下達成的。
             <br><br>
             <b>邊際決策邊際分析：</b>當保戶行為持續性低於 40% 時，健康代理效果崩塌；一旦跨越 75% 門檻，複利循環高機率啟動。
             <br><br>
-            <b>氣候黑天鵝托底防禦：</b>本模型導入台灣夏季高日照、梅雨季突發連續大雨（效益隨機重擊 -35%）之氣候風險傳導。
+            <b>氣候黑天鵝托底防禦：</b>本模型導入台灣夏季高日照、梅雨季突發連續大雨（效益隨機重擊 -35%）之氣候風險傳導。<br>
             精算證實，在 95% 置信區間最極端之日照不足黑天鵝路徑下，保戶最終資產仍能保持穩定。
             這是因為我們在智慧合約中引入了 <b>3.0% 實體綠能最低托底保價機制 (Floor Yield)</b>，成功切斷了自然環境對保戶回饋的負面傳導，具備完美的抗風險韌性。
             """, unsafe_allow_html=True)
