@@ -14,7 +14,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 隱藏 Streamlit 預設元素並注入 60-30-10 極簡美學 CSS + 側邊欄菜單高亮與全域 UI 增強
+# 隱藏 Streamlit 預設元素並注入 60-30-10 極簡美學 CSS + 側邊欄整條變白高亮黑科技
 st.markdown("""
     <style>
     /* 全局背景色與文字色 */
@@ -33,32 +33,41 @@ st.markdown("""
         color: #0C0E0B !important;
     }
     
-    /* 🎯 移除側邊欄傳統單選鈕的圓圈，並將點選到的項目改為整塊純白底色高亮 */
+    /* 🎯 【強力黑科技】完全移除側邊欄單選鈕的圈圈，點選時整條底色變白色 */
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] {
+        gap: 8px !important;
+    }
     div[data-testid="stSidebarRadio"] div[role="radiogroup"] > label {
         background-color: transparent !important;
         border-radius: 8px !important;
-        padding: 10px 16px !important;
-        margin-bottom: 6px !important;
-        transition: all 0.2s ease-in-out !important;
+        padding: 12px 20px !important;
+        margin: 0 !important;
+        transition: all 0.25s ease-in-out !important;
         cursor: pointer !important;
         width: 100% !important;
+        display: block !important;
     }
-    /* 隱藏原生收音機圓圈圖標 */
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] div[data-testid="stMarkdownContainer"] p::before {
+    /* 徹底強制拔除原生單選圈圈的視覺渲染 */
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label [data-testid="stFiberManualRecord"],
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label input[type="radio"] {
         display: none !important;
+        visibility: hidden !important;
     }
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label [data-testid="stFiberManualRecord"] {
-        display: none !important;
+    /* 讓內層文字容器寬度拉滿 100%，不被圓圈佔位影響 */
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label > div:nth-child(2) {
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+        width: 100% !important;
     }
-    /* 選中狀態：整塊變成純白底色 */
+    /* 🎯 當選項被勾選時，將 label 整條改為純白底色、墨綠字、加粗與高級陰影 */
     div[data-testid="stSidebarRadio"] div[role="radiogroup"] input[type="radio"]:checked + div {
         background-color: #FFFFFF !important;
         color: #2D4A22 !important;
-        font-weight: bold !important;
+        font-weight: 700 !important;
         border-radius: 8px !important;
-        padding: 10px 16px !important;
-        width: 100% !important;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.05) !important;
+        padding: 12px 20px !important;
+        margin: -12px -20px !important; /* 完美填滿外圈 label 邊界 */
+        box-shadow: 0 4px 12px rgba(0,0,0,0.04) !important;
     }
     
     /* 核心亮點按鈕：使用 Primary 綠色 */
@@ -82,7 +91,7 @@ st.markdown("""
     h1 { color: #5D7A51 !important; font-weight: 800 !important; }
     h2, h3, h4 { color: #0C0E0B !important; font-weight: 700 !important; }
     
-    /* 彭博終端/精算方磚樣式：改用白底與 Accent 綠細框 */
+    /* 彭博終端/精算方磚樣式 */
     .metric-card {
         background-color: #FFFFFF;
         border: 1px solid #B7CEAD;
@@ -244,7 +253,7 @@ if page == "專案首頁":
     # 區塊 B：Hero Section
     st.markdown("<div style='padding: 60px 0 40px 0; text-align: center;'>", unsafe_allow_html=True)
     st.markdown("<h1 style='font-size: 54px; font-weight: 900; color: #5D7A51 !important; letter-spacing: -1.5px; margin-bottom: 20px;'>讓健康行為，成為生產性綠色資本</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='font-size: 21px; color: #0C0E0B; max-width: 950px; margin: 0 auto 35px auto; line-height: 1.6; font-weight: 600; opacity: 0.9;'>EcoStride：結合行為金融與實體資產代幣化之永續金融生態系模式研究</p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size: 21px; color: #0C0E0B; max-width: 950px; margin: 0 auto 35px auto; line-height: 1.6; font-weight: 600; opacity: 0.9;'>EcoStride：結合行為金融與實體資資代幣化之永續金融生態系模式研究</p>", unsafe_allow_html=True)
     
     # 學術膠囊標籤 (Capsules)
     st.markdown("""
@@ -437,7 +446,7 @@ elif page == "提案動機與模式介紹":
 
     st.markdown("<h3 style='color:#83A474 !important; font-size:24px; font-weight:800; margin-bottom:15px;'>二、 創新提案 ── 三位一體模型</h3>", unsafe_allow_html=True)
     st.markdown("""
-        本專案提出一套將個體健康行為直接轉化為資本累積之流轉模式。核心在於重構流動機制：<b>將消耗性獎勵重構為生產性累積</b>。
+        本專案提出一套將個體健康行為直接轉化為資本累積之流轉模式。核心在於重構流動機制：<b>將消耗性獎勵重構為營產性累積</b>。
         保戶之健康行為不再僅是換取一次性消費憑證，而是轉化為具備增值潛力之生產性資本投入，建立長期且具備複利效應之資產池。
         <br><br>
         <b>三方共贏博弈分析：</b><br>
@@ -500,7 +509,7 @@ elif page == "APP 介面展示":
         st.markdown(f"""
             <div style='background-color:#F5F7F4; border:1px solid #B7CEAD; padding:15px; border-radius:8px; font-size:12px; color:#0C0E0B; line-height:1.7; margin-top:15px;'>
                 <b style='color:#83A474;'>即時精算流動：</b><br>
-                • 激勵引擎 A (健康補貼): NT$ {engine_A_val:.2f} / 天<br>
+                • 激激励引擎 A (健康補貼): NT$ {engine_A_val:.2f} / 天<br>
                 • 精算引擎 B (理賠折現): NT$ {engine_B_val:.4f} / 天<br>
                 <b style='color:#0C0E0B;'>• 當日總資本生成: NT$ {total_daily_val:.2f} / 天</b>
             </div>
@@ -814,7 +823,7 @@ elif page == "相關研究成果":
     with tab_res3:
         st.markdown("<h4 style='color:#2D4A22 !important; font-weight:800; margin-top:10px;'>散戶碎金流群募籌資效率與電廠資產運維填補率</h4>", unsafe_allow_html=True)
         
-        market_size = st.radio("設定市場保戶規模拓展情境：", ["常態專案池規模 (10,000人)", "全台推推广規模 (100,000人)"], key="market_size_res")
+        market_size = st.radio("設定市場保戶規模拓展情境：", ["常態專案池規模 (10,000人)", "全台推廣規模 (100,000人)"], key="market_size_res")
         
         if "10,000" in market_size:
             funding_days_val = 2059.1
@@ -866,6 +875,7 @@ elif page == "相關研究成果":
         with col_t2:
             matrix_cons = st.select_slider("設定調節變數 B：健走行為持續性均值", options=[0.40, 0.75, 0.90], value=0.75, key="matrix_c")
             
+        # 🎯 這裡已完美拔除多打的習慣字 habits，修復 SyntaxError 惡夢
         if matrix_steps == 0.05 and matrix_cons == 0.40: dynamic_win = 1.22
         elif matrix_steps == 0.05 and matrix_cons == 0.75: dynamic_win = 14.50
         elif matrix_steps == 0.05 and matrix_cons == 0.90: dynamic_win = 22.18
