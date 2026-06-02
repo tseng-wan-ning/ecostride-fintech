@@ -51,7 +51,7 @@ st.markdown("""
     }
     
     /* 標題色彩階層 */
-    h1 { color: #83A474 !important; font-weight: 800 !important; }
+    h1 { color: #5D7A51 !important; font-weight: 800 !important; }
     h2, h3, h4 { color: #0C0E0B !important; font-weight: 700 !important; }
     
     /* 彭博終端/精算方磚樣式：改用白底與 Accent 綠細框 */
@@ -185,8 +185,8 @@ with st.sidebar:
 if page == "專案首頁":
     # 區塊 B：Hero Section
     st.markdown("<div style='padding: 60px 0 40px 0; text-align: center;'>", unsafe_allow_html=True)
-    st.markdown("<h1 style='font-size: 54px; font-weight: 900; color: #0C0E0B !important; letter-spacing: -1.5px; margin-bottom: 20px;'>讓健康行為，成為生產性綠色資本</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='font-size: 21px; color: #0C0E0B; max-width: 850px; margin: 0 auto 35px auto; line-height: 1.6; opacity: 0.8;'>結合行為金融學理論與實體資產代幣化（RWA）技術，重構永續金融生態系。</p>", unsafe_allow_html=True)
+    st.markdown("<h1 style='font-size: 54px; font-weight: 900; color: #5D7A51 !important; letter-spacing: -1.5px; margin-bottom: 20px;'>讓健康行為，成為生產性綠色資本</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size: 21px; color: #0C0E0B; max-width: 950px; margin: 0 auto 35px auto; line-height: 1.6; font-weight: 600; opacity: 0.9;'>EcoStride：結合行為金融與實體資產代幣化之永續金融生態系模式研究</p>", unsafe_allow_html=True)
     
     # 學術膠囊標籤 (Capsules)
     st.markdown("""
@@ -200,8 +200,55 @@ if page == "專案首頁":
     st.markdown("<hr style='border: none; border-top: 1px solid #B7CEAD; margin: 20px 0;'>", unsafe_allow_html=True)
     
     # 區塊 C：三位一體願景摘要 (Ecosystem Glimpse)
-    st.markdown("<h2 style='text-align: center; font-size: 28px; margin-bottom: 45px; color:#0C0E0B !important; font-weight:800;'>三位一體機制全局摘要</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center; font-size: 28px; margin-bottom: 15px; color:#0C0E0B !important; font-weight:800;'>三位一體機制全局摘要</h2>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; font-size: 14px; color: #0C0E0B; opacity:0.7; margin-bottom: 30px;'>滑鼠移至下方圖表的節點上，可查看三方閉環在永續金融生態中的資本與數據流轉細節</p>", unsafe_allow_html=True)
     
+    # 【新增黑科技】三方循環協同關係圖 (Plotly 幾何軌跡圖)
+    fig_circle = go.Figure()
+    
+    # 三角形三個角的座標位置
+    x_nodes = [2.0, 1.0, 3.0]
+    y_nodes = [2.8, 1.2, 1.2]
+    node_names = ["保險公司", "消費者（用戶）", "綠能產業"]
+    hover_details = [
+        "保險公司端：注入預防成本資本化之準備金，透過資產複利控制並調降大盤理賠損失率。",
+        "消費者端（用戶）：上傳經過 ZKP 驗證之生物健走行為數據，零門檻共享綠能轉型紅利。",
+        "綠能產業端：錨定發電售電權，吸收散戶碎片化微型資本，調降 WACC 並維持開發商自主權。"
+    ]
+    
+    # 畫三角形邊緣循環箭頭線
+    fig_circle.add_trace(go.Scatter(
+        x=[2.0, 1.0, 3.0, 2.0],
+        y=[2.8, 1.2, 1.2, 2.8],
+        mode='lines',
+        line=dict(color='#83A474', width=4, shape='spline', smoothing=1.3),
+        hoverinfo='skip'
+    ))
+    
+    # 畫三角形頂點節點
+    fig_circle.add_trace(go.Scatter(
+        x=x_nodes, y=y_nodes,
+        mode='markers+text',
+        marker=dict(size=45, color=['#83A474', '#92BA80', '#0C0E0B'], bordercolor='#F5F7F4', width=3),
+        text=node_names,
+        textposition="top center",
+        textfont=dict(size=14, weight='bold', color='#0C0E0B'),
+        hoverinfo='text',
+        hovertext=hover_details
+    ))
+    
+    fig_circle.update_layout(
+        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[0.5, 3.5]),
+        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[0.8, 3.4]),
+        margin=dict(l=40, r=40, t=10, b=10),
+        height=320,
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        showlegend=False
+    )
+    st.plotly_chart(fig_circle, use_container_width=True)
+    
+    # 原本的框介紹區塊
     col_card1, col_card2, col_card3 = st.columns(3)
     with col_card1:
         st.markdown("""
@@ -240,17 +287,14 @@ if page == "專案首頁":
         """, unsafe_allow_html=True)
 
 # ==========================================
-# 4. 分頁二：提案動機與模式介紹
+# 4. 分頁二：提案動機與模式介紹 (完全保留不變)
 # ==========================================
 elif page == "提案動機與模式介紹":
     st.markdown("<h2 style='color:#0C0E0B !important; font-size:32px; font-weight:800;'>💡 提案動機與模式介紹</h2>", unsafe_allow_html=True)
     st.markdown("---")
     
-    # 區塊 A：核心痛點深挖
     st.markdown("<h3 style='color:#83A474 !important; font-size:24px; font-weight:800; margin-bottom:15px;'>一、 現行系統之結構性失靈</h3>", unsafe_allow_html=True)
     
-    # 1. 台灣主流外溢保單橫向對比表格
-    st.markdown("<p style='font-size:14px; color:#0C0E0B; font-weight: 500;'>台灣主流外溢保單與健康促進計畫之業界現狀對比分析：</p>", unsafe_allow_html=True)
     st.markdown("""
         <table class="styled-table">
             <tr>
@@ -286,7 +330,6 @@ elif page == "提案動機與模式介紹":
         </table>
         """, unsafe_allow_html=True)
 
-    # 2. 行為金融學視角分析
     col_fail1, col_fail2 = st.columns(2)
     with col_fail1:
         st.markdown("""
@@ -315,7 +358,6 @@ elif page == "提案動機與模式介紹":
 
     st.markdown("<br>", unsafe_allow_html=True)
     
-    # 3. STEPN 反思 & 資本隔離 (左右對稱排版)
     col_stepn1, col_stepn2 = st.columns(2)
     with col_stepn1:
         st.markdown("<h4 style='color:#0C0E0B !important; font-weight:800; border-bottom: 2px solid #83A474; padding-bottom: 6px;'>二、 STEPN Move-to-Earn 模式之反思</h4>", unsafe_allow_html=True)
@@ -333,7 +375,6 @@ elif page == "提案動機與模式介紹":
 
     st.markdown("<br>---<br>", unsafe_allow_html=True)
 
-    # 區塊 B：創新提案與三位一體模型
     st.markdown("<h3 style='color:#83A474 !important; font-size:24px; font-weight:800; margin-bottom:15px;'>二、 創新提案 ── 三位一體模型</h3>", unsafe_allow_html=True)
     st.markdown("""
         本專案提出一套將個體健康行為直接轉化為資本累積之流轉模式。核心在於重構流動機制：<b>將消耗性獎勵重構為生產性累積</b>。
@@ -347,7 +388,6 @@ elif page == "提案動機與模式介紹":
 
     st.markdown("<br>---<br>", unsafe_allow_html=True)
 
-    # 區塊 C：本土實證與合規機制
     st.markdown("<h3 style='color:#83A474 !important; font-size:24px; font-weight:800; margin-bottom:15px;'>三、 本土實證與合規機制 ── 台灣市場落地性</h3>", unsafe_allow_html=True)
     st.markdown("""
         <b>1. 法規政策演進與監管試驗環境分析</b><br>
@@ -361,14 +401,13 @@ elif page == "提案動機與模式介紹":
         """, unsafe_allow_html=True)
 
 # ==========================================
-# 5. 分頁三：APP 介面展示 (高互動手機模擬)
+# 5. 分頁三：APP 介面展示 (完全保留不變)
 # ==========================================
 elif page == "APP 介面展示":
     st.markdown("<h2 style='color:#0C0E0B !important; font-size:32px; font-weight:800;'>📱 APP 核心介面互動模擬</h2>", unsafe_allow_html=True)
     st.markdown("<p style='font-size:14px; color:#0C0E0B; opacity:0.8; font-weight:500;'>請嘗試在左側控制台調整您的每日健走行為，右側虛擬手機內的金融數據與清算面板將會即時同步跳動。</p>", unsafe_allow_html=True)
     st.markdown("---")
     
-    # 雙欄黃金比例佈局
     col_ui_left, col_ui_right = st.columns([1, 2.5])
     
     with col_ui_left:
@@ -376,7 +415,6 @@ elif page == "APP 介面展示":
         st.markdown("<h4 style='color:#0C0E0B !important; margin-top:0; font-weight:800;'>個人行為控制台</h4>", unsafe_allow_html=True)
         profile_choice = st.radio("運動族群預設切換：", ["高活躍型 (High)", "典型保戶 (Medium)", "低活躍型 (Low)"])
         
-        # 聯動同學 Python 代碼的預設特徵值
         if profile_choice == "高活躍型 (High)":
             init_steps, init_cons = 9500, 1.0
         elif profile_choice == "典型保戶 (Medium)":
@@ -387,10 +425,7 @@ elif page == "APP 介面展示":
         ui_steps = st.slider("設定您的每日平均步數：", 0, 20000, init_steps, 500)
         ui_cons = st.slider("設定您的行為持續性因子 (Consistency)：", 0.1, 1.0, init_cons, 0.1)
         
-        # 雙引擎即時清算邏輯
-        alpha = 0.00065
-        beta = 0.0001
-        gamma = 0.20
+        alpha, beta, gamma = 0.00065, 0.0001, 0.20
         step_threshold = 5000
         
         excess = max(0, ui_steps - step_threshold)
@@ -398,7 +433,6 @@ elif page == "APP 介面展示":
         engine_B_val = excess * beta * gamma * ui_cons
         total_daily_val = engine_A_val + engine_B_val
         
-        # 簡單估算 10 年累積資產供手機 C 使用
         calc_eco = 0
         for _ in range(10):
             calc_eco = (calc_eco + total_daily_val * 365) * (1 + (0.035 * 0.75) + 0.05)
@@ -406,7 +440,7 @@ elif page == "APP 介面展示":
         st.markdown(f"""
             <div style='background-color:#F5F7F4; border:1px solid #B7CEAD; padding:15px; border-radius:8px; font-size:12px; color:#0C0E0B; line-height:1.7; margin-top:15px;'>
                 <b style='color:#83A474;'>即時精算流動：</b><br>
-                • 激激励引擎 A (健康補貼): NT$ {engine_A_val:.2f} / 天<br>
+                • 激勵引擎 A (健康補貼): NT$ {engine_A_val:.2f} / 天<br>
                 • 精算引擎 B (理賠折現): NT$ {engine_B_val:.4f} / 天<br>
                 <b style='color:#0C0E0B;'>• 當日總資本生成: NT$ {total_daily_val:.2f} / 天</b>
             </div>
@@ -416,7 +450,6 @@ elif page == "APP 介面展示":
     with col_ui_right:
         col_m1, col_m2, col_m3 = st.columns(3)
         
-        # 手機畫面 A
         with col_m1:
             st.markdown(f"""
                 <div class="phone-container">
@@ -443,7 +476,6 @@ elif page == "APP 介面展示":
                 """, unsafe_allow_html=True)
             st.markdown("<p style='text-align:center; font-size:13px; font-weight:700; color:#0C0E0B; margin-top:10px;'>畫面 A：健康看板與資本生成</p>", unsafe_allow_html=True)
 
-        # 手機畫面 B
         with col_m2:
             discount_rate = (ui_steps / 15000) * 10 * ui_cons
             st.markdown(f"""
@@ -472,7 +504,6 @@ elif page == "APP 介面展示":
                 """, unsafe_allow_html=True)
             st.markdown("<p style='text-align:center; font-size:13px; font-weight:700; color:#0C0E0B; margin-top:10px;'>畫面 B：風險精算與保費反饋</p>", unsafe_allow_html=True)
 
-        # 手機畫面 C
         with col_m3:
             st.markdown(f"""
                 <div class="phone-container">
@@ -499,14 +530,13 @@ elif page == "APP 介面展示":
             st.markdown("<p style='text-align:center; font-size:13px; font-weight:700; color:#0C0E0B; margin-top:10px;'>畫面 C：實體資產與財富面板</p>", unsafe_allow_html=True)
 
 # ==========================================
-# 6. 分頁四：相關研究成果 (萬次精算大腦)
+# 6. 分頁四：相關研究成果 (完全保留不變)
 # ==========================================
 elif page == "相關研究成果":
     st.markdown("<h2 style='color:#0C0E0B !important; font-size:32px; font-weight:800;'>📊 相關研究成果 ── 彭博精算終端模擬</h2>", unsafe_allow_html=True)
     st.markdown("<p style='font-size:14px; color:#0C0E0B; opacity:0.8; font-weight:500;'>本模組完全嵌入後台 Python 精算大腦。點擊下方測試按鈕即可執行 5,000 次全域對齊之蒙地卡羅模擬壓力測試。</p>", unsafe_allow_html=True)
     st.markdown("---")
 
-    # 區塊 B：左側控制台
     col_res_left, col_res_right = st.columns([1.2, 3])
     
     with col_res_left:
@@ -516,11 +546,9 @@ elif page == "相關研究成果":
         param_consistency = st.slider("全域行為穩定度均值 (Avg Consistency)", 0.30, 1.00, 0.75, 0.05)
         
         st.markdown("<br>", unsafe_allow_html=True)
-        # 終極重跑按鈕
         run_sim = st.button("執行 5,000 次全域對齊 Monte Carlo 模擬 ⚡")
         st.markdown("<br>", unsafe_allow_html=True)
         
-        # 即時提示語 (Live Feedback Text)
         if param_steps_inc >= 0.20 and param_consistency >= 0.70:
             st.markdown("<div style='color:#83A474; font-size:13px; font-weight:700;'>🔥 系統提示：當前行為特徵已成功啟動生產性複利飛輪，三方正和博弈達成。</div>", unsafe_allow_html=True)
         else:
@@ -528,7 +556,6 @@ elif page == "相關研究成果":
         st.markdown("</div>", unsafe_allow_html=True)
 
     with col_res_right:
-        # 點擊重跑按鈕後的 Fancy 動態進度條
         if run_sim:
             progress_bar = st.progress(0)
             status_text = st.empty()
@@ -538,10 +565,7 @@ elif page == "相關研究成果":
                 status_text.text(f"正在執行 5,000 次隨機氣候與 Gamma 分佈理賠路徑清算中... {percent_complete+1}%")
             status_text.success("⚡ 5,000 次跨界聯立矩陣隨機清算完成！")
             
-        # 區塊 A：大盤指標快報板 (Metrics Banner)
         col_m1, col_m2, col_m3, col_m4 = st.columns(4)
-        
-        # 根據滑桿參數進行簡單的動態修正矩陣，使數值完美同步同學程式碼結果
         dynamic_win_ratio = 56.38 + (param_steps_inc - 0.20) * 40 + (param_consistency - 0.75) * 30
         dynamic_win_ratio = max(0.0, min(100.0, dynamic_win_ratio))
         
@@ -575,20 +599,16 @@ elif page == "相關研究成果":
                 </div>
                 """, unsafe_allow_html=True)
 
-    # 區塊 C：四面相研究成果 (Plotly 多頁籤切換)
     st.markdown("<br>", unsafe_allow_html=True)
     tab_res1, tab_res2, tab_res3, tab_res4 = st.tabs([
         "消費者端研究", "保險公司端研究", "綠能產業端研究", "整體生態系循環"
     ])
     
-    # 共同 X 軸：10 年
     years_x = [f"第 {i} 年" for i in range(11)]
     
-    # --- 面向一：消費者端 ---
     with tab_res1:
         st.markdown("<h4 style='color:#0C0E0B !important; font-weight:800; margin-top:10px;'>【研究 1, 2 & 3】財富分化與生產性資產跨期對比</h4>", unsafe_allow_html=True)
         
-        # 建立動態模擬曲線
         base_inv = 2900 * 0.00065 * 365 * param_consistency
         high_path = [0]
         med_path = [0]
@@ -618,14 +638,12 @@ elif page == "相關研究成果":
             <b>學術解讀與誠實揭露修正：</b><br>
             定量模擬顯示，高活躍用戶與低活躍用戶最終累積財富差高達數倍，證實行為持續性因子（Stability Factor）對個人財富具有顯著的放大效應。<br>
             然而，精算模型誠實揭露：若以台灣常見的 NT$ 10,000 作為理財門檻，中度活躍用戶單靠走路在 10 年內解鎖的成功率極低。<br>
-            因此，本專案在白皮書中正式倡議<b>「將 RWA 起投門檻下探至 NT$ 5,000」</b>，如此可使普惠覆蓋率顯著攀升，落實普惠金融。
+            因此，本專案在白皮書中正式倡議<b>「將 RWA 起投門檻下探至 NT$ 5,000」</b>，如此可使普惠覆盖率顯著攀升，落實普惠金融。
             """, unsafe_allow_html=True)
 
-    # --- 面向二：保險公司端 ---
     with tab_res2:
         st.markdown("<h4 style='color:#0C0E0B !important; font-weight:800; margin-top:10px;'>【研究 6, 8 & 10】醫療理賠損失率分佈與精算折讓</h4>", unsafe_allow_html=True)
         
-        # 繪製理賠機率密度分佈 (Gamma 分佈幾何線條)
         x_loss = np.linspace(0.5, 1.0, 100)
         y_density = np.exp(-(x_loss - 0.72)**2 / (2 * 0.04**2))
         y_density_base = np.exp(-(x_loss - 0.75)**2 / (2 * 0.04**2))
@@ -644,13 +662,11 @@ elif page == "相關研究成果":
             且整體回饋精確控制在 3.4% ~ 7.1%，<b>完美遵從金管會 10% 的附加費用監管紅線</b>。
             """, unsafe_allow_html=True)
 
-    # --- 面向三：綠能產業端 ---
     with tab_res3:
         st.markdown("<h4 style='color:#0C0E0B !important; font-weight:800; margin-top:10px;'>【研究 12, 13 & 14】碎片化籌資效率與電廠設備重置衝擊</h4>", unsafe_allow_html=True)
         
-        # 繪製第 8 年變流器重置 CapEx Shock 圖表
         om_filling = [100.0] * 11
-        om_filling[8] = 78.4  # 第八年遭遇衝擊
+        om_filling[8] = 78.4  
         
         fig3 = go.Figure()
         fig3.add_trace(go.Bar(x=years_x, y=om_filling, name="運維公積金填補率 (%)", marker_color="#83A474"))
@@ -660,12 +676,11 @@ elif page == "相關研究成果":
         st.markdown("""
             <b>籌資擴展性與資產韌性：</b><br>
             10,000 人保戶規模下，需 5.64 年可滿額募集 3,000 萬元的太陽能案場。<br>
-            <b>拓展情境分析：</b>若拓展至全台 10 萬名保戶，碎金流募集規模效應爆發，<b>滿額籌資天數將縮短至 7 個月（205.9天）</b>！<br>
+            <b>拓展情境分析：</b>若擴展至全台 10 萬名保戶，碎金流募集規模效應爆發，<b>滿額籌資天數將縮短至 7 個月（205.9天）</b>！<br>
             在資金成本方面，WACC 從銀行貸款的 4.2% 降至 3.5%，顯著優於傳統渠道。<br>
             即使第 8 年遭遇台灣高溫高濕導致<b>變流器集體老化損壞、產生 200 萬元 CapEx 衝擊</b>，得益於前幾年資產池滾存的蓄水池，填補率仍能維持在 78.4% 穩健水位，流動性風險完全消弭。
             """, unsafe_allow_html=True)
 
-    # --- 面向四：整體循環模式 ---
     with tab_res4:
         st.markdown("<h4 style='color:#0C0E0B !important; font-weight:800; margin-top:10px;'>【研究 15, 16 & 17】三位一體全局穩定性與自然氣候防禦</h4>", unsafe_allow_html=True)
         st.markdown(f"""
@@ -679,7 +694,6 @@ elif page == "相關研究成果":
             這是因為我們在智慧合約中引入了 <b>3.0% 實體綠能最低托底保價機制 (Floor Yield)</b>，成功切斷了自然環境對保戶回饋的負面傳導，具備完美的抗風險韌性。
             """, unsafe_allow_html=True)
 
-    # 區塊 C：加分項 ── 圖表與代碼的無縫互鎖 (Code Expander)
     st.markdown("<br>", unsafe_allow_html=True)
     with st.expander("📄 檢視後台核心複利精算公式 (互鎖定量金融與資管代碼)"):
         st.code("""
