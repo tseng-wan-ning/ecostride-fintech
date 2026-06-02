@@ -14,7 +14,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 隱藏 Streamlit 預設元素並注入 60-30-10 極簡美學 CSS + 側邊欄整條變白高亮黑科技
+# 隱藏 Streamlit 預設元素並注入 60-30-10 極簡美學 CSS + 側邊欄「強制去圈、整條變白」高級黑科技
 st.markdown("""
     <style>
     /* 全局背景色與文字色 */
@@ -33,41 +33,59 @@ st.markdown("""
         color: #0C0E0B !important;
     }
     
-    /* 🎯 【強力黑科技】完全移除側邊欄單選鈕的圈圈，點選時整條底色變白色 */
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] {
-        gap: 8px !important;
+    /* 🎯🎯🎯 【無痛終極去圈黑科技】直接消滅所有原生的單選小圓圈 🎯🎯🎯 */
+    /* 1. 隱藏 Streamlit 內建的偽元素、圓圈和選取框外殼 */
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label [data-testid="stFiberManualRecord"],
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label input[type="radio"],
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label div[class*="st-c"],
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label div[class*="st-b"] {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        visibility: hidden !important;
     }
+    
+    /* 2. 重置整個 Radio 群組的間距 */
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] {
+        gap: 10px !important;
+        width: 100% !important;
+    }
+    
+    /* 3. 將每一個選項的外殼包裝成一個「整條大按鈕」的外觀 */
     div[data-testid="stSidebarRadio"] div[role="radiogroup"] > label {
         background-color: transparent !important;
         border-radius: 8px !important;
-        padding: 12px 20px !important;
+        padding: 12px 18px !important;
         margin: 0 !important;
         transition: all 0.25s ease-in-out !important;
         cursor: pointer !important;
         width: 100% !important;
-        display: block !important;
+        display: flex !important;
+        align-items: center !important;
     }
-    /* 徹底強制拔除原生單選圈圈的視覺渲染 */
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label [data-testid="stFiberManualRecord"],
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label input[type="radio"] {
-        display: none !important;
-        visibility: hidden !important;
-    }
-    /* 讓內層文字容器寬度拉滿 100%，不被圓圈佔位影響 */
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label > div:nth-child(2) {
+    
+    /* 4. 強制內層文字靠最左，並寬度填滿 100% */
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label div[data-testid="stMarkdownContainer"] {
+        width: 100% !important;
         margin-left: 0 !important;
         padding-left: 0 !important;
-        width: 100% !important;
     }
-    /* 🎯 當選項被勾選時，將 label 整條改為純白底色、墨綠字、加粗與高級陰影 */
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] input[type="radio"]:checked + div {
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label div[data-testid="stMarkdownContainer"] p {
+        font-size: 15px !important;
+        font-weight: 500 !important;
+        margin: 0 !important;
+    }
+    
+    /* 5. 🎯 重中之重：當該項目被點選到（Checked）時，強制將「整條標籤」染成純白底色、墨綠字、加粗與柔和陰影 */
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label:has(input[type="radio"]:checked) {
         background-color: #FFFFFF !important;
+        box-shadow: 0 4px 12px rgba(45, 74, 34, 0.08) !important;
+    }
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label:has(input[type="radio"]:checked) p {
         color: #2D4A22 !important;
         font-weight: 700 !important;
-        border-radius: 8px !important;
-        padding: 12px 20px !important;
-        margin: -12px -20px !important; /* 完美填滿外圈 label 邊界 */
-        box-shadow: 0 4px 12px rgba(0,0,0,0.04) !important;
     }
     
     /* 核心亮點按鈕：使用 Primary 綠色 */
@@ -175,7 +193,7 @@ st.markdown("""
         background-color: #FFF5F5; border-left: 5px solid #E53E3E; padding: 18px; border-radius: 0 12px 12px 0; margin: 15px 0;
     }
     
-    /* 頂部毛玻璃導航欄：配合優化後的垂直間距 */
+    /* 頂部毛玻璃導航欄 */
     .navbar-mock {
         background: rgba(245, 247, 244, 0.85);
         backdrop-filter: blur(16px);
@@ -224,7 +242,7 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # ==========================================
-# 2. 側邊欄個人化導覽切換 (底色亮白高亮定製版)
+# 2. 側邊欄個人化導覽切換
 # ==========================================
 with st.sidebar:
     st.markdown("<div style='padding: 20px 0 10px 0;'><h3 style='margin:0; font-size: 20px;'>專案選單</h3></div>", unsafe_allow_html=True)
@@ -253,7 +271,7 @@ if page == "專案首頁":
     # 區塊 B：Hero Section
     st.markdown("<div style='padding: 60px 0 40px 0; text-align: center;'>", unsafe_allow_html=True)
     st.markdown("<h1 style='font-size: 54px; font-weight: 900; color: #5D7A51 !important; letter-spacing: -1.5px; margin-bottom: 20px;'>讓健康行為，成為生產性綠色資本</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='font-size: 21px; color: #0C0E0B; max-width: 950px; margin: 0 auto 35px auto; line-height: 1.6; font-weight: 600; opacity: 0.9;'>EcoStride：結合行為金融與實體資資代幣化之永續金融生態系模式研究</p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size: 21px; color: #0C0E0B; max-width: 950px; margin: 0 auto 35px auto; line-height: 1.6; font-weight: 600; opacity: 0.9;'>EcoStride：結合行為金融與實體資產代幣化之永續金融生態系模式研究</p>", unsafe_allow_html=True)
     
     # 學術膠囊標籤 (Capsules)
     st.markdown("""
@@ -446,7 +464,7 @@ elif page == "提案動機與模式介紹":
 
     st.markdown("<h3 style='color:#83A474 !important; font-size:24px; font-weight:800; margin-bottom:15px;'>二、 創新提案 ── 三位一體模型</h3>", unsafe_allow_html=True)
     st.markdown("""
-        本專案提出一套將個體健康行為直接轉化為資本累積之流轉模式。核心在於重構流動機制：<b>將消耗性獎勵重構為營產性累積</b>。
+        本專案提出一套將個體健康行為直接轉化為資本累積之流轉模式。核心在於重構流動機制：<b>將消耗性獎勵重構為生產性累積</b>。
         保戶之健康行為不再僅是換取一次性消費憑證，而是轉化為具備增值潛力之生產性資本投入，建立長期且具備複利效應之資產池。
         <br><br>
         <b>三方共贏博弈分析：</b><br>
@@ -509,7 +527,7 @@ elif page == "APP 介面展示":
         st.markdown(f"""
             <div style='background-color:#F5F7F4; border:1px solid #B7CEAD; padding:15px; border-radius:8px; font-size:12px; color:#0C0E0B; line-height:1.7; margin-top:15px;'>
                 <b style='color:#83A474;'>即時精算流動：</b><br>
-                • 激激励引擎 A (健康補貼): NT$ {engine_A_val:.2f} / 天<br>
+                • 激勵引擎 A (健康補貼): NT$ {engine_A_val:.2f} / 天<br>
                 • 精算引擎 B (理賠折現): NT$ {engine_B_val:.4f} / 天<br>
                 <b style='color:#0C0E0B;'>• 當日總資本生成: NT$ {total_daily_val:.2f} / 天</b>
             </div>
@@ -848,7 +866,7 @@ elif page == "相關研究成果":
                 <b style='color:#2D4A22; font-size:15px;'>加權平均資金成本（WACC）減輕分析</b><br><br>
                 碎金流募集模式直接對接發電售電收益憑證，WACC 降低 0.70%；<br>
                 • 綠能業者年度利息支出實質省下：<span style='color:#83A474; font-weight:800; font-size:18px;'>NT$ 210,000 / 年</span><br>
-                • 經營自主權判讀：分散投資散戶不具備组织干涉力，電廠主導權極高。
+                • 經營自主權判讀：分散投資散戶不具備組織組織力，電廠主導權極高。
             </div>
             """, unsafe_allow_html=True)
 
@@ -875,7 +893,6 @@ elif page == "相關研究成果":
         with col_t2:
             matrix_cons = st.select_slider("設定調節變數 B：健走行為持續性均值", options=[0.40, 0.75, 0.90], value=0.75, key="matrix_c")
             
-        # 🎯 這裡已完美拔除多打的習慣字 habits，修復 SyntaxError 惡夢
         if matrix_steps == 0.05 and matrix_cons == 0.40: dynamic_win = 1.22
         elif matrix_steps == 0.05 and matrix_cons == 0.75: dynamic_win = 14.50
         elif matrix_steps == 0.05 and matrix_cons == 0.90: dynamic_win = 22.18
