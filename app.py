@@ -109,6 +109,14 @@ st.markdown("""
         box-shadow: 0 8px 24px rgba(131, 164, 116, 0.1);
     }
     
+    /* 自訂墨綠色專用標題樣式 */
+    .dark-green-title {
+        color: #2D4A22 !important;
+        font-size: 19px;
+        font-weight: 800;
+        margin-bottom: 15px;
+    }
+    
     /* 結構化對比表格 */
     .styled-table {
         width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; background-color: #FFFFFF;
@@ -203,7 +211,7 @@ if page == "專案首頁":
     st.markdown("<h2 style='text-align: center; font-size: 28px; margin-bottom: 15px; color:#0C0E0B !important; font-weight:800;'>三位一體機制全局摘要</h2>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; font-size: 14px; color: #0C0E0B; opacity:0.7; margin-bottom: 30px;'>滑鼠移至下方圖表的節點上，可查看三方閉環在永續金融生態中的資本與數據流轉細節</p>", unsafe_allow_html=True)
     
-    # 三方循環協同關係圖 (修正語法錯誤後的 Plotly 圖表)
+    # 三方循環協同關係圖
     fig_circle = go.Figure()
     
     x_nodes = [2.0, 1.0, 3.0]
@@ -224,7 +232,7 @@ if page == "專案首頁":
         hoverinfo='skip'
     ))
     
-    # 正確修正後的頂點節點語法
+    # 頂點節點
     fig_circle.add_trace(go.Scatter(
         x=x_nodes, y=y_nodes,
         mode='markers+text',
@@ -251,13 +259,13 @@ if page == "專案首頁":
     )
     st.plotly_chart(fig_circle, use_container_width=True)
     
-    # 原本的框介紹區塊
+    # 原本的框介紹區塊（標題已套用墨綠色樣式）
     col_card1, col_card2, col_card3 = st.columns(3)
     with col_card1:
         st.markdown("""
             <div class="vision-card">
                 <div style='width: 40px; height: 6px; background-color: #83A474; margin-bottom: 20px; border-radius: 3px;'></div>
-                <h4 style='font-size: 19px; font-weight: 800; color: #0C0E0B; margin-bottom: 15px;'>消費者端：生物行為資產化</h4>
+                <div class="dark-green-title">消費者端：生物行為資產化</div>
                 <p style='font-size: 14.5px; color: #0C0E0B; line-height: 1.7; opacity: 0.85;'>徹底打破財富階級門檻。無初始存款之年輕族群，僅靠規律之步行數據，即可無痛認購綠能案場份額，共享淨零轉型之資本紅利。</p>
             </div>
             """, unsafe_allow_html=True)
@@ -266,7 +274,7 @@ if page == "專案首頁":
         st.markdown("""
             <div class="vision-card">
                 <div style='width: 40px; height: 6px; background-color: #B7CEAD; margin-bottom: 20px; border-radius: 3px;'></div>
-                <h4 style='font-size: 19px; font-weight: 800; color: #0C0E0B; margin-bottom: 15px;'>保險公司端：高效率風險管理</h4>
+                <div class="dark-green-title">保險公司端：高效率風險管理</div>
                 <p style='font-size: 14.5px; color: #0C0E0B; line-height: 1.7; opacity: 0.85;'>將既有行銷費用與理賠準備金提前折現注入綠能基金，透過資產的生產性複利增值感，實質且長期優化保戶健康品質，控制理賠損失率。</p>
             </div>
             """, unsafe_allow_html=True)
@@ -275,7 +283,7 @@ if page == "專案首頁":
         st.markdown("""
             <div class="vision-card">
                 <div style='width: 40px; height: 6px; background-color: #92BA80; margin-bottom: 20px; border-radius: 3px;'></div>
-                <h4 style='font-size: 19px; font-weight: 800; color: #0C0E0B; margin-bottom: 15px;'>綠能產業端：去中心化普惠資本</h4>
+                <div class="dark-green-title">綠能產業端：去中心化普惠資本</div>
                 <p style='font-size: 14.5px; color: #0C0E0B; line-height: 1.7; opacity: 0.85;'>底層資產錨定「陽光綠益」等 STO 售電收益權。引入散戶碎金流以降低開發商資金成本（WACC），同時維護電廠之經營自主權。</p>
             </div>
             """, unsafe_allow_html=True)
@@ -386,7 +394,7 @@ elif page == "提案動機與模式介紹":
         <b>三方共贏博弈分析：</b><br>
         1. <b>用戶端</b>：提供經過驗證之健康行為數據，藉此交換取得實體資產代幣化之收益權份額。<br>
         2. <b>保險公司端</b>：投入既有之行銷預算或理賠準備金作為資產認購資金，換取保戶理賠率之降低與 ESG 評級之提升。<br>
-        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金. <b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金的同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
+        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金。<b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金的同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
         """, unsafe_allow_html=True)
 
     st.markdown("<br>---<br>", unsafe_allow_html=True)
@@ -394,7 +402,7 @@ elif page == "提案動機與模式介紹":
     st.markdown("<h3 style='color:#83A474 !important; font-size:24px; font-weight:800; margin-bottom:15px;'>三、 本土實證與合規機制 ── 台灣市場落地性</h3>", unsafe_allow_html=True)
     st.markdown("""
         <b>1. 法規政策演進與監管試驗環境分析</b><br>
-        金管會自 2023 年起放寬證券型代幣（STO）規範，並於 2024 年正式成立實體資產代幣化小組。2025 年 9 月之概念驗證報告成功驗證債券與基金代幣化之可行性，落實券款對付之即時交割機制。此項技術突破，為本計畫中生物行為資產化後之即時權益分配，奠定了關鍵的技術與法理基礎。
+        金管會自 20 23 年起放寬證券型代幣（STO）規範，並於 2024 年正式成立實體資產代幣化小組。2025 年 9 月之概念驗證報告成功驗證債券與基金代幣化之可行性，落實券款對付之即時交割機制。此項技術突破，為本計畫中生物行為資產化後之即時權益分配，奠定了關鍵的技術與法理基礎。
         <br><br>
         <b>2. 國泰證券「陽光綠益」STO 案例研究（底層資產實證）</b><br>
         國泰證券與綠點能創合作，發行台灣首檔 STO「陽光綠益」（募資規模三千萬元）。底層資產為六年期債務型憑證，提供年利率 3.5% 之固定回報。此案例成果直接解決了過往 Web3 模式缺乏實體資產背書之痛點。實體資產代幣化提供穩定之綠能收益權作為價值支撐，使 EcoStride 核發之數位憑證具備實體生產力背書。
@@ -679,7 +687,7 @@ elif page == "相關研究成果":
         st.markdown("""
             <b>籌資擴展性與資產韌性：</b><br>
             10,000 人保戶規模下，需 5.64 年可滿額募集 3,000 萬元的太陽能案場。<br>
-            <b>拓展情境分析：</b>若拓展至全台 10 萬名保戶，碎金流募集規模效應爆發，<b>滿額籌資天數將縮短至 7 個月（205.9天）</b>！<br>
+            <b>拓展情境分析：</b>若擴展至全台 10 萬名保戶，碎金流募集規模效應爆發，<b>滿額籌資天數將縮短至 7 個月（205.9天）</b>！<br>
             在資金成本方面，WACC 從銀行貸款的 4.2% 降至 3.5%，顯著優於傳統渠道。<br>
             即使第 8 年遭遇台灣高溫高濕導致<b>變流器集體老化損壞、產生 200 萬元 CapEx 衝擊</b>，得益於前幾年資產池滾存的蓄水池，填補率仍能維持在 78.4% 穩健水位，流動性風險完全消弭。
             """, unsafe_allow_html=True)
