@@ -166,7 +166,7 @@ st.markdown("""
         background-color: #FFF5F5; border-left: 5px solid #E53E3E; padding: 18px; border-radius: 0 12px 12px 0; margin: 15px 0;
     }
     
-    /* 🎯 頂部毛玻璃導航欄：配合使用者指令將 margin-top 從 -6rem 修正為 -4.5rem，整體向下平移優化垂直間距 */
+    /* 頂部毛玻璃導航欄：配合優化後的垂直間距 */
     .navbar-mock {
         background: rgba(245, 247, 244, 0.85);
         backdrop-filter: blur(16px);
@@ -200,7 +200,7 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # ==========================================
-# 1. 頂部毛玻璃導航欄區塊 (區塊 A - 已向下平移)
+# 1. 頂部毛玻璃導航欄區塊 (區塊 A)
 # ==========================================
 st.markdown("""
     <div class="navbar-mock">
@@ -220,14 +220,12 @@ st.markdown("""
 with st.sidebar:
     st.markdown("<div style='padding: 20px 0 10px 0;'><h3 style='margin:0; font-size: 20px;'>專案選單</h3></div>", unsafe_allow_html=True)
     
-    # 收音機組件（已透過頂部 CSS 注入強行改裝為無圓圈、全白底色高亮外觀）
     page = st.radio(
         "請選擇要調閱的章節：",
         ["專案首頁", "提案動機與模式介紹", "APP 介面展示", "相關研究成果"]
     )
     
     st.markdown("---")
-    # 🎯 依照指令：更新系所名稱為「計量財務金融學系」與指導教授「韓傳祥」
     st.markdown("""
         <div style='font-size: 12px; line-height: 1.8;'>
         <b style='font-size:14px; color:#2D4A22;'>研究團隊</b><br>
@@ -349,7 +347,7 @@ if page == "專案首頁":
         """, unsafe_allow_html=True)
 
 # ==========================================
-# 4. 分頁二：提案動機與模式介紹 (完全保留不變)
+# 4. 分頁二：提案動機與模式介紹
 # ==========================================
 elif page == "提案動機與模式介紹":
     st.markdown("<h2 style='color:#0C0E0B !important; font-size:32px; font-weight:800;'>💡 提案動機與模式介紹</h2>", unsafe_allow_html=True)
@@ -425,7 +423,7 @@ elif page == "提案動機與模式介紹":
         st.markdown("<h4 style='color:#0C0E0B !important; font-weight:800; border-bottom: 2px solid #83A474; padding-bottom: 6px;'>二、 STEPN Move-to-Earn 模式之反思</h4>", unsafe_allow_html=True)
         st.markdown("""
             STEPN 雖透過 Web3 遊戲化驅動健康行為，吸引超過 200 萬用戶。然而，其核心崩盤原因在於
-            <b>「死亡螺旋經濟模型」</b>── 高度依賴新用戶流入以支撐舊用戶收益（龐氏結構），代幣（GST）通膨嚴重且缺乏真實資產背書，導致資產價值最終崩盤。
+            <b>「死亡螺旋經濟模型」</b>──高度依賴新用戶流入以支撐舊用戶收益（龐氏結構），代幣（GST）通膨嚴重且缺乏真實資產背書，導致資產價值最終崩盤。
             <br><br>
             <b>EcoStride 的改良路徑：</b>借鏡其健康驅動與碎片化參與之優勢，但<b>轉向實體資產（RWA）背書</b>，將步數代幣（STRIDE）錨定綠能收益權，徹底避免純投機風險。
             """, unsafe_allow_html=True)
@@ -445,7 +443,7 @@ elif page == "提案動機與模式介紹":
         <b>三方共贏博弈分析：</b><br>
         1. <b>用戶端</b>：提供經過驗證之健康行為數據，藉此交換取得實體資產代幣化之收益權份額。<br>
         2. <b>保險公司端</b>：投入既有之行銷預算或理賠準備金作為資產認購資金，換取保戶理賠率之降低與 ESG 評級之提升。<br>
-        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金。<b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金 the 同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
+        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金。<b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金的同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
         """, unsafe_allow_html=True)
 
     st.markdown("<br>---<br>", unsafe_allow_html=True)
@@ -463,7 +461,7 @@ elif page == "提案動機與模式介紹":
         """, unsafe_allow_html=True)
 
 # ==========================================
-# 5. 分頁三：APP 介面展示 (完全保留不變)
+# 5. 分頁三：APP 介面展示
 # ==========================================
 elif page == "APP 介面展示":
     st.markdown("<h2 style='color:#0C0E0B !important; font-size:32px; font-weight:800;'>📱 APP 核心介面互動模擬</h2>", unsafe_allow_html=True)
@@ -757,7 +755,7 @@ elif page == "相關研究成果":
         """, unsafe_allow_html=True)
 
     # ==========================================
-    # 🏥 面向二：保險公司端研究子分頁
+    # 🏥 面向二：保險公司端研究
     # ==========================================
     with tab_res2:
         st.markdown("<h4 style='color:#2D4A22 !important; font-weight:800; margin-top:10px;'>預防成本資本化與理賠損失率動態分佈測試</h4>", unsafe_allow_html=True)
@@ -811,12 +809,12 @@ elif page == "相關研究成果":
         """, unsafe_allow_html=True)
 
     # ==========================================
-    # ⚡ 面向三：綠能產業端研究子分頁
+    # ⚡ 面向三：綠能產業端研究
     # ==========================================
     with tab_res3:
         st.markdown("<h4 style='color:#2D4A22 !important; font-weight:800; margin-top:10px;'>散戶碎金流群募籌資效率與電廠資產運維填補率</h4>", unsafe_allow_html=True)
         
-        market_size = st.radio("設定市場保戶規模拓展情境：", ["常態專案池規模 (10,000人)", "全台推廣規模 (100,000人)"], key="market_size_res")
+        market_size = st.radio("設定市場保戶規模拓展情境：", ["常態專案池規模 (10,000人)", "全台推推广規模 (100,000人)"], key="market_size_res")
         
         if "10,000" in market_size:
             funding_days_val = 2059.1
@@ -856,7 +854,7 @@ elif page == "相關研究成果":
         st.plotly_chart(fig_energy, use_container_width=True)
 
     # ==========================================
-    # 🔄 面向四：整體循環模式子分頁
+    # 🔄 面向四：整體循環模式
     # ==========================================
     with tab_res4:
         st.markdown("<h4 style='color:#2D4A22 !important; font-weight:800; margin-top:10px;'>生態系成功啟動之財務邊界條件與邊際分析</h4>", unsafe_allow_html=True)
@@ -870,7 +868,7 @@ elif page == "相關研究成果":
             
         if matrix_steps == 0.05 and matrix_cons == 0.40: dynamic_win = 1.22
         elif matrix_steps == 0.05 and matrix_cons == 0.75: dynamic_win = 14.50
-        elif matrix_steps == 0.05 habits and matrix_cons == 0.90: dynamic_win = 22.18
+        elif matrix_steps == 0.05 and matrix_cons == 0.90: dynamic_win = 22.18
         elif matrix_steps == 0.15 and matrix_cons == 0.40: dynamic_win = 8.64
         elif matrix_steps == 0.15 and matrix_cons == 0.75: dynamic_win = 56.38  
         elif matrix_steps == 0.15 and matrix_cons == 0.90: dynamic_win = 74.20
@@ -889,7 +887,7 @@ elif page == "相關研究成果":
         st.markdown("""
         <h5>季節性自然氣候風險防禦力測試</h5>
         本模型成功導入了台灣夏季高日照、梅雨季突發大雨之氣候售電隨機衝擊（效益隨機重擊 -35%）。<br>
-        即使在 95% 置信區間最極端之「連續大大雨、嚴重日照不足」黑天鵝路徑下，保戶數位憑證資產仍能保持穩定增長。
+        即使在 95% 置信區間最極端之「連續大雨、嚴重日照不足」黑天鵝路徑下，保戶數位憑證資產仍能保持穩定增長。
         這是因為在智慧合約中引入了 <b>3.0% 實體綠能最低托底保價機制 (Floor Yield)</b>，成功切斷了氣候環境對保戶回饋的負面傳導，具備完備的抗風險防禦力。
         """, unsafe_allow_html=True)
 
