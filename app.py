@@ -267,7 +267,7 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # ==========================================
-# 2. 側邊欄個人化導覽切換 (🎯 依照指令：改為與底下完全相同的 Tabs 面向樣式)
+# 2. 側邊欄個人化導覽切換 (底色亮白高亮定製版)
 # ==========================================
 with st.sidebar:
     st.markdown("<div style='padding: 20px 0 10px 0;'><h3 style='margin:0; font-size: 20px;'>專案選單</h3></div>", unsafe_allow_html=True)
@@ -397,7 +397,7 @@ if page == "專案首頁":
             </div>
             """, unsafe_allow_html=True)
 
-    # 區塊 D：頁腳 (Footer) - 🎯 依照指令更新為乾淨的名單
+    # 區塊 D：頁腳 (Footer)
     st.markdown("<div style='margin-top: 100px;'></div>", unsafe_allow_html=True)
     st.markdown("""
         <div style='border-top: 1px solid #B7CEAD; padding: 35px 0; text-align: center; font-size: 12px; color: #0C0E0B; background-color: #FFFFFF; margin: 0 -4rem;'>
@@ -921,7 +921,6 @@ elif page == "相關研究成果":
     with tab_res4:
         st.markdown("<h4 style='color:#2D4A22 !important; font-weight:800; margin-top:10px;'>生態系成功啟動之財務邊界條件與邊際分析</h4>", unsafe_allow_html=True)
         
-        # 🎯 依照指令優化文字：拔除直白的視覺提示，改為引導學術思考的高級陳述
         st.markdown("<p style='font-size:13px; color:#555;'>請微調下方財務自變數，即時觀測飛輪聯立矩陣之動態跨界反饋：</p>", unsafe_allow_html=True)
         
         col_t1, col_t2 = st.columns(2)
@@ -931,7 +930,7 @@ elif page == "相關研究成果":
             matrix_cons = st.select_slider("設定調節變數 B：健走行為持續性均值", options=[0.40, 0.75, 0.90], value=0.75, key="matrix_c")
             
         if matrix_steps == 0.05 and matrix_cons == 0.40: dynamic_win = 1.22
-        elif matrix_steps == 0.05 side matrix_cons == 0.75: dynamic_win = 14.50
+        elif matrix_steps == 0.05 and matrix_cons == 0.75: dynamic_win = 14.50
         elif matrix_steps == 0.05 and matrix_cons == 0.90: dynamic_win = 22.18
         elif matrix_steps == 0.15 and matrix_cons == 0.40: dynamic_win = 8.64
         elif matrix_steps == 0.15 and matrix_cons == 0.75: dynamic_win = 56.38  
@@ -985,3 +984,4 @@ def calculate_compounding_rwa_wealth(excess_steps, alpha, beta, gamma, consisten
         
     return total_user_rwa_wealth
         """, language="python")
+    
