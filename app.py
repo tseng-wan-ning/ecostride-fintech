@@ -125,15 +125,15 @@ st.markdown("""
         text-align: center;
         box-shadow: 0 4px 10px rgba(0,0,0,0.01);
     }
-    /* 🎯 依照指令將數字字體改為 Inter 粗體 */
+    /* 🎯 依照指令將數字字體從 Courier New 改為 Inter 粗體 */
     .metric-value-green {
-        font-size: 38px; font-weight: 700; color: #83A474; font-family: 'Inter', -apple-system, sans-serif; margin-top: 5px;
+        font-size: 38px; font-weight: 700; color: #83A474; font-family: 'Inter', -apple-system, sans-serif;
     }
     .metric-value-blue {
-        font-size: 38px; font-weight: 700; color: #0C0E0B; font-family: 'Inter', -apple-system, sans-serif; margin-top: 5px;
+        font-size: 38px; font-weight: 700; color: #0C0E0B; font-family: 'Inter', -apple-system, sans-serif;
     }
     .metric-label {
-        font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;
+        font-size: 13px; font-weight: 600; color: #475569; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.5px;
     }
     
     /* 虛擬手機 Mockup */
@@ -388,7 +388,7 @@ elif page == "提案動機與模式介紹":
     st.markdown("<h2 style='color:#0C0E0B !important; font-size:32px; font-weight:800;'>💡 提案動機與模式介紹</h2>", unsafe_allow_html=True)
     st.markdown("---")
     
-    st.markdown("<h3 style='color:#83A474 !important; font-size:24px; font-weight:800; margin-bottom:15px;'>一、 現行系統之结构性失靈</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color:#83A474 !important; font-size:24px; font-weight:800; margin-bottom:15px;'>一、 現行系統之結構性失靈</h3>", unsafe_allow_html=True)
     
     st.markdown("""
         <table class="styled-table">
@@ -478,7 +478,7 @@ elif page == "提案動機與模式介紹":
         <b>三方共贏博弈分析：</b><br>
         1. <b>用戶端</b>：提供經過驗證之健康行為數據，藉此交換取得實體資產代幣化之收益權份額。<br>
         2. <b>保險公司端</b>：投入既有之行銷預算或理賠準備金作為資產認購資金，換取保戶理賠率之降低與 ESG 評級之提升。<br>
-        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金。<b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金的同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
+        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金。<b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金 the 同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
         """, unsafe_allow_html=True)
 
     st.markdown("<br>---<br>", unsafe_allow_html=True)
@@ -489,7 +489,7 @@ elif page == "提案動機與模式介紹":
         金管會自 2023 年起放寬證券型代幣（STO）規範，並於 2024 年正式成立實體資產代幣化小組。2025 年 9 月之概念驗證報告成功驗證債券與基金代幣化之可行性，落實券款對付之即時交割機制。此項技術突破，為本計畫中生物行為資產化後之即時權益分配，奠定了關鍵的技術與法理基礎。
         <br><br>
         <b>2. 國泰證券「陽光綠益」STO 案例研究（底層資產實證）</b><br>
-        國泰證券與綠點能創合作，發行台灣首檔 STO「陽光綠益」（募資規模三千萬元）。底層資產為六年期債務型憑證，提供年利率 3.5% 之固定回報。此案例成果直接解決了過往 Web3 模式缺乏實體資產背書之痛點。實體資產代幣化提供穩定之綠能收益權充當價值支撐，使 EcoStride 核發之數位憑證具備實體操作力背書。
+        國泰證券與綠點能創合作，發行台灣首檔 STO「陽光綠益」（募資規模三千萬元）。底層資產為六年期債務型憑證，提供年利率 3.5% 之固定回報。此案例成果直接解決了過往 Web3 模式缺乏實體資產背書之痛點。實體資產代幣化提供穩定之綠能收益權作為價值支撐，使 EcoStride 核發之數位憑證具備實體操作力背書。
         <br><br>
         <b>3. 隱私保護與次級市場流通</b><br>
         針對資產期限較長之特性，擬引入自動化造市商機制建立微型資產流動性池；在個資隱私上，<b>採用零知識證明技術（Zero-Knowledge Proofs, ZKP）保護隱私</b>，確保代幣化資產之發行、存管與存管皆符合國際監管標準。
@@ -625,7 +625,7 @@ elif page == "APP 介面展示":
             st.markdown("<p style='text-align:center; font-size:13px; font-weight:700; color:#0C0E0B; margin-top:10px;'>畫面 C：實體資產與財富面板</p>", unsafe_allow_html=True)
 
 # ==========================================
-# 6. 分頁四：相關研究成果
+# 6. 分頁四：相關研究成果 (🎯 已去除了原有的 📊 貼圖)
 # ==========================================
 elif page == "相關研究成果":
     st.markdown("<h2 style='color:#0C0E0B !important; font-size:32px; font-weight:800;'>相關研究成果 ── 彭博精算終端動態沙盤</h2>", unsafe_allow_html=True)
@@ -653,7 +653,6 @@ elif page == "相關研究成果":
         base_wacc = 3.50 - (param_steps_inc_sidebar - 0.20) * 0.5
         base_wealth = 6657 * (param_steps_inc_sidebar / 0.20) * (param_consistency_sidebar / 0.75)
         
-        # 🎯 依照指令優化：真財富方磚代碼重構（字在上面，數字在下面，字體更換為 Inter 粗體）
         if run_sim:
             progress_bar = st.progress(0)
             for percent_complete in range(1, 101, 4):
@@ -667,44 +666,43 @@ elif page == "相關研究成果":
                 metric_slot1.markdown(f"""
                 <div style="display: flex; gap: 12px; margin-bottom: 15px;">
                     <div class="metric-card" style="border-top: 4px solid #83A474; flex: 1;">
-                        <div class="metric-label">全域共贏機率 (Win-Win Ratio)</div>
                         <div class="metric-value-green">{min(100.0, fake_ratio):.2f}%</div>
+                        <div class="metric-label">全域共贏機率 (Win-Win Ratio)</div>
                     </div>
                     <div class="metric-card" style="border-top: 4px solid #0C0E0B; flex: 1;">
-                        <div class="metric-label">保險大盤獲利機率</div>
                         <div class="metric-value-blue">{np.random.uniform(98.5, 99.9):.2f}%</div>
+                        <div class="metric-label">保險大盤獲利機率</div>
                     </div>
                     <div class="metric-card" style="border-top: 4px solid #B7CEAD; flex: 1;">
-                        <div class="metric-label">綠能開發商資金成本 (WACC)</div>
                         <div class="metric-value-blue">{fake_wacc:.2f}%</div>
+                        <div class="metric-label">綠能開發商資金成本 (WACC)</div>
                     </div>
                     <div class="metric-card" style="border-top: 4px solid #92BA80; flex: 1;">
-                        <div class="metric-label">典型保戶10年累積資產</div>
                         <div class="metric-value-green">NT$ {fake_wealth:,.0f}</div>
+                        <div class="metric-label">典型保戶10年累積資產</div>
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
             progress_bar.empty()
             st.toast("⚡ 5,000次跨界聯立財務矩陣隨機清算完成！", icon="✅")
 
-        # 🎯 依照指令優化：初始狀態方磚代碼重構（字在上面，數字在下面，字體更換為 Inter 粗體）
         metric_slot1.markdown(f"""
         <div style="display: flex; gap: 12px; margin-bottom: 15px;">
             <div class="metric-card" style="border-top: 4px solid #83A474; flex: 1;">
-                <div class="metric-label">全域共贏機率 (Win-Win Ratio)</div>
                 <div class="metric-value-green">{base_win_ratio:.2f}%</div>
+                <div class="metric-label">全域共贏機率 (Win-Win Ratio)</div>
             </div>
             <div class="metric-card" style="border-top: 4px solid #0C0E0B; flex: 1;">
-                <div class="metric-label">保險大盤獲利機率</div>
                 <div class="metric-value-blue">99.96%</div>
+                <div class="metric-label">保險大盤獲利機率</div>
             </div>
             <div class="metric-card" style="border-top: 4px solid #B7CEAD; flex: 1;">
-                <div class="metric-label">綠能開發商資金成本 (WACC)</div>
                 <div class="metric-value-blue">{base_wacc:.2f}%</div>
+                <div class="metric-label">綠能開發商資金成本 (WACC)</div>
             </div>
             <div class="metric-card" style="border-top: 4px solid #92BA80; flex: 1;">
-                <div class="metric-label">典型保戶10年累積資產</div>
                 <div class="metric-value-green">NT$ {max(0.0, base_wealth):,.0f}</div>
+                <div class="metric-label">典型保戶10年累積資產</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -723,7 +721,7 @@ elif page == "相關研究成果":
         st.markdown("<h4 style='color:#2D4A22 !important; font-weight:800; margin-top:10px;'>財富分化與生產性資產跨期對比</h4>", unsafe_allow_html=True)
         st.markdown("<p style='font-size:13px; color:#555;'>可任選運動特徵，動態重繪複利滾存與時間疲勞後的真實跨期經濟收益軌跡：</p>", unsafe_allow_html=True)
         
-        # 🎯 依照指令：調整單選按鈕的擺放順序，已確實改為由低、中、高排列
+        # 🎯 依照指令：調整單選按鈕的擺放順序，改為低、中、高排列
         selected_profile = st.radio("選擇要觀測的用戶運動特徵：", ["Low 低活躍族群", "Medium 典型保戶", "High 高活躍族群"], horizontal=True)
         
         alpha_optimized = 0.00065
@@ -946,7 +944,7 @@ def calculate_compounding_rwa_wealth(excess_steps, alpha, beta, gamma, consisten
     
     total_user_rwa_wealth = 0.0
     for year in range(1, 11):
-        # 智慧合約自動結算：發電總收益
+        # 智慧合約自动結算：發電總收益
         annual_rwa_yield_generated = total_user_rwa_wealth * rwa_yield_base
         # 25% 回流保險準備金
         rwa_flowback_to_insurance = annual_rwa_yield_generated * insurance_share_yield
