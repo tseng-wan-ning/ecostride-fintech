@@ -231,23 +231,6 @@ st.markdown("""
         font-weight: 800 !important;
         border-top: 3px solid #83A474 !important;
     }
-
-    /* 側邊欄特化選單按鈕，強制讓其上下堆疊填滿 */
-    .stSidebar div[data-testid="stTabs"] [role="tablist"] {
-        flex-direction: column !important;
-        gap: 6px !important;
-    }
-    .stSidebar div[data-testid="stTabs"] button {
-        border-radius: 8px !important;
-        border: 1px solid #83A474 !important;
-        text-align: left !important;
-        justify-content: flex-start !important;
-        width: 100% !important;
-    }
-    .stSidebar div[data-testid="stTabs"] button[aria-selected="true"] {
-        border-top: 1px solid #83A474 !important;
-        border-left: 4px solid #83A474 !important; /* 選中時左側加重線條 */
-    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -267,23 +250,15 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # ==========================================
-# 2. 側邊欄個人化導覽切換 (🎯 依照指令：改為與底下完全相同的 Tabs 面向樣式)
+# 2. 側邊欄個人化導覽切換 (底色亮白高亮定製版)
 # ==========================================
 with st.sidebar:
     st.markdown("<div style='padding: 20px 0 10px 0;'><h3 style='margin:0; font-size: 20px;'>專案選單</h3></div>", unsafe_allow_html=True)
     
-    # 使用 st.tabs 將原本的 radio 替換，達成點擊整塊色塊換色的高級質感
-    tab_menu1, tab_menu2, tab_menu3, tab_menu4 = st.tabs(["🏠 專案首頁", "💡 提案動機與模式介紹", "📱 APP 介面展示", "📈 相關研究成果"])
-    
-    # 透過各自的 tab 啟動觸發全域頁面狀態變數
-    with tab_menu1:
-        page = "專案首頁"
-    with tab_menu2:
-        page = "提案動機與模式介紹"
-    with tab_menu3:
-        page = "APP 介面展示"
-    with tab_menu4:
-        page = "相關研究成果"
+    page = st.radio(
+        "請選擇要調閱的章節：",
+        ["專案首頁", "提案動機與模式介紹", "APP 介面展示", "相關研究成果"]
+    )
     
     st.markdown("---")
     st.markdown("""
@@ -483,7 +458,7 @@ elif page == "提案動機與模式介紹":
         st.markdown("<h4 style='color:#0C0E0B !important; font-weight:800; border-bottom: 2px solid #83A474; padding-bottom: 6px;'>二、 STEPN Move-to-Earn 模式之反思</h4>", unsafe_allow_html=True)
         st.markdown("""
             STEPN 雖透過 Web3 遊戲化驅動健康行為，吸引超過 200 萬用戶。然而，其核心崩盤原因在於
-            <b>「死亡螺旋經濟模型」</b>──高度依賴新用戶流入以支撐舊用戶收益（龐氏結構），代幣（GST）通膨嚴重且缺乏真實資產背書，導致資產價值最終崩盤。
+            <b>「死亡螺旋經濟模型」</b>──高度依賴新用戶流入以支撐舊用戶收益（龐氏結構），代幣（GST）通膨嚴重且缺乏真實資產背書，導致資產價值最終崩盤.
             <br><br>
             <b>EcoStride 的改良路徑：</b>借鏡其健康驅動與碎片化參與之優勢，但<b>轉向實體資產（RWA）背書</b>，將步數代幣（STRIDE）錨定綠能收益權，徹底避免純投機風險。
             """, unsafe_allow_html=True)
@@ -503,7 +478,7 @@ elif page == "提案動機與模式介紹":
         <b>三方共贏博弈分析：</b><br>
         1. <b>用戶端</b>：提供經過驗證之健康行為數據，藉此交換取得實體資產代幣化之收益權份額。<br>
         2. <b>保險公司端</b>：投入既有之行銷預算或理賠準備金作為資產認購資金，換取保戶理賠率之降低與 ESG 評級之提升。<br>
-        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金。<b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
+        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金。<b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金 the 同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
         """, unsafe_allow_html=True)
 
     st.markdown("<br>---<br>", unsafe_allow_html=True)
@@ -511,7 +486,7 @@ elif page == "提案動機與模式介紹":
     st.markdown("<h3 style='color:#83A474 !important; font-size:24px; font-weight:800; margin-bottom:15px;'>三、 本土實證與合規機制 ── 台灣市場落地性</h3>", unsafe_allow_html=True)
     st.markdown("""
         <b>1. 法規政策演進與監管試驗環境分析</b><br>
-        金管會自 2023 年起放寬證券型代幣（STO）規範，並於 2024 年正式成立實體資產代幣化小組。2025 年 9 月之概念驗證報告成功驗證債券與基金代幣化之可行性，落實券款對付之即時交割機制。此項技術突破，為本計畫中生物行為資產化後之即時權益分配，奠定了關鍵的技術與法理基礎。
+        金管會自 2023 年起放寬證券型代幣（STO）規範，並於 2024 年正式成立實體資產代幣化小裝。2025 年 9 月之概念驗證報告成功驗證債券與基金代幣化之可行性，落實券款對付之即時交割機制。此項技術突破，為本計畫中生物行為資產化後之即時權益分配，奠定了關鍵的技術與法理基礎。
         <br><br>
         <b>2. 國泰證券「陽光綠益」STO 案例研究（底層資產實證）</b><br>
         國泰證券與綠點能創合作，發行台灣首檔 STO「陽光綠益」（募資規模三千萬元）。底層資產為六年期債務型憑證，提供年利率 3.5% 之固定回報。此案例成果直接解決了過往 Web3 模式缺乏實體資產背書之痛點。實體資產代幣化提供穩定之綠能收益權作為價值支撐，使 EcoStride 核發之數位憑證具備實體操作力背書。
@@ -650,7 +625,7 @@ elif page == "APP 介面展示":
             st.markdown("<p style='text-align:center; font-size:13px; font-weight:700; color:#0C0E0B; margin-top:10px;'>畫面 C：實體資產與財富面板</p>", unsafe_allow_html=True)
 
 # ==========================================
-# 6. 分頁四：相關研究成果
+# 6. 分頁四：相關研究成果 (🎯 已去除了原有的 📊 貼圖)
 # ==========================================
 elif page == "相關研究成果":
     # 🎯 依照指令：將此行標題包裝於深綠色（#2D4A22）的 HTML 標籤中
@@ -899,7 +874,7 @@ elif page == "相關研究成果":
             st.markdown("""
             <div style='background-color:#FFFFFF; border:1px solid #B7CEAD; padding:20px; border-radius:12px; min-height:160px;'>
                 <b style='color:#2D4A22; font-size:15px;'>加權平均資金成本（WACC）減輕分析</b><br><br>
-                碎金流募集模式直接對接發電售電收益憑證，WACC 降低 0.70%；<br>
+                碎金流募集模式直接對接發發電售電收益憑證，WACC 降低 0.70%；<br>
                 • 綠能業者年度利息支出實質省下：<span style='color:#83A474; font-weight:800; font-size:18px;'>NT$ 210,000 / 年</span><br>
                 • 經營自主權判讀：分散投資散戶不具備組織力，電廠主導權極高。
             </div>
@@ -931,7 +906,7 @@ elif page == "相關研究成果":
             matrix_cons = st.select_slider("設定調節變數 B：健走行為持續性均值", options=[0.40, 0.75, 0.90], value=0.75, key="matrix_c")
             
         if matrix_steps == 0.05 and matrix_cons == 0.40: dynamic_win = 1.22
-        elif matrix_steps == 0.05 side matrix_cons == 0.75: dynamic_win = 14.50
+        elif matrix_steps == 0.05 and matrix_cons == 0.75: dynamic_win = 14.50
         elif matrix_steps == 0.05 and matrix_cons == 0.90: dynamic_win = 22.18
         elif matrix_steps == 0.15 and matrix_cons == 0.40: dynamic_win = 8.64
         elif matrix_steps == 0.15 and matrix_cons == 0.75: dynamic_win = 56.38  
@@ -955,12 +930,12 @@ elif page == "相關研究成果":
         這是因為在智慧合約中引入了 <b>3.0% 實體綠能最低托底保價機制 (Floor Yield)</b>，成功切斷了氣候環境對保戶回饋的負面傳導，具備完備的抗風險防禦力。
         """, unsafe_allow_html=True)
 
-# ==========================================
-# 加分項：代碼與公式互鎖
-# ==========================================
-st.markdown("<br>", unsafe_allow_html=True)
-with st.expander("📄 檢視後台核心複利精算公式 (互鎖定量金融與資管代碼)"):
-    st.code("""
+    # ==========================================
+    # 加分項：代碼與公式互鎖
+    # ==========================================
+    st.markdown("<br>", unsafe_allow_html=True)
+    with st.expander("📄 檢視後台核心複利精算公式 (互鎖定量金融與資管代碼)"):
+        st.code("""
 # EcoStride 智慧合約跨期核心資產滾存演算法
 # 完全對齊定量金融精算架構，包含 25% 收益回流與 5% 市場資本利得
 
