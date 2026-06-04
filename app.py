@@ -34,11 +34,12 @@ st.markdown("""
     }
     
     /* 🎯🎯🎯 【無痛終極去圈黑科技】直接消滅所有原生的單選小圓圈 🎯🎯🎯 */
-    /* 1. 隱藏 Streamlit 內建的偽元素、圓圈和選取框外殼 */
+    /* 1. 強制消滅 Streamlit 內建的偽元素、圓圈圖標和選取框外殼空間 */
     div[data-testid="stSidebarRadio"] div[role="radiogroup"] label [data-testid="stFiberManualRecord"],
     div[data-testid="stSidebarRadio"] div[role="radiogroup"] label input[type="radio"],
     div[data-testid="stSidebarRadio"] div[role="radiogroup"] label div[class*="st-c"],
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label div[class*="st-b"] {
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label div[class*="st-b"],
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label div[data-testid="stRadioButtonUI"] {
         display: none !important;
         width: 0 !important;
         height: 0 !important;
@@ -49,7 +50,7 @@ st.markdown("""
     
     /* 2. 重置整個 Radio 群組的間距 */
     div[data-testid="stSidebarRadio"] div[role="radiogroup"] {
-        gap: 10px !important;
+        gap: 8px !important;
         width: 100% !important;
     }
     
@@ -66,6 +67,11 @@ st.markdown("""
         align-items: center !important;
     }
     
+    /* 滑鼠懸停 Hover 時：變半透明的淡白底色，增強互動感 */
+    div[data-testid="stSidebarRadio"] div[role="radiogroup"] > label:hover {
+        background-color: rgba(255, 255, 255, 0.4) !important;
+    }
+    
     /* 4. 強制內層文字靠最左，並寬度填滿 100% */
     div[data-testid="stSidebarRadio"] div[role="radiogroup"] label div[data-testid="stMarkdownContainer"] {
         width: 100% !important;
@@ -76,9 +82,10 @@ st.markdown("""
         font-size: 15px !important;
         font-weight: 500 !important;
         margin: 0 !important;
+        color: #0C0E0B !important;
     }
     
-    /* 5. 🎯 重中之重：當該項目被點選到（Checked）時，強制將「整條標籤」染成純白底色、墨綠字、加粗與柔和陰影 */
+    /* 5. 🎯 當該項目被點選到（Checked）時，強制將「整條標籤」染成純白底色、墨綠字、加粗與柔和陰影 */
     div[data-testid="stSidebarRadio"] div[role="radiogroup"] label:has(input[type="radio"]:checked) {
         background-color: #FFFFFF !important;
         box-shadow: 0 4px 12px rgba(45, 74, 34, 0.08) !important;
@@ -227,7 +234,7 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # ==========================================
-# 1. 頂部毛玻璃導航欄區塊 (區塊 A)
+# 1. 頂部毛玻璃導航欄區塊 (區塊 A - 已更新文字)
 # ==========================================
 st.markdown("""
     <div class="navbar-mock">
@@ -236,13 +243,13 @@ st.markdown("""
             <span style="font-size: 20px; font-weight: 800; letter-spacing: 3px; color: #0C0E0B;">ECOSTRIDE</span>
         </div>
         <div style="font-size: 13px; color: #0C0E0B; font-weight: 600; background-color: #B7CEAD; padding: 4px 12px; border-radius: 6px;">
-            國立清華大學 金融科技專題研究成果展示大盤
+            國立清華大學 金融科技專題研究成果
         </div>
     </div>
     """, unsafe_allow_html=True)
 
 # ==========================================
-# 2. 側邊欄個人化導覽切換
+# 2. 側邊欄個人化導覽切換 (底色亮白高亮定製版)
 # ==========================================
 with st.sidebar:
     st.markdown("<div style='padding: 20px 0 10px 0;'><h3 style='margin:0; font-size: 20px;'>專案選單</h3></div>", unsafe_allow_html=True)
@@ -364,12 +371,12 @@ if page == "專案首頁":
             </div>
             """, unsafe_allow_html=True)
 
-    # 區塊 D：頁腳 (Footer)
-    st.markdown("<br><br><br><br>", unsafe_allow_html=True)
+    # 區塊 D：頁腳 (Footer) - 🎯 依照指令更新為乾淨的名單
+    st.markdown("<div style='margin-top: 100px;'></div>", unsafe_allow_html=True)
     st.markdown("""
         <div style='border-top: 1px solid #B7CEAD; padding: 35px 0; text-align: center; font-size: 12px; color: #0C0E0B; background-color: #FFFFFF; margin: 0 -4rem;'>
             <b>© 2026 EcoStride Research Project. Powered by Streamlit Community Cloud.</b><br>
-            研究成員：蔡宜伶（Quantitative Finance & Information Management）| 賀舜禹 | 曾琬甯
+            研究成員：蔡宜伶 | 賀舜禹 | 曾琬甯
         </div>
         """, unsafe_allow_html=True)
 
@@ -484,7 +491,7 @@ elif page == "提案動機與模式介紹":
         國泰證券與綠點能創合作，發行台灣首檔 STO「陽光綠益」（募資規模三千萬元）。底層資產為六年期債務型憑證，提供年利率 3.5% 之固定回報。此案例成果直接解決了過往 Web3 模式缺乏實體資產背書之痛點。實體資產代幣化提供穩定之綠能收益權作為價值支撐，使 EcoStride 核發之數位憑證具備實體操作力背書。
         <br><br>
         <b>3. 隱私保護與次級市場流通</b><br>
-        針對資產期限較長之特性，擬引入自動化造市商機制建立微型資產流動性池；在個資隱私上，<b>採用零知識證明技術（Zero-Knowledge Proofs, ZKP）保護隱私</b>，確保代幣化資產之發行、存管與清算皆符合國際監管標準。
+        針對資產期限較長之特性，擬引入自動化造市商機制建立微型資產流動性池；在個資隱私上，<b>採用零知識證明技術（Zero-Knowledge Proofs, ZKP）保護隱私</b>，確保代幣化資產之發行、存管與存管皆符合國際監管標準。
         """, unsafe_allow_html=True)
 
 # ==========================================
@@ -617,10 +624,10 @@ elif page == "APP 介面展示":
             st.markdown("<p style='text-align:center; font-size:13px; font-weight:700; color:#0C0E0B; margin-top:10px;'>畫面 C：實體資產與財富面板</p>", unsafe_allow_html=True)
 
 # ==========================================
-# 6. 分頁四：相關研究成果
+# 6. 分頁四：相關研究成果 (🎯 已去除了原有的 📊 貼圖)
 # ==========================================
 elif page == "相關研究成果":
-    st.markdown("<h2 style='color:#0C0E0B !important; font-size:32px; font-weight:800;'>📊 相關研究成果 ── 彭博精算終端動態沙盤</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color:#0C0E0B !important; font-size:32px; font-weight:800;'>相關研究成果 ── 彭博精算終端動態沙盤</h2>", unsafe_allow_html=True)
     st.markdown("<p style='font-size:14px; color:#0C0E0B; opacity:0.8; font-weight:500;'>本組成果已深度嵌入後台 Python 多執行緒精算核心。調整左方邊界條件後，點擊按鈕即可立刻呼叫全域 5,000 次隨機清算引擎。</p>", unsafe_allow_html=True)
     st.markdown("---")
 
@@ -866,7 +873,7 @@ elif page == "相關研究成果":
                 <b style='color:#2D4A22; font-size:15px;'>加權平均資金成本（WACC）減輕分析</b><br><br>
                 碎金流募集模式直接對接發電售電收益憑證，WACC 降低 0.70%；<br>
                 • 綠能業者年度利息支出實質省下：<span style='color:#83A474; font-weight:800; font-size:18px;'>NT$ 210,000 / 年</span><br>
-                • 經營自主權判讀：分散投資散戶不具備組織組織力，電廠主導權極高。
+                • 經營自主權判讀：分散投資散戶不具備組織力，電廠主導權極高。
             </div>
             """, unsafe_allow_html=True)
 
@@ -885,7 +892,9 @@ elif page == "相關研究成果":
     # ==========================================
     with tab_res4:
         st.markdown("<h4 style='color:#2D4A22 !important; font-weight:800; margin-top:10px;'>生態系成功啟動之財務邊界條件與邊際分析</h4>", unsafe_allow_html=True)
-        st.markdown("<p style='font-size:13px; color:#555;'>拖動下方滑桿調整財務自變數，下方經由調節改變的連動數據將會<b>動態亮起紅色高亮</b>：</p>", unsafe_allow_html=True)
+        
+        # 🎯 依照指令優化文字：拔除直白的視覺提示，改為引導學術思考的高級陳述
+        st.markdown("<p style='font-size:13px; color:#555;'>請微調下方財務自變數，即時觀測飛輪聯立矩陣之動態跨界反饋：</p>", unsafe_allow_html=True)
         
         col_t1, col_t2 = st.columns(2)
         with col_t1:
