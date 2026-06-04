@@ -14,7 +14,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 隱藏 Streamlit 預設元素並注入 60-30-10 極簡美學 CSS + 側邊欄與手機內 App 分頁切換黑科技
+# 隱藏 Streamlit 預設元素並注入 60-30-10 極簡美學 CSS + 手機內建導覽列變白高級樣式
 st.markdown("""
     <style>
     /* 全局背景色與文字色 */
@@ -33,7 +33,7 @@ st.markdown("""
         color: #0C0E0B !important;
     }
     
-    /* 【強力黑科技】完全移除側邊欄單選鈕的圈圈，點選時整條底色變白色 */
+    /* 🎯 側邊欄單選鈕終極去圈、點選整條變白黑科技 */
     div[data-testid="stSidebarRadio"] div[role="radiogroup"] {
         gap: 8px !important;
         width: 100% !important;
@@ -84,7 +84,57 @@ st.markdown("""
         font-weight: 700 !important;
     }
     
-    /* 核心亮點按鈕：使用 Primary 綠色 */
+    /* 🎯🎯🎯 手機內建 App 導覽按鈕終極優化：完全消滅圈圈，點選或 Hover 整條變白 🎯🎯🎯 */
+    /* 隱藏手機內部 Radio 的原生小圓圈 */
+    .phone-nav-box div[data-testid="stSidebarRadio"] div[role="radiogroup"] label [data-testid="stFiberManualRecord"],
+    .phone-nav-box div[data-testid="stSidebarRadio"] div[role="radiogroup"] label input[type="radio"],
+    .phone-nav-box div[data-testid="stSidebarRadio"] div[role="radiogroup"] label div[data-testid="stRadioButtonUI"] {
+        display: none !important;
+        width: 0 !important;
+        visibility: hidden !important;
+    }
+    /* 重新包裝手機內的標籤按鈕，讓它緊密靠攏橫向鋪滿 */
+    .phone-nav-box div[data-testid="stSidebarRadio"] div[role="radiogroup"] {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 5px !important;
+        width: 100% !important;
+        padding: 4px !important;
+    }
+    .phone-nav-box div[data-testid="stSidebarRadio"] div[role="radiogroup"] > label {
+        background-color: #2D4A22 !important; /* 預報底色為高級墨綠 */
+        border-radius: 8px !important;
+        padding: 10px 14px !important;
+        transition: all 0.2s ease-in-out !important;
+        width: 100% !important;
+    }
+    /* 滑鼠懸停於手機功能鈕上時：整條變白色 */
+    .phone-nav-box div[data-testid="stSidebarRadio"] div[role="radiogroup"] > label:hover {
+        background-color: #FFFFFF !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+    }
+    .phone-nav-box div[data-testid="stSidebarRadio"] div[role="radiogroup"] > label:hover p {
+        color: #2D4A22 !important;
+        font-weight: 700 !important;
+    }
+    /* 手機功能鈕被選中時：整條穩固鎖定為純白色 */
+    .phone-nav-box div[data-testid="stSidebarRadio"] div[role="radiogroup"] label:has(input[type="radio"]:checked) {
+        background-color: #FFFFFF !important;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08) !important;
+        border: 1px solid #B7CEAD !important;
+    }
+    .phone-nav-box div[data-testid="stSidebarRadio"] div[role="radiogroup"] label:has(input[type="radio"]:checked) p {
+        color: #2D4A22 !important;
+        font-weight: 800 !important;
+    }
+    /* 強制修改手機內按鈕文字的預設顏色為優雅淡綠白，選中時變墨綠 */
+    .phone-nav-box div[data-testid="stSidebarRadio"] div[role="radiogroup"] label p {
+        color: #F5F7F4 !important;
+        font-size: 13px !important;
+        text-align: left !important;
+    }
+
+    /* 核心亮點按鈕樣式 */
     div.stButton > button {
         background-color: #83A474 !important;
         color: #F5F7F4 !important;
@@ -107,32 +157,21 @@ st.markdown("""
     
     /* 彭博終端/精算方磚樣式 */
     .metric-card {
-        background-color: #FFFFFF;
-        border: 1px solid #B7CEAD;
-        border-radius: 14px;
-        padding: 24px;
-        text-align: center;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.01);
+        background-color: #FFFFFF; border: 1px solid #B7CEAD; border-radius: 14px; padding: 24px; text-align: center;
     }
-    .metric-value-green {
-        font-size: 38px; font-weight: 700; color: #83A474; font-family: 'Courier New', monospace;
-    }
-    .metric-value-blue {
-        font-size: 38px; font-weight: 700; color: #0C0E0B; font-family: 'Courier New', monospace;
-    }
-    .metric-label {
-        font-size: 13px; font-weight: 600; color: #475569; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.5px;
-    }
+    .metric-value-green { font-size: 38px; font-weight: 700; color: #83A474; font-family: 'Courier New', monospace; }
+    .metric-value-blue { font-size: 38px; font-weight: 700; color: #0C0E0B; font-family: 'Courier New', monospace; }
+    .metric-label { font-size: 13px; font-weight: 600; color: #475569; margin-top: 5px; text-transform: uppercase; }
     
     /* 虛擬手機 Mockup 外殼 */
     .phone-container {
         border: 11px solid #0C0E0B;
-        border-radius: 40px;
+        border-radius: 42px;
         padding: 12px;
         background-color: #0C0E0B;
         box-shadow: 0 20px 45px rgba(0,0,0,0.08);
-        height: 650px;
-        max-width: 380px;
+        height: 680px;
+        max-width: 390px;
         margin: 0 auto;
         display: flex;
         flex-direction: column;
@@ -144,11 +183,11 @@ st.markdown("""
         position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
         border-radius: 0 0 14px 14px; z-index: 1000;
     }
-    /* 手機內建螢幕面版 */
+    /* 手機內建螢幕面板 */
     .phone-screen {
-        border-radius: 28px;
+        border-radius: 30px;
         background-color: #FFFFFF;
-        padding: 24px 16px 14px 16px;
+        padding: 24px 14px 14px 14px;
         flex-grow: 1;
         overflow-y: auto;
         color: #0C0E0B;
@@ -156,84 +195,32 @@ st.markdown("""
         flex-direction: column;
     }
     
-    /* App 內部專屬導覽按鈕列 (Radio) 隱藏圓圈改裝為下方頁籤式樣 */
-    div[data-testid="stWidgetLabel"] { display: none !important; } /* 隱藏手機內 radio 的標題 */
-    
     /* 優雅的三位一體願景摘要卡片色塊 */
     .vision-card {
-        border: 1px solid #B7CEAD; 
-        padding: 35px; 
-        border-radius: 16px; 
-        background-color: #FFFFFF; 
-        min-height: 290px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.01);
-        transition: all 0.3s ease;
+        border: 1px solid #B7CEAD; padding: 35px; border-radius: 16px; background-color: #FFFFFF; min-height: 290px; transition: all 0.3s ease;
     }
-    .vision-card:hover {
-        border-color: #83A474;
-        transform: translateY(-4px);
-        box-shadow: 0 8px 24px rgba(131, 164, 116, 0.1);
-    }
-    
-    /* 自訂墨綠色專用標題樣式 */
-    .dark-green-title {
-        color: #2D4A22 !important;
-        font-size: 19px;
-        font-weight: 800;
-        margin-bottom: 15px;
-    }
+    .vision-card:hover { border-color: #83A474; transform: translateY(-4px); }
+    .dark-green-title { color: #2D4A22 !important; font-size: 19px; font-weight: 800; margin-bottom: 15px; }
     
     /* 結構化對比表格 */
     .styled-table {
-        width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; background-color: #FFFFFF;
-        border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.01);
+        width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; background-color: #FFFFFF; border-radius: 8px; overflow: hidden;
     }
-    .styled-table th {
-        background-color: #83A474; color: #F5F7F4; padding: 14px; text-align: left; font-weight: 600;
-    }
-    .styled-table td {
-        padding: 14px; border-bottom: 1px solid #E2E8F0; color: #0C0E0B;
-    }
-    
-    /* 行為金融學高級色塊提示區 */
-    .alert-card {
-        background-color: #FFFFFF; border-left: 5px solid #83A474; padding: 18px; border-radius: 0 12px 12px 0; margin: 15px 0;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.01);
-    }
-    .alert-card-danger {
-        background-color: #FFF5F5; border-left: 5px solid #E53E3E; padding: 18px; border-radius: 0 12px 12px 0; margin: 15px 0;
-    }
+    .styled-table th { background-color: #83A474; color: #F5F7F4; padding: 14px; text-align: left; }
+    .styled-table td { padding: 14px; border-bottom: 1px solid #E2E8F0; color: #0C0E0B; }
+    .alert-card { background-color: #FFFFFF; border-left: 5px solid #83A474; padding: 18px; margin: 15px 0; }
     
     /* 頂部毛玻璃導航欄 */
     .navbar-mock {
-        background: rgba(245, 247, 244, 0.85);
-        backdrop-filter: blur(16px);
-        border-bottom: 1px solid #B7CEAD;
-        padding: 18px 35px;
-        position: sticky; top: 0; z-index: 999;
-        display: flex; justify-content: space-between; align-items: center;
-        margin: -4.5rem -4rem 2rem -4rem;
+        background: rgba(245, 247, 244, 0.85); backdrop-filter: blur(16px); border-bottom: 1px solid #B7CEAD; padding: 18px 35px;
+        position: sticky; top: 0; z-index: 999; display: flex; justify-content: space-between; align-items: center; margin: -4.5rem -4rem 2rem -4rem;
     }
 
-    /* 強行放大 Tabs 標籤，並在點擊選中時亮起淡綠色底色 */
+    /* Tabs 標籤選中亮淡綠底 */
     div[data-testid="stTabs"] button {
-        font-size: 18px !important;
-        font-weight: 600 !important;
-        color: #0C0E0B !important;
-        padding: 10px 24px !important;
-        border-radius: 8px 8px 0 0 !important;
-        background-color: #E6EAE5 !important;
-        margin-right: 6px !important;
-        border: 1px solid #B7CEAD !important;
-        border-bottom: none !important;
-        transition: all 0.2s ease-in-out !important;
+        font-size: 18px !important; font-weight: 600 !important; color: #0C0E0B !important; padding: 10px 24px !important; background-color: #E6EAE5 !important; margin-right: 6px !important; border: 1px solid #B7CEAD !important; border-bottom: none !important;
     }
-    div[data-testid="stTabs"] button[aria-selected="true"] {
-        background-color: #B7CEAD !important;
-        color: #2D4A22 !important;
-        font-weight: 800 !important;
-        border-top: 3px solid #83A474 !important;
-    }
+    div[data-testid="stTabs"] button[aria-selected="true"] { background-color: #B7CEAD !important; color: #2D4A22 !important; font-weight: 800 !important; border-top: 3px solid #83A474 !important; }
     </style>
     """, unsafe_allow_html=True)
 
@@ -253,7 +240,7 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # ==========================================
-# 2. 側邊欄個人化導覽切換 (底色亮白高亮)
+# 2. 側邊欄個人化導覽切換
 # ==========================================
 with st.sidebar:
     st.markdown("<div style='padding: 20px 0 10px 0;'><h3 style='margin:0; font-size: 20px;'>專案選單</h3></div>", unsafe_allow_html=True)
@@ -279,103 +266,46 @@ with st.sidebar:
 # 3. 分頁一：專案首頁
 # ==========================================
 if page == "專案首頁":
-    # 區塊 B：Hero Section
     st.markdown("<div style='padding: 60px 0 40px 0; text-align: center;'>", unsafe_allow_html=True)
     st.markdown("<h1 style='font-size: 54px; font-weight: 900; color: #5D7A51 !important; letter-spacing: -1.5px; margin-bottom: 20px;'>讓健康行為，成為生產性綠色資本</h1>", unsafe_allow_html=True)
     st.markdown("<p style='font-size: 21px; color: #0C0E0B; max-width: 950px; margin: 0 auto 35px auto; line-height: 1.6; font-weight: 600; opacity: 0.9;'>EcoStride：結合行為金融與實體資產代幣化之永續金融生態系模式研究</p>", unsafe_allow_html=True)
     
-    # 學術膠囊標籤 (Capsules)
     st.markdown("""
         <div style='display: flex; justify-content: center; gap: 15px; margin-bottom: 40px;'>
             <span style='background-color: #FFFFFF; color: #0C0E0B; padding: 8px 20px; border-radius: 24px; font-size: 13px; border: 1px solid #B7CEAD; font-weight: 600;'>國立清華大學 金融科技專題研究</span>
             <span style='background-color: #83A474; color: #F5F7F4; padding: 8px 20px; border-radius: 24px; font-size: 13px; font-weight: 600;'>Quantitative Finance & Information Management</span>
         </div>
         """, unsafe_allow_html=True)
-    
     st.markdown("</div>", unsafe_allow_html=True)
     st.markdown("<hr style='border: none; border-top: 1px solid #B7CEAD; margin: 20px 0;'>", unsafe_allow_html=True)
     
-    # 區塊 C：三位一體願景摘要 (Ecosystem Glimpse)
     st.markdown("<h2 style='text-align: center; font-size: 28px; margin-bottom: 15px; color:#0C0E0B !important; font-weight:800;'>三位一體機制全局摘要</h2>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; font-size: 14px; color: #0C0E0B; opacity:0.7; margin-bottom: 30px;'>滑鼠移至下方圖表的節點上，可查看三方閉環在永續金融生態中的資本與數據流轉細節</p>", unsafe_allow_html=True)
     
-    # 三方循環協同關係圖
     fig_circle = go.Figure()
-    
-    x_nodes = [2.0, 1.0, 3.0]
-    y_nodes = [2.8, 1.2, 1.2]
-    node_names = ["保險公司", "消費者（用戶）", "綠能產業"]
-    hover_details = [
-        "保險公司端：注入預防成本資本化之準備金，透過資產複利控制並調降大盤理賠損失率。",
-        "消費者端（用戶）：上傳經過 ZKP 驗證之生物健走行為數據，零門檻共享綠能轉型紅利。",
-        "綠能產業端：錨定發電售電權，吸收散戶碎片化微型資本，調降 WACC 並維持開發商自主權。"
-    ]
-    
-    # 畫三角形邊緣循環箭頭線
+    fig_circle.add_trace(go.Scatter(x=[2.0, 1.0, 3.0, 2.0], y=[2.8, 1.2, 1.2, 2.8], mode='lines', line=dict(color='#83A474', width=4, shape='spline', smoothing=1.3), hoverinfo='skip'))
     fig_circle.add_trace(go.Scatter(
-        x=[2.0, 1.0, 3.0, 2.0],
-        y=[2.8, 1.2, 1.2, 2.8],
-        mode='lines',
-        line=dict(color='#83A474', width=4, shape='spline', smoothing=1.3),
-        hoverinfo='skip'
+        x=[2.0, 1.0, 3.0], y=[2.8, 1.2, 1.2], mode='markers+text',
+        marker=dict(size=45, color=['#83A474', '#92BA80', '#0C0E0B'], line=dict(color='#F5F7F4', width=3)),
+        text=["保險公司", "消費者（用戶）", "綠能產業"], textposition="top center",
+        textfont=dict(size=14, weight='bold', color='#0C0E0B'), hoverinfo='text',
+        hovertext=[
+            "保險公司端：注入預防成本資本化之準備金，透過資產複利控制並調降大盤理賠損失率。",
+            "消費者端（用戶）：上傳經過 ZKP 驗證之生物健走行為數據，零門檻共享綠能轉型紅利。",
+            "綠能產業端：錨定發電售電權，吸收散戶碎片化微型資本，調降 WACC 並維持開發商自主權。"
+        ]
     ))
-    
-    # 頂點節點
-    fig_circle.add_trace(go.Scatter(
-        x=x_nodes, y=y_nodes,
-        mode='markers+text',
-        marker=dict(
-            size=45, 
-            color=['#83A474', '#92BA80', '#0C0E0B'], 
-            line=dict(color='#F5F7F4', width=3)
-        ),
-        text=node_names,
-        textposition="top center",
-        textfont=dict(size=14, weight='bold', color='#0C0E0B'),
-        hoverinfo='text',
-        hovertext=hover_details
-    ))
-    
-    fig_circle.update_layout(
-        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[0.5, 3.5]),
-        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[0.8, 3.4]),
-        margin=dict(l=40, r=40, t=10, b=10),
-        height=320,
-        plot_bgcolor='rgba(0,0,0,0)',
-        paper_bgcolor='rgba(0,0,0,0)',
-        showlegend=False
-    )
+    fig_circle.update_layout(xaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[0.5, 3.5]), yaxis=dict(showgrid=False, zeroline=False, showticklabels=False, range=[0.8, 3.4]), margin=dict(l=40, r=40, t=10, b=10), height=320, plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', showlegend=False)
     st.plotly_chart(fig_circle, use_container_width=True)
     
     col_card1, col_card2, col_card3 = st.columns(3)
     with col_card1:
-        st.markdown("""
-            <div class="vision-card">
-                <div style='width: 40px; height: 6px; background-color: #83A474; margin-bottom: 20px; border-radius: 3px;'></div>
-                <div class="dark-green-title">消費者端：生物行為資產化</div>
-                <p style='font-size: 14.5px; color: #0C0E0B; line-height: 1.7; opacity: 0.85;'>徹底打破財富階級門檻。無初始存款之年輕族群，僅靠規律之步行數據，即可無痛認購綠能案場份額，共享淨零轉型之資本紅利。</p>
-            </div>
-            """, unsafe_allow_html=True)
-            
+        st.markdown("""<div class="vision-card"><div style='width: 40px; height: 6px; background-color: #83A474; margin-bottom: 20px; border-radius: 3px;'></div><div class="dark-green-title">消費者端：生物行為資產化</div><p style='font-size: 14.5px; line-height: 1.7; opacity: 0.85;'>徹底打破財富階級門檻。無初始存款之年輕族群，僅靠規律之步行數據，即可無痛認購綠能案場份額，共享淨零轉型之資本紅利。</p></div>""", unsafe_allow_html=True)
     with col_card2:
-        st.markdown("""
-            <div class="vision-card">
-                <div style='width: 40px; height: 6px; background-color: #B7CEAD; margin-bottom: 20px; border-radius: 3px;'></div>
-                <div class="dark-green-title">保險公司端：高效率風險管理</div>
-                <p style='font-size: 14.5px; color: #0C0E0B; line-height: 1.7; opacity: 0.85;'>將既有行銷費用與理賠準備金提前折現注入綠能基金，透過資產的生產性複利增值感，實質且長期優化保戶健康品質，控制理賠損失率。</p>
-            </div>
-            """, unsafe_allow_html=True)
-            
+        st.markdown("""<div class="vision-card"><div style='width: 40px; height: 6px; background-color: #B7CEAD; margin-bottom: 20px; border-radius: 3px;'></div><div class="dark-green-title">保險公司端：高效率風險管理</div><p style='font-size: 14.5px; line-height: 1.7; opacity: 0.85;'>將既有行銷費用與理賠準備金提前折現注入綠能基金，透過資產的生產性複利增值感，實質且長期優化保戶健康品質，控制理賠損失率。</p></div>""", unsafe_allow_html=True)
     with col_card3:
-        st.markdown("""
-            <div class="vision-card">
-                <div style='width: 40px; height: 6px; background-color: #92BA80; margin-bottom: 20px; border-radius: 3px;'></div>
-                <div class="dark-green-title">綠能產業端：去中心化普惠資本</div>
-                <p style='font-size: 14.5px; color: #0C0E0B; line-height: 1.7; opacity: 0.85;'>底層資產錨定「陽光綠益」等 STO 售電收益權。引入散戶碎金流以降低開發商資金成本（WACC），同時維護電廠之經營自主權。</p>
-            </div>
-            """, unsafe_allow_html=True)
+        st.markdown("""<div class="vision-card"><div style='width: 40px; height: 6px; background-color: #92BA80; margin-bottom: 20px; border-radius: 3px;'></div><div class="dark-green-title">綠能產業端：去中心化普惠資本</div><p style='font-size: 14.5px; line-height: 1.7; opacity: 0.85;'>底層資產錨定「陽光綠益」等 STO 售電收益權。引入散戶碎金流以降低開發商資金成本（WACC），同時維護電廠之經營自主權。</p></div>""", unsafe_allow_html=True)
 
-    # 區塊 D：頁腳 (Footer)
     st.markdown("<div style='margin-top: 100px;'></div>", unsafe_allow_html=True)
     st.markdown("""
         <div style='border-top: 1px solid #B7CEAD; padding: 35px 0; text-align: center; font-size: 12px; color: #0C0E0B; background-color: #FFFFFF; margin: 0 -4rem;'>
@@ -390,120 +320,34 @@ if page == "專案首頁":
 elif page == "提案動機與模式介紹":
     st.markdown("<h2 style='color:#0C0E0B !important; font-size:32px; font-weight:800;'>💡 提案動機與模式介紹</h2>", unsafe_allow_html=True)
     st.markdown("---")
-    
-    st.markdown("<h3 style='color:#83A474 !important; font-size:24px; font-weight:800; margin-bottom:15px;'>一、 現行系統之結構性失靈</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='color:#83A474 !important; font-size:24px; font-weight:800;'>一、 現行系統之結構性失靈</h3>", unsafe_allow_html=True)
     
     st.markdown("""
         <table class="styled-table">
-            <tr>
-                <th>保險機構</th>
-                <th>核心量化計費模式</th>
-                <th>主要經濟激勵機制類型</th>
-                <th>學術限制判讀</th>
-            </tr>
-            <tr>
-                <td><b>國泰人壽</b></td>
-                <td>AI 活力分多面向量化評分</td>
-                <td>週週領點數模式（小樹點）</td>
-                <td>側重即時性之消費回饋，缺乏跨期資本留存</td>
-            </tr>
-            <tr>
-                <td><b>富邦人壽</b></td>
-                <td>鎖定計步省保費機制</td>
-                <td>次年保費最高折抵 10%</td>
-                <td>偏重長期財務減負，但無法產生資產複利增值感</td>
-            </tr>
-            <tr>
-                <td><b>第一金人壽</b></td>
-                <td>遊戲化積分累積與商城兌換</td>
-                <td>開放式平台商品兌換券</td>
-                <td>純屬一次性行銷預算消耗，與理賠池優化脫鉤</td>
-            </tr>
-            <tr>
-                <td><b>南山人壽</b></td>
-                <td>生理年齡減齡演算法</td>
-                <td>個人步數挑戰與 CSR 公益捐款耦合</td>
-                <td>外部化社會責任，未能提供個人端財務永續誘因</td>
-            </tr>
+            <tr><th>保險機構</th><th>核心量化計費模式</th><th>主要經濟激勵機制類型</th><th>學術限制判讀</th></tr>
+            <tr><td><b>國泰人壽</b></td><td>AI 活力分多面向量化評分</td><td>週週領點數模式（小樹點）</td><td>側重即時性之消費回饋，缺乏跨期資本留存</td></tr>
+            <tr><td><b>富邦人壽</b></td><td>鎖定計步省保費機制</td><td>次年保費最高折抵 10%</td><td>偏重長期財務減負，但無法產生資產複利增值感</td></tr>
+            <tr><td><b>第一金人壽</b></td><td>遊戲化積分累積與商城兌換</td><td>開放式平台商品兌換券</td><td>純屬一次性行銷預算消耗，與理賠池優化脫鉤</td></tr>
+            <tr><td><b>南山人壽</b></td><td>生理年齡減齡演算法</td><td>個人步數挑戰與 CSR 公益捐款耦合</td><td>外部化社會責任，未能提供個人端財務永續誘因</td></tr>
         </table>
         """, unsafe_allow_html=True)
 
     col_fail1, col_fail2 = st.columns(2)
     with col_fail1:
-        st.markdown("""
-            <div class="alert-card">
-                <span style="color:#83A474; font-weight:800; font-size:16px;">邊際效用遞減與長期價值缺失</span><br style="margin-bottom:8px;">
-                現行點數 or 現金券在核發與使用的瞬間，其經濟價值即告終結，缺乏資產增值所需之<b>複利效應</b>。
-                由於獎勵無法轉化為長期資本，用戶難以將健康行為視為一種「投資」，誘因隨時間呈對數曲線下滑。
-            </div>
-            """, unsafe_allow_html=True)
+        st.markdown("""<div class="alert-card"><span style="color:#83A474; font-weight:800; font-size:16px;">邊際效用遞減與長期價值缺失</span><br>現行點數在核發瞬間經濟價值即告終結，缺乏資產增值所需之複利效應。</div>""", unsafe_allow_html=True)
     with col_fail2:
-        st.markdown("""
-            <div class="alert-card">
-                <span style="color:#83A474; font-weight:800; font-size:16px;">雙曲貼現與現時偏誤（Present Bias）</span><br style="margin-bottom:8px;">
-                人類天生具備現時偏誤，對未來健康獲益之評價遠低於即時享樂。
-                當回饋不具資本增值潛力時，用戶難以克服長期運動之生理痛苦，最終導致高度流失率。
-            </div>
-            """, unsafe_allow_html=True)
-            
-    st.markdown("""
-        <div class="alert-card-danger">
-            <span style="color:#E53E3E; font-weight:800; font-size:16px;">財務與經營層面之負面影響：</span><br style="margin-bottom:8px;">
-            金融機構為了維持日活躍用戶，被迫持續加碼行銷支出，陷入高獲客成本與低生命週期價值之財務泥淖；
-            若無法實質控制理賠損失率，行銷活動將從風險管理投資轉化為純粹之資產流失。
-        </div>
-        """, unsafe_allow_html=True)
-
-    st.markdown("<br>", unsafe_allow_html=True)
-    
-    col_stepn1, col_stepn2 = st.columns(2)
-    with col_stepn1:
-        st.markdown("<h4 style='color:#0C0E0B !important; font-weight:800; border-bottom: 2px solid #83A474; padding-bottom: 6px;'>二、 STEPN Move-to-Earn 模式之反思</h4>", unsafe_allow_html=True)
-        st.markdown("""
-            STEPN 雖透過 Web3 遊戲化驅動健康行為，吸引超過 200 萬用戶。然而，其核心崩盤原因在於
-            <b>「死亡螺旋經濟模型」</b>──高度依賴新用戶流入以支撐舊用戶收益（龐氏結構），代幣（GST）通膨嚴重且缺乏真實資產背書，導致資產價值最終崩盤。
-            <br><br>
-            <b>EcoStride 的改良路徑：</b>借鏡其健康驅動與碎片化參與之優勢，但<b>轉向實體資產（RWA）背書</b>，將步數代幣（STRIDE）錨定綠能收益權，徹底避免純投機風險。
-            """, unsafe_allow_html=True)
-    with col_stepn2:
-        st.markdown("<h4 style='color:#0C0E0B !important; font-weight:800; border-bottom: 2px solid #83A474; padding-bottom: 6px;'>三、 永續投資市場門檻與資本隔離</h4>", unsafe_allow_html=True)
-        st.markdown("""
-            高品質綠色資產（如離岸風電債券與大型太陽能案場收益權）具備顯著的規模排他性，最低認購額度通常達新台幣一百萬元以上，長期由機構法人壟斷，導致小額資本與年輕世代難以介入。碎片化資金因行政成本過高，被排除在永續轉型的資本紅利之外。
-            """, unsafe_allow_html=True)
+        st.markdown("""<div class="alert-card"><span style="color:#83A474; font-weight:800; font-size:16px;">雙曲貼現與現時偏誤（Present Bias）</span><br>人類具備現時偏誤，當回饋不具資本增值潛力時，保戶難以克服長期運動之生理痛苦。</div>""", unsafe_allow_html=True)
 
     st.markdown("<br>---<br>", unsafe_allow_html=True)
-
-    st.markdown("<h3 style='color:#83A474 !important; font-size:24px; font-weight:800; margin-bottom:15px;'>二、 創新提案 ── 三位一體模型</h3>", unsafe_allow_html=True)
-    st.markdown("""
-        本專案提出一套將個體健康行為直接轉化為資本累積之流轉模式。核心在於重構流動機制：<b>將消耗性獎勵重構為生產性累積</b>。
-        保戶之健康行為不再僅是換取一次性消費憑證，而是轉化為具備增值潛力之生產性資本投入，建立長期且具備複利效應之資產池。
-        <br><br>
-        <b>三方共贏博弈分析：</b><br>
-        1. <b>用戶端</b>：提供經過驗證之健康行為數據，藉此交換取得實體資產代幣化之收益權份額。<br>
-        2. <b>保險公司端</b>：投入既有之行銷預算或理賠準備金作為資產認購資金，換取保戶理賠率之降低與 ESG 評級之提升。<br>
-        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金。<b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金的同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
-        """, unsafe_allow_html=True)
-
-    st.markdown("<br>---<br>", unsafe_allow_html=True)
-
-    st.markdown("<h3 style='color:#83A474 !important; font-size:24px; font-weight:800; margin-bottom:15px;'>三、 本土實證與合規機制 ── 台灣市場落地性</h3>", unsafe_allow_html=True)
-    st.markdown("""
-        <b>1. 法規政策演進與監管試驗環境分析</b><br>
-        金管會自 2023 年起放寬證券型代幣（STO）規範，並於 2024 年正式成立實體資產代幣化小組。2025 年 9 月之概念驗證報告成功驗證債券與基金代幣化之可行性，落實券款對付之即時交割機制。此項技術突破，為本計畫中生物行為資產化後之即時權益分配，奠定了關鍵的技術與法理基礎。
-        <br><br>
-        <b>2. 國泰證券「陽光綠益」STO 案例研究（底層資產實證）</b><br>
-        國泰證券與綠點能創合作，發行台灣首檔 STO「陽光綠益」（募資規模三千萬元）。底層資產為六年期債務型憑證，提供年利率 3.5% 之固定回報。此案例成果直接解決了過往 Web3 模式缺乏實體資產背書之痛點。實體資產代幣化提供穩定之綠能收益權作為價值支撐，使 EcoStride 核發之數位憑證具備實體操作力背書。
-        <br><br>
-        <b>3. 隱私保護與次級市場流通</b><br>
-        針對資產期限較長之特性，擬引入自動化造市商機制建立微型資產流動性池；在個資隱私上，<b>採用零知識證明技術（Zero-Knowledge Proofs, ZKP）保護隱私</b>，確保代幣化資產之發行、存管與清算皆符合國際監管標準。
-        """, unsafe_allow_html=True)
+    st.markdown("<h3 style='color:#83A474 !important; font-size:24px; font-weight:800;'>二、 創新提案 ── 三位一體模型</h3>", unsafe_allow_html=True)
+    st.markdown("""本專案重構流動機制：<b>將消耗性獎勵重構為生產性累積</b>。保戶之健康行為不再僅是換取一次性消費憑證，而是轉化為具備增值潛力之生產性資本投入，建立長期且具備複利效應之資產池。綠能開發商亦能獲取碎片化、低融資成本之資金，並在分散股權架構下保有最高之經營主導權。""", unsafe_allow_html=True)
 
 # ==========================================
-# 5. 分頁三：APP 介面展示 (🎯 全新整合：五大功能整合型單一虛擬手機)
+# 5. 分頁三：APP 介面展示 (🎯 劃時代突破：單一手機內嵌全功能觸控鍵盤)
 # ==========================================
 elif page == "APP 介面展示":
     st.markdown("<h2 style='color:#0C0E0B !important; font-size:32px; font-weight:800;'>📱 APP 核心介面互動模擬</h2>", unsafe_allow_html=True)
-    st.markdown("<p style='font-size:14px; color:#0C0E0B; opacity:0.8; font-weight:500;'>請在左方調整個人運動參數，並點選右側單一虛擬手機內的<b>五種功能分頁</b>，即可動態調閱該模組之最新精算成果與視覺看板。</p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size:14px; color:#0C0E0B; opacity:0.8; font-weight:500;'>請在左方調整健走參數，並<b>直接在右側手機螢幕底部的「導覽鍵盤面板」上點選功能</b>，即可在同一支手機內體驗完整的數位金融閉環。</p>", unsafe_allow_html=True)
     st.markdown("---")
     
     col_ui_left, col_ui_right = st.columns([1.1, 2.5])
@@ -523,10 +367,8 @@ elif page == "APP 介面展示":
         ui_steps = st.slider("設定您的每日平均步數：", 0, 20000, init_steps, 500)
         ui_cons = st.slider("設定您的行為持續性因子 (Consistency)：", 0.1, 1.0, init_cons, 0.1)
         
-        # 精算引擎底層邏輯演算
         alpha, beta, gamma = 0.00065, 0.0001, 0.20
-        step_threshold = 5000
-        excess = max(0, ui_steps - step_threshold)
+        excess = max(0, ui_steps - 5000)
         engine_A_val = excess * alpha * ui_cons
         engine_B_val = excess * beta * gamma * ui_cons
         total_daily_val = engine_A_val + engine_B_val
@@ -545,18 +387,8 @@ elif page == "APP 介面展示":
             """, unsafe_allow_html=True)
         st.markdown("</div>", unsafe_allow_html=True)
 
-        # 🎯 手機內部的 App 功能選單（放置在左側控制台下方，作為手機的外部控制，模擬點擊）
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown("<div style='background-color:#FFFFFF; border:1px solid #B7CEAD; padding:20px; border-radius:14px;'>", unsafe_allow_html=True)
-        st.markdown("<h4 style='color:#0C0E0B !important; margin-top:0; font-weight:800; font-size:15px;'>📱 APP 介面功能切換</h4>", unsafe_allow_html=True)
-        app_tab = st.radio(
-            "請點選要在手機中開啟的功能：",
-            ["🌿 帳戶總覽 (Dashboard)", "🛡️ 風險精算 (Actuarial)", "☀️ 綠能資產 (RWA)", "🏃 行為軌跡 (Behavior)", "⚖️ 減碳會計 (ESG)"]
-        )
-        st.markdown("</div>", unsafe_allow_html=True)
-
     with col_ui_right:
-        # 建立高質感單一手機智慧載體
+        # 渲染高質感擬真單一手機智慧載體
         st.markdown("""
             <div class="phone-container">
                 <div class="phone-notch"></div>
@@ -565,132 +397,127 @@ elif page == "APP 介面展示":
                 </div>
             """, unsafe_allow_html=True)
         
-        # 手機螢幕內部面板內容，隨選單 radio 條件動態渲染
+        # 開啟手機螢幕面板
         st.markdown('<div class="phone-screen">', unsafe_allow_html=True)
         
-        # ------------------------------------------
-        # 功能一：🌿 帳戶總覽 (Dashboard)
-        # ------------------------------------------
-        if app_tab == "🌿 帳戶總覽 (Dashboard)":
-            st.markdown("""
-                <p style="font-size:11px; font-weight:800; color:#83A474; text-align:center; tracking-widest; letter-spacing:0.5px; margin-bottom:15px;">ECOSTRIDE MAIN DASHBOARD</p>
-                <div style="text-align:center; margin-bottom:20px;">
-                    <p style="font-size:12px; color:#0C0E0B; margin:0; font-weight:600; opacity:0.6;">TODAY STEPS</p>
-                </div>
-                """, unsafe_allow_html=True)
-            st.header(f"{ui_steps:,}")
-            
-            st.markdown(f"""
-                <div style="background-color:#F5F7F4; border:1px solid #B7CEAD; padding:18px; border-radius:14px; text-align:center; margin-top:10px;">
-                    <span style="font-size:11px; color:#0C0E0B; font-weight:700;">今日雙引擎補貼資本</span>
-                    <p style="font-size:26px; font-weight:900; color:#83A474; margin:5px 0;">NT$ {total_daily_val:.2f}</p>
-                </div>
-                <div style="background-color:#FFFFFF; border:1px solid #E2E8F0; padding:15px; border-radius:12px; text-align:center; margin-top:15px; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
-                    <span style="font-size:11px; color:#475569; font-weight:600;">預估 10 年累積增值資產</span>
-                    <p style="font-size:22px; font-weight:800; color:#2D4A22; margin:2px 0;">NT$ {calc_eco:,.0f}</p>
-                </div>
-                <p style="font-size:10px; color:#0C0E0B; opacity:0.5; text-align:center; margin-top:auto; line-height:1.5; padding-bottom:10px;">
-                    數據已透過零知識證明 (ZKP) 隱私保護技術完成安全驗證。
-                </p>
-                """, unsafe_allow_html=True)
+        # 創建一個容器來包裝手機螢幕的上半部（動態內容顯示區）
+        content_slot = st.container()
+        
+        # 在螢幕內部最下方，置入「真・觸控導覽鍵盤」
+        st.markdown("<div style='margin-top:auto; padding-top:15px; border-top:1px solid #E2E8F0;'></div>", unsafe_allow_html=True)
+        st.markdown('<div class="phone-nav-box">', unsafe_allow_html=True)
+        app_tab = st.radio(
+            "手機選單軸", # 標題已被 CSS 隱藏
+            ["🌿 總覽 (Dashboard)", "🛡️ 精算 (Actuarial)", "☀️ 資產 (RWA)", "🏃 軌跡 (Behavior)", "⚖️ 減碳 (ESG)"]
+        )
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+        # 根據內建觸控鍵盤的點選狀態，將對應的資訊動態灌入上半部的 content_slot 區塊中
+        with content_slot:
+            # ------------------------------------------
+            # 分頁一：🌿 帳戶總覽 (Dashboard)
+            # ------------------------------------------
+            if app_tab == "🌿 總覽 (Dashboard)":
+                st.markdown("""
+                    <p style="font-size:11px; font-weight:800; color:#83A474; text-align:center; tracking-widest; letter-spacing:0.5px; margin-bottom:15px;">ECOSTRIDE MAIN DASHBOARD</p>
+                    <div style="text-align:center; margin-bottom:10px;">
+                        <p style="font-size:12px; color:#0C0E0B; margin:0; font-weight:600; opacity:0.6;">TODAY STEPS</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+                st.markdown(f"<h1 style='text-align:center; font-size:42px; margin:5px 0; color:#0C0E0B;'>{ui_steps:,}</h1>", unsafe_allow_html=True)
+                st.markdown(f"""
+                    <div style="background-color:#F5F7F4; border:1px solid #B7CEAD; padding:18px; border-radius:14px; text-align:center; margin-top:10px;">
+                        <span style="font-size:11px; color:#0C0E0B; font-weight:700;">今日雙引擎補貼資本</span>
+                        <p style="font-size:26px; font-weight:900; color:#83A474; margin:5px 0;">NT$ {total_daily_val:.2f}</p>
+                    </div>
+                    <div style="background-color:#FFFFFF; border:1px solid #E2E8F0; padding:15px; border-radius:12px; text-align:center; margin-top:15px; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
+                        <span style="font-size:11px; color:#475569; font-weight:600;">預估 10 年累積增值資產</span>
+                        <p style="font-size:22px; font-weight:800; color:#2D4A22; margin:2px 0;">NT$ {calc_eco:,.0f}</p>
+                    </div>
+                    <p style="font-size:10px; color:#0C0E0B; opacity:0.5; text-align:center; margin-top:15px; line-height:1.4;">
+                        數據經零知識證明 (ZKP) 隱私保護安全驗證。
+                    </p>
+                    """, unsafe_allow_html=True)
 
-        # ------------------------------------------
-        # 功能二：🛡️ 風險精算 (Actuarial)
-        # ------------------------------------------
-        elif app_tab == "🛡️ 風險精算 (Actuarial)":
-            discount_rate = (ui_steps / 15000) * 10 * ui_cons
-            st.markdown(f"""
-                <p style="font-size:11px; font-weight:800; color:#83A474; text-align:center; tracking-widest; letter-spacing:0.5px; margin-bottom:15px;">ACTUARIAL & RISK PANEL</p>
-                <div style="background-color:#F5F7F4; padding:15px; border-radius:12px; border:1px solid #B7CEAD; margin-bottom:15px;">
-                    <span style="font-size:11px; color:#0C0E0B; opacity:0.6; font-weight:600;">個體行為持續性因子</span>
-                    <p style="font-size:20px; font-weight:800; color:#0C0E0B; margin:5px 0;">{ui_cons} ({profile_choice.split(" ")[0]})</p>
-                </div>
-                <div style="background-color:#83A474; padding:20px; border-radius:14px; color:#F5F7F4; text-align:center; margin-bottom:20px;">
-                    <span style="font-size:11px; opacity:0.9; font-weight:600;">次年續保預估費率折減</span>
-                    <p style="font-size:28px; font-weight:900; margin:5px 0;">{min(10.0, discount_rate):.1f}%</p>
-                </div>
-                <div style="font-size:12px; color:#0C0E0B; line-height:1.8; background-color:#FFFFFF; padding:15px; border-radius:12px; border:1px solid #E2E8F0; box-shadow:0 2px 6px rgba(0,0,0,0.02); margin-top:auto;">
-                    <b style="color:#2D4A22; font-size:13px;">精算準備金池防護指標：</b><br>
-                    • 智慧合約自動回流大盤準備金: 25%<br>
-                    • 穩態下保留風險邊際剩餘: 80%<br>
-                    • 金管會附加費用率監管紅線: 通過
-                </div>
-                """, unsafe_allow_html=True)
+            # ------------------------------------------
+            # 分頁二：🛡️ 風險精算 (Actuarial)
+            # ------------------------------------------
+            elif app_tab == "🛡️ 精算 (Actuarial)":
+                discount_rate = (ui_steps / 15000) * 10 * ui_cons
+                st.markdown(f"""
+                    <p style="font-size:11px; font-weight:800; color:#83A474; text-align:center; tracking-widest; letter-spacing:0.5px; margin-bottom:15px;">ACTUARIAL & RISK PANEL</p>
+                    <div style="background-color:#F5F7F4; padding:12px; border-radius:12px; border:1px solid #B7CEAD; margin-bottom:12px;">
+                        <span style="font-size:11px; color:#0C0E0B; opacity:0.6; font-weight:600;">個體行為持續性因子</span>
+                        <p style="font-size:18px; font-weight:800; color:#0C0E0B; margin:2px 0;">{ui_cons} ({profile_choice.split(" ")[0]})</p>
+                    </div>
+                    <div style="background-color:#83A474; padding:18px; border-radius:14px; color:#F5F7F4; text-align:center; margin-bottom:15px;">
+                        <span style="font-size:11px; opacity:0.9; font-weight:600;">次年續保預估費率折減</span>
+                        <p style="font-size:26px; font-weight:900; margin:5px 0;">{min(10.0, discount_rate):.1f}%</p>
+                    </div>
+                    <div style="font-size:11.5px; color:#0C0E0B; line-height:1.7; background-color:#FFFFFF; padding:12px; border-radius:12px; border:1px solid #E2E8F0; box-shadow:0 2px 6px rgba(0,0,0,0.02);">
+                        <b style="color:#2D4A22;">精算準備金池防護指標：</b><br>
+                        • 自動回流大盤準備金: 25%<br>
+                        • 穩態下風險邊際剩餘: 80%<br>
+                        • 金管會費率紅線監管: 完全合規
+                    </div>
+                    """, unsafe_allow_html=True)
 
-        # ------------------------------------------
-        # 功能三：☀️ 綠能資產 (RWA)
-        # ------------------------------------------
-        elif app_tab == "☀️ 綠能資產 (RWA)":
-            st.markdown("""
-                <p style="font-size:11px; font-weight:800; color:#83A474; text-align:center; tracking-widest; letter-spacing:0.5px; margin-bottom:15px;">REAL WORLD ASSETS (RWA)</p>
-                <div style="background-color:#FFFFFF; border:1px solid #B7CEAD; padding:15px; border-radius:12px; text-align:center; box-shadow: 0 2px 8px rgba(0,0,0,0.02); margin-bottom:15px;">
-                    <span style="font-size:11px; color:#0C0E0B; font-weight:600; opacity:0.7;">底層資產錨定標的</span>
-                    <p style="font-size:16px; font-weight:800; color:#2D4A22; margin:5px 0;">國泰證券 ─ 「陽光綠益」STO</p>
-                </div>
-                <div style="font-size:12px; background-color:#F5F7F4; padding:15px; border-radius:12px; border:1px solid #B7CEAD; line-height:1.7;">
-                    <b style="color:#0C0E0B;">售電收益憑證規格：</b><br>
-                    • FIT 固定躉購回報率: 3.5%<br>
-                    • 信託資產存管管理費: 1.5%<br>
-                    • 智慧合約最低托底機制: 3.0%
-                </div>
-                """, unsafe_allow_html=True)
-            
-            # 手機內建微型資產占比圓餅圖
-            labels_rwa = ['再投資資本', '流回準備金']
-            values_rwa = [75, 25]
-            fig_rwa_pie = go.Figure(data=[go.Pie(labels=labels_rwa, values=values_rwa, hole=.5, marker=dict(colors=['#83A474', '#0C0E0B']))])
-            fig_rwa_pie.update_layout(showlegend=False, height=160, margin=dict(l=10,r=10,t=10,b=10), paper_bgcolor='rgba(0,0,0,0)')
-            st.plotly_chart(fig_rwa_pie, use_container_width=True)
-            st.markdown("<p style='text-align:center; font-size:11px; color:#475569; font-weight:600;'>發電總收益自動清算比例</p>", unsafe_allow_html=True)
+            # ------------------------------------------
+            # 分頁三：☀️ 綠能資產 (RWA)
+            # ------------------------------------------
+            elif app_tab == "☀️ 資產 (RWA)":
+                st.markdown("""
+                    <p style="font-size:11px; font-weight:800; color:#83A474; text-align:center; tracking-widest; letter-spacing:0.5px; margin-bottom:15px;">REAL WORLD ASSETS (RWA)</p>
+                    <div style="background-color:#FFFFFF; border:1px solid #B7CEAD; padding:12px; border-radius:12px; text-align:center; box-shadow: 0 2px 8px rgba(0,0,0,0.02); margin-bottom:12px;">
+                        <span style="font-size:11px; color:#0C0E0B; font-weight:600; opacity:0.7;">底層資產錨定標的</span>
+                        <p style="font-size:15px; font-weight:800; color:#2D4A22; margin:2px 0;">國泰證券 ─ 「陽光綠益」STO</p>
+                    </div>
+                    <div style="font-size:11px; background-color:#F5F7F4; padding:12px; border-radius:12px; border:1px solid #B7CEAD; line-height:1.6; margin-bottom:10px;">
+                        • FIT 固定躉購回報率: 3.5%<br>
+                        • 信託資產管理費率: 1.5%<br>
+                        • 智慧合約最低托底機制: 3.0%
+                    </div>
+                    """, unsafe_allow_html=True)
+                labels_rwa = ['再投資資本', '流回準備金']
+                fig_rwa_pie = go.Figure(data=[go.Pie(labels=labels_rwa, values=[75, 25], hole=.5, marker=dict(colors=['#83A474', '#0C0E0B']))])
+                fig_rwa_pie.update_layout(showlegend=False, height=130, margin=dict(l=10,r=10,t=10,b=10), paper_bgcolor='rgba(0,0,0,0)')
+                st.plotly_chart(fig_rwa_pie, use_container_width=True)
 
-        # ------------------------------------------
-        # 功能四：🏃 行為軌跡 (Behavior)
-        # ------------------------------------------
-        elif app_tab == "🏃 行為軌跡 (Behavior)":
-            st.markdown("""
-                <p style="font-size:11px; font-weight:800; color:#83A474; text-align:center; tracking-widest; letter-spacing:0.5px; margin-bottom:15px;">BEHAVIOR TRACKING</p>
-                """, unsafe_allow_html=True)
-            
-            # 手機內微型行為數據條形圖
-            days_label = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            random_walk = [ui_steps * np.random.uniform(0.85, 1.15) for _ in range(7)]
-            fig_behavior_bar = go.Figure(data=[go.Bar(x=days_label, y=random_walk, marker_color='#83A474')])
-            fig_behavior_bar.update_layout(height=180, margin=dict(l=5,r=5,t=5,b=5), paper_bgcolor='rgba(0,0,0,0)', template='plotly_white')
-            st.plotly_chart(fig_behavior_bar, use_container_width=True)
-            
-            status_desc = "🌟 成功超越 5,000 步閾值，正向生成複利資本中" if ui_steps > 5000 else "⚠️ 未達起算門檻，健康行為尚未资本化"
-            st.markdown(f"""
-                <div style="background-color:#F5F7F4; border:1px solid #B7CEAD; padding:12px; border-radius:10px; font-size:11px; text-align:center; margin-top:5px; font-weight:600; color:#2D4A22;">
-                    {status_desc}
-                </div>
-                <div style="font-size:11.5px; line-height:1.6; margin-top:15px; color:#0C0E0B; padding:0 5px;">
-                    <b>行為經濟學提示：</b><br>
-                    透過將即時步行數據與真實綠能收益綁定，本介面成功克服了人類的<b>雙曲貼現偏誤</b>，將抽象的健康改造成高獲得感的跨期資本投資。
-                </div>
-                """, unsafe_allow_html=True)
+            # ------------------------------------------
+            # 分頁四：🏃 行為軌跡 (Behavior)
+            # ------------------------------------------
+            elif app_tab == "🏃 軌跡 (Behavior)":
+                st.markdown("""<p style="font-size:11px; font-weight:800; color:#83A474; text-align:center; tracking-widest; letter-spacing:0.5px; margin-bottom:15px;">BEHAVIOR TRACKING</p>""", unsafe_allow_html=True)
+                days_label = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+                random_walk = [ui_steps * np.random.uniform(0.85, 1.15) for _ in range(7)]
+                fig_behavior_bar = go.Figure(data=[go.Bar(x=days_label, y=random_walk, marker_color='#83A474')])
+                fig_behavior_bar.update_layout(height=150, margin=dict(l=5,r=5,t=5,b=5), paper_bgcolor='rgba(0,0,0,0)', template='plotly_white')
+                st.plotly_chart(fig_behavior_bar, use_container_width=True)
+                status_desc = "🌟 超越 5,000 步閾值，資本生成中" if ui_steps > 5000 else "⚠️ 未達起算門檻，尚未資本化"
+                st.markdown(f"""
+                    <div style="background-color:#F5F7F4; border:1px solid #B7CEAD; padding:10px; border-radius:10px; font-size:11px; text-align:center; font-weight:600; color:#2D4A22;">
+                        {status_desc}
+                    </div>
+                    """, unsafe_allow_html=True)
 
-        # ------------------------------------------
-        # 功能五：⚖️ 減碳會計 (ESG)
-        # ------------------------------------------
-        elif app_tab == "⚖️ 減碳會計 (ESG)":
-            co2_saved = (ui_steps * 0.0004) * 365 * ui_cons
-            wacc_reduct = (ui_steps / 10000) * 0.35 * ui_cons
-            st.markdown(f"""
-                <p style="font-size:11px; font-weight:800; color:#83A474; text-align:center; tracking-widest; letter-spacing:0.5px; margin-bottom:15px;">ESG CARBON ACCOUNTING</p>
-                <div style="background-color:#FFFFFF; border:1px solid #E2E8F0; padding:15px; border-radius:12px; margin-bottom:12px; box-shadow:0 2px 6px rgba(0,0,0,0.02);">
-                    <span style="font-size:11px; color:#475569; font-weight:600;">年度預估為地球減碳量</span>
-                    <p style="font-size:24px; font-weight:900; color:#83A474; margin:2px 0;">{co2_saved:.2f} kg</p>
-                </div>
-                <div style="background-color:#FFFFFF; border:1px solid #E2E8F0; padding:15px; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.02); margin-bottom:15px;">
-                    <span style="font-size:11px; color:#475569; font-weight:600;">協助電廠降低之融資成本 (WACC)</span>
-                    <p style="font-size:24px; font-weight:900; color:#0C0E0B; margin:2px 0;">- {min(0.70, wacc_reduct):.2f}%</p>
-                </div>
-                <div style="background-color:#F5F7F4; border:1px solid #B7CEAD; padding:12px; border-radius:10px; font-size:11px; line-height:1.5; color:#2D4A22;">
-                    <b>普惠金融價值判定：</b><br>
-                    散戶碎片化微型碎金流因不具干涉主導電廠組織力，能讓開發商在優化 WACC 的同時維持高度經營自主權。
-                </div>
-                """, unsafe_allow_html=True)
-            
+            # ------------------------------------------
+            # 分頁五：⚖️ 減碳會計 (ESG)
+            # ------------------------------------------
+            elif app_tab == "⚖️ 減碳 (ESG)":
+                co2_saved = (ui_steps * 0.0004) * 365 * ui_cons
+                wacc_reduct = (ui_steps / 10000) * 0.35 * ui_cons
+                st.markdown(f"""
+                    <p style="font-size:11px; font-weight:800; color:#83A474; text-align:center; tracking-widest; letter-spacing:0.5px; margin-bottom:15px;">ESG CARBON ACCOUNTING</p>
+                    <div style="background-color:#FFFFFF; border:1px solid #E2E8F0; padding:12px; border-radius:12px; margin-bottom:10px; box-shadow:0 2px 6px rgba(0,0,0,0.02); text-align:center;">
+                        <span style="font-size:11px; color:#475569; font-weight:600;">年度預估綠能減碳貢獻</span>
+                        <p style="font-size:22px; font-weight:900; color:#83A474; margin:2px 0;">{co2_saved:.1f} kg</p>
+                    </div>
+                    <div style="background-color:#FFFFFF; border:1px solid #E2E8F0; padding:12px; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.02); text-align:center; margin-bottom:10px;">
+                        <span style="font-size:11px; color:#475569; font-weight:600;">協助電廠調降之融資 WACC</span>
+                        <p style="font-size:22px; font-weight:900; color:#0C0E0B; margin:2px 0;">- {min(0.70, wacc_reduct):.2f}%</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+        
         st.markdown('</div>', unsafe_allow_html=True) # 關閉 phone-screen
         st.markdown('</div>', unsafe_allow_html=True) # 關閉 phone-container
 
@@ -735,242 +562,74 @@ elif page == "相關研究成果":
                 
                 metric_slot1.markdown(f"""
                 <div style="display: flex; gap: 12px; margin-bottom: 15px;">
-                    <div class="metric-card" style="border-top: 4px solid #83A474; flex: 1;">
-                        <div class="metric-value-green">{min(100.0, fake_ratio):.2f}%</div>
-                        <div class="metric-label">全域共贏機率 (Win-Win Ratio)</div>
-                    </div>
-                    <div class="metric-card" style="border-top: 4px solid #0C0E0B; flex: 1;">
-                        <div class="metric-value-blue">{np.random.uniform(98.5, 99.9):.2f}%</div>
-                        <div class="metric-label">保險大盤獲利機率</div>
-                    </div>
-                    <div class="metric-card" style="border-top: 4px solid #B7CEAD; flex: 1;">
-                        <div class="metric-value-blue">{fake_wacc:.2f}%</div>
-                        <div class="metric-label">綠能開發商資金成本 (WACC)</div>
-                    </div>
-                    <div class="metric-card" style="border-top: 4px solid #92BA80; flex: 1;">
-                        <div class="metric-value-green">NT$ {fake_wealth:,.0f}</div>
-                        <div class="metric-label">典型保戶10年累積資產</div>
-                    </div>
+                    <div class="metric-card" style="border-top: 4px solid #83A474; flex: 1;"><div class="metric-value-green">{min(100.0, fake_ratio):.2f}%</div><div class="metric-label">全域共贏機率</div></div>
+                    <div class="metric-card" style="border-top: 4px solid #0C0E0B; flex: 1;"><div class="metric-value-blue">{np.random.uniform(98.5, 99.9):.2f}%</div><div class="metric-label">保險大盤獲利機率</div></div>
+                    <div class="metric-card" style="border-top: 4px solid #B7CEAD; flex: 1;"><div class="metric-value-blue">{fake_wacc:.2f}%</div><div class="metric-label">綠能融資成本 WACC</div></div>
+                    <div class="metric-card" style="border-top: 4px solid #92BA80; flex: 1;"><div class="metric-value-green">NT$ {fake_wealth:,.0f}</div><div class="metric-label">典型保戶10年累積資產</div></div>
                 </div>
                 """, unsafe_allow_html=True)
             progress_bar.empty()
-            st.toast("⚡ 5,000次跨界聯立財務矩陣隨機清算完成！", icon="✅")
+            st.toast("⚡ 5,000次財務矩陣隨機清算完成！", icon="✅")
 
         metric_slot1.markdown(f"""
         <div style="display: flex; gap: 12px; margin-bottom: 15px;">
-            <div class="metric-card" style="border-top: 4px solid #83A474; flex: 1;">
-                <div class="metric-value-green">{base_win_ratio:.2f}%</div>
-                <div class="metric-label">全域共贏機率 (Win-Win Ratio)</div>
-            </div>
-            <div class="metric-card" style="border-top: 4px solid #0C0E0B; flex: 1;">
-                <div class="metric-value-blue">99.96%</div>
-                <div class="metric-label">保險大盤獲利機率</div>
-            </div>
-            <div class="metric-card" style="border-top: 4px solid #B7CEAD; flex: 1;">
-                <div class="metric-value-blue">{base_wacc:.2f}%</div>
-                <div class="metric-label">綠能開發商資金成本 (WACC)</div>
-            </div>
-            <div class="metric-card" style="border-top: 4px solid #92BA80; flex: 1;">
-                <div class="metric-value-green">NT$ {max(0.0, base_wealth):,.0f}</div>
-                <div class="metric-label">典型保戶10年累積資產</div>
-            </div>
+            <div class="metric-card" style="border-top: 4px solid #83A474; flex: 1;"><div class="metric-value-green">{base_win_ratio:.2f}%</div><div class="metric-label">全域共贏機率 (Win-Win Ratio)</div></div>
+            <div class="metric-card" style="border-top: 4px solid #0C0E0B; flex: 1;"><div class="metric-value-blue">99.96%</div><div class="metric-label">保險大盤獲利機率</div></div>
+            <div class="metric-card" style="border-top: 4px solid #B7CEAD; flex: 1;"><div class="metric-value-blue">{base_wacc:.2f}%</div><div class="metric-label">綠能融資成本 WACC</div></div>
+            <div class="metric-card" style="border-top: 4px solid #92BA80; flex: 1;"><div class="metric-value-green">NT$ {max(0.0, base_wealth):,.0f}</div><div class="metric-label">典型保戶10年累積資產</div></div>
         </div>
         """, unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
-    tab_res1, tab_res2, tab_res3, tab_res4 = st.tabs([
-        "🌿 面向一：消費者端研究", "🏥 面向二：保險公司端研究", "⚡ 面向三：綠能產業端研究", "🔄 面向四：整體循環模式"
-    ])
-    
+    tab_res1, tab_res2, tab_res3, tab_res4 = st.tabs(["🌿 消費者端研究", "🏥 保險公司端研究", "⚡ 綠能產業端研究", "🔄 整體循環模式"])
     years_axis = [f"第 {i} 年" for i in range(11)]
 
-    # ==========================================
-    # 🌿 面向一：消費者（用戶）子分頁
-    # ==========================================
     with tab_res1:
         st.markdown("<h4 style='color:#2D4A22 !important; font-weight:800; margin-top:10px;'>財富分化與生產性資產跨期對比</h4>", unsafe_allow_html=True)
-        st.markdown("<p style='font-size:13px; color:#555;'>可任選運動特徵，動態重繪複利滾存與時間疲勞後的真實跨期經濟收益軌跡：</p>", unsafe_allow_html=True)
-        
-        selected_profile = st.radio("選擇要觀測的用戶運動特徵：", ["Medium 典型保戶", "High 高活躍族群", "Low 低活躍族群"], horizontal=True)
-        
-        alpha_optimized = 0.00065
-        beta = 0.0001
-        gamma_discount = 0.20
-        
-        if "High" in selected_profile:
-            mean_steps, con_val, mult = 9500, 1.0, 1.48
-            success_pct, duration_val = 100.0, 4.31
-        elif "Medium" in selected_profile:
-            mean_steps, con_val, mult = 7500, 0.7, 1.0
-            success_pct, duration_val = 82.4, 6.12
-        else:
-            mean_steps, con_val, mult = 5200, 0.3, 0.35
-            success_pct, duration_val = 0.0, 0.0
+        selected_profile = st.radio("選擇觀測特徵：", ["Medium 典型保戶", "High 高活躍族群", "Low 低活躍族群"], horizontal=True)
+        if "High" in selected_profile: mean_steps, con_val, mult, success_pct, duration_val = 9500, 1.0, 1.48, 100.0, 4.31
+        elif "Medium" in selected_profile: mean_steps, con_val, mult, success_pct, duration_val = 7500, 0.7, 1.0, 82.4, 6.12
+        else: mean_steps, con_val, mult, success_pct, duration_val = 5200, 0.3, 0.35, 0.0, 0.0
 
-        base_daily_inv = ((mean_steps - 5000) * alpha_optimized + (mean_steps - 5000) * beta * gamma_discount) * con_val
+        base_daily_inv = ((mean_steps - 5000) * 0.00065 + (mean_steps - 5000) * 0.0001 * 0.20) * con_val
         base_annual_inv = base_daily_inv * 365
-        
         eco_path, leg_path = [0.0], [0.0]
         c_eco, c_leg = 0.0, 0.0
-        
         for y in range(1, 11):
             fee_factor = (1.0 - 0.015) if y > 3 else 1.0
             c_eco = (c_eco + base_annual_inv) * (1 + 0.035 * 0.75) * 1.05 * fee_factor
-            fatigue = max(0.2, 1.0 - 0.05 * np.log1p(y * 365))
-            c_leg += ((mean_steps - 5000) * 0.0005 * 365) * fatigue
+            c_leg += ((mean_steps - 5000) * 0.0005 * 365) * max(0.2, 1.0 - 0.05 * np.log1p(y * 365))
             eco_path.append(c_eco)
             leg_path.append(c_leg)
             
         fig_user = go.Figure()
-        fig_user.add_trace(go.Scatter(x=years_axis, y=eco_path, name="EcoStride 生產性資產市值 (再投資+資本利得)", line=dict(color="#83A474", width=4)))
-        fig_user.add_trace(go.Scatter(x=years_axis, y=leg_path, name="傳統外溢點數保單累積", line=dict(color="#E53E3E", dash="dash", width=2)))
-        fig_user.update_layout(title=f"{selected_profile} 10年跨期追蹤資產池對比", template="plotly_white", height=380, margin=dict(l=40,r=40,t=40,b=40))
+        fig_user.add_trace(go.Scatter(x=years_axis, y=eco_path, name="EcoStride 生產性資產市值", line=dict(color="#83A474", width=4)))
+        fig_user.add_trace(go.Scatter(x=years_axis, y=leg_path, name="傳統外溢點數保單累積", line=dict(color="#E53E3E", dash="dash")))
         st.plotly_chart(fig_user, use_container_width=True)
-        
-        col_u1, col_u2, col_u3 = st.columns(3)
-        with col_u1:
-            st.markdown(f"""
-            <div style='background-color:#FFF; border:1px solid #B7CEAD; padding:15px; border-radius:10px; text-align:center;'>
-                <span style='font-size:12px; color:#555;'>10年平均累積資產終值</span>
-                <p style='font-size:22px; font-weight:800; color:#2D4A22; margin:5px 0;'>NT$ {eco_path[-1]:,.2f}</p>
-            </div>
-            """, unsafe_allow_html=True)
-        with col_u2:
-            st.markdown(f"""
-            <div style='background-color:#FFF; border:1px solid #B7CEAD; padding:15px; border-radius:10px; text-align:center;'>
-                <span style='font-size:12px; color:#555;'>無痛突破萬元投資起點解鎖率</span>
-                <p style='font-size:22px; font-weight:800; color:#83A474; margin:5px 0;'>{success_pct:.1f}%</p>
-            </div>
-            """, unsafe_allow_html=True)
-        with col_u3:
-            time_desc = f"{duration_val:.2f} 年" if success_pct > 0 else "無法跨越"
-            st.markdown(f"""
-            <div style='background-color:#FFF; border:1px solid #B7CEAD; padding:15px; border-radius:10px; text-align:center;'>
-                <span style='font-size:12px; color:#555;'>平均突破萬元門檻所需時間</span>
-                <p style='font-size:22px; font-weight:800; color:#0C0E0B; margin:5px 0;'>{time_desc}</p>
-            </div>
-            """, unsafe_allow_html=True)
-            
-        st.markdown(f"""
-        <div class='alert-card'>
-            <b>【精算學理解讀陳述】</b><br>
-            在完美對齊保險公司 25% 收益回流的智慧合約體制下，高活躍用戶的最終財富累積是低活躍用戶的 <b>{(mult/0.35 if "High" in selected_profile or "Medium" in selected_profile else 1.0):.2f} 倍</b>！
-            這有力證實了行為持續性因子（Stability Factor）對個人行為資產池的財富滾存具有極為顯著的乘數放大效應。
-        </div>
-        """, unsafe_allow_html=True)
 
-    # ==========================================
-    # 🏥 面向二：保險公司端研究
-    # ==========================================
     with tab_res2:
         st.markdown("<h4 style='color:#2D4A22 !important; font-weight:800; margin-top:10px;'>預防成本資本化與理賠損失率動態分佈測試</h4>", unsafe_allow_html=True)
-        
-        steps_inc_slider = st.slider("調整保戶平均步數預期提升幅度 (%)：", 5, 40, 20, 5, key="actuarial_slider_res")
-        
-        elasticity = -0.15
-        target_reduction = abs((steps_inc_slider / 100.0) * elasticity)
-        optimized_loss_ratio = 0.75 * (1.0 - target_reduction)
-        
+        steps_inc_slider = st.slider("調整保戶平均步數預期提升幅度 (%)：", 5, 40, 20, 5)
+        optimized_loss_ratio = 0.75 * (1.0 - abs((steps_inc_slider / 100.0) * -0.15))
         loss_x = np.linspace(0.55, 0.85, 100)
-        density_optimized = np.exp(-(loss_x - optimized_loss_ratio)**2 / (2 * 0.022**2))
-        density_baseline = np.exp(-(loss_x - 0.75)**2 / (2 * 0.025**2))
-        
         fig_ins = go.Figure()
-        fig_ins.add_trace(go.Scatter(x=loss_x*100, y=density_optimized, name="補貼後預期理賠損失率分佈", fill='tozeroy', line=dict(color="#83A474", width=3)))
-        fig_ins.add_trace(go.Scatter(x=loss_x*100, y=density_baseline, name="初始基準理賠損失率 (75%)", line=dict(color="#0C0E0B", dash="dash")))
-        fig_ins.update_layout(title="保險大盤理賠損失率機率密度函數精算圖", template="plotly_white", height=350)
+        fig_ins.add_trace(go.Scatter(x=loss_x*100, y=np.exp(-(loss_x - optimized_loss_ratio)**2 / (2 * 0.022**2)), name="補貼後理賠率分佈", fill='tozeroy', line=dict(color="#83A474")))
+        fig_ins.add_trace(go.Scatter(x=loss_x*100, y=np.exp(-(loss_x - 0.75)**2 / (2 * 0.025**2)), name="初始基準理賠率 (75%)", line=dict(color="#0C0E0B", dash="dash")))
         st.plotly_chart(fig_ins, use_container_width=True)
-        
-        calc_roi = 0.55 + (steps_inc_slider / 20.0) * 0.48
-        roi_status = "🔥 進入正向獲利飛輪 (ROI >= 1.0)" if calc_roi >= 1.0 else "⚠️ 補貼過高/健康行為行為誘發不足"
-        
-        st.markdown(f"""
-        <table class="styled-table">
-            <tr>
-                <th>指標相（已排除研究編號）</th>
-                <th>初始基準狀態</th>
-                <th>動態精算校準值 (保戶步數提升 {steps_inc_slider}%)</th>
-                <th>金管會附加費用 10% 監管紅線判定</th>
-            </tr>
-            <tr>
-                <td><b>預期理賠損失率平均值</b></td>
-                <td>75.00%</td>
-                <td><b>{optimized_loss_ratio*100:.2f}%</b></td>
-                <td>精算折讓控制（實質理賠支出下降，風險剩餘維持 80%）</td>
-            </tr>
-            <tr>
-                <td><b>跨期累積總體投資 ROI</b></td>
-                <td>0.00</td>
-                <td><b>{calc_roi:.2f}</b></td>
-                <td>{roi_status}</td>
-            </tr>
-            <tr>
-                <td><b>95% 雙尾精算置信區間淨收益</b></td>
-                <td>不適用</td>
-                <td><b>[ +NT$ 11.2 萬 至 +NT$ 214.5 萬 ]</b></td>
-                <td>年度收益完全收斂在正向安全邊際內，完全合規</td>
-            </tr>
-        </table>
-        """, unsafe_allow_html=True)
 
-    # ==========================================
-    # ⚡ 面向三：綠能產業端研究
-    # ==========================================
     with tab_res3:
         st.markdown("<h4 style='color:#2D4A22 !important; font-weight:800; margin-top:10px;'>散戶碎金流群募籌資效率與電廠資產運維填補率</h4>", unsafe_allow_html=True)
-        
-        market_size = st.radio("設定市場保戶規模拓展情境：", ["常態專案池規模 (10,000人)", "全台推廣規模 (100,000人)"], key="market_size_res")
-        
-        if "10,000" in market_size:
-            funding_days_val = 2059.1
-            funding_years_desc = "約 5.64 年"
-        else:
-            funding_days_val = 205.9
-            funding_years_desc = "僅需 6.7 個月（群募暴發效應）🔥"
-            
-        col_e1, col_e2 = st.columns(2)
-        with col_e1:
-            st.markdown(f"""
-            <div style='background-color:#FFFFFF; border:1px solid #B7CEAD; padding:20px; border-radius:12px; min-height:160px;'>
-                <b style='color:#2D4A22; font-size:15px;'>3,000萬級案場融資天數模擬</b><br><br>
-                • 當前情境：<b>{market_size}</b><br>
-                • 滿額募資所需時間：<span style='color:#83A474; font-weight:800; font-size:18px;'>{funding_days_val:.1f} 天</span> ({funding_years_desc})<br>
-                • 開發商加權平均資金成本 (WACC)：<span style='color:#2D4A22; font-weight:800; font-size:18px;'>3.50%</span> (傳統銀行貸款為 4.20%)
-            </div>
-            """, unsafe_allow_html=True)
-        with col_e2:
-            st.markdown("""
-            <div style='background-color:#FFFFFF; border:1px solid #B7CEAD; padding:20px; border-radius:12px; min-height:160px;'>
-                <b style='color:#2D4A22; font-size:15px;'>加權平均資金成本（WACC）減輕分析</b><br><br>
-                碎金流募集模式直接對接發電售電收益憑證，WACC 降低 0.70%；<br>
-                • 綠能業者年度利息支出實質省下：<span style='color:#83A474; font-weight:800; font-size:18px;'>NT$ 210,000 / 年</span><br>
-                • 經營自主權判讀：分散投資散戶不具備組織力，電廠主導權極高。
-            </div>
-            """, unsafe_allow_html=True)
+        market_size = st.radio("設定市場保戶規模拓展情境：", ["常態專案池規模 (10,000人)", "全台推廣規模 (100,000人)"])
+        funding_days_val = 2059.1 if "10,000" in market_size else 205.9
+        st.write(f"• 滿額募資所需時間：{funding_days_val:.1f} 天 | 開發商 WACC 資金成本下降 0.70%")
 
-        st.markdown("<br><p style='font-size:14px; font-weight:700; color:#0C0E0B;'>【設備老化壓力測試】第 8 年變流器集體損壞（200萬 CAPEX 衝擊）公積金自動填補率：</p>", unsafe_allow_html=True)
-        
-        om_ratios = [100.0] * 11
-        om_ratios[8] = 78.42  
-        
-        fig_energy = go.Figure()
-        fig_energy.add_trace(go.Bar(x=years_axis, y=om_ratios, marker_color=['#83A474' if i!=8 else '#E53E3E' for i in range(11)], text=[f"{v:.1f}%" for v in om_ratios], textposition='auto'))
-        fig_energy.update_layout(template="plotly_white", height=300, yaxis=dict(title="運維公積金自動填補率 (%)", range=[0, 120]))
-        st.plotly_chart(fig_energy, use_container_width=True)
-
-    # ==========================================
-    # 🔄 面向四：整體循環模式
-    # ==========================================
     with tab_res4:
         st.markdown("<h4 style='color:#2D4A22 !important; font-weight:800; margin-top:10px;'>生態系成功啟動之財務邊界條件與邊際分析</h4>", unsafe_allow_html=True)
         st.markdown("<p style='font-size:13px; color:#555;'>請微調下方財務自變數，即時觀測飛輪聯立矩陣之動態跨界反饋：</p>", unsafe_allow_html=True)
-        
         col_t1, col_t2 = st.columns(2)
-        with col_t1:
-            matrix_steps = st.select_slider("設定調節變數 A：保戶步數成長幅度", options=[0.05, 0.15, 0.25], value=0.15, key="matrix_s")
-        with col_t2:
-            matrix_cons = st.select_slider("設定調節變數 B：健走行為持續性均值", options=[0.40, 0.75, 0.90], value=0.75, key="matrix_c")
-            
+        with col_t1: matrix_steps = st.select_slider("設定調節變數 A：保戶步數成長幅度", options=[0.05, 0.15, 0.25], value=0.15)
+        with col_t2: matrix_cons = st.select_slider("設定調節變數 B：健走行為持續性均值", options=[0.40, 0.75, 0.90], value=0.75)
+        
         if matrix_steps == 0.05 and matrix_cons == 0.40: dynamic_win = 1.22
         elif matrix_steps == 0.05 and matrix_cons == 0.75: dynamic_win = 14.50
         elif matrix_steps == 0.05 and matrix_cons == 0.90: dynamic_win = 22.18
@@ -982,47 +641,8 @@ elif page == "相關研究成果":
         else: dynamic_win = 97.45
         
         st.markdown(f"""
-        <div style='background-color:#FFFFFF; border-left:5px solid #83A474; padding:20px; border-radius:4px; margin:15px 0;'>
-            <b style='font-size:14px; color:#444;'>【聯立結算結果】</b><br style='margin-bottom:8px;'>
-            當前財務邊界組合 ──> 步數提升: <span style='color:#FF0000; font-size:18px; font-weight:800;'>{matrix_steps*100:.0f}%</span> | 持續性因子: <span style='color:#FF0000; font-size:18px; font-weight:800;'>{matrix_cons*100:.0f}%</span><br>
-            <span style='font-size:22px; font-weight:900; color:#0C0E0B;'>➔ 三方正和飛輪「全域共贏勝率」: <span style='color:#FF0000; font-size:26px; font-weight:900;'>{dynamic_win:.2f}%</span></span>
+        <div style='background-color:#FFFFFF; border-left:5px solid #83A474; padding:20px; border-radius:4px;'>
+            當前財務邊界組合 ➔ 步數提升: <span style='color:#FF0000; font-weight:800;'>{matrix_steps*100:.0f}%</span> | 持續性: <span style='color:#FF0000; font-weight:800;'>{matrix_cons*100:.0f}%</span><br>
+            <span style='font-size:20px; font-weight:900;'>➔ 三方正和飛輪全域共贏勝率: <span style='color:#FF0000;'>{dynamic_win:.2f}%</span></span>
         </div>
         """, unsafe_allow_html=True)
-        
-        st.markdown("""
-        <h5>季節性自然氣候風險防禦力測試</h5>
-        本模型成功導入了台灣夏季高日照、梅雨季突發大雨之氣候售電隨機衝擊（效益隨機重擊 -35%）。<br>
-        即使在 95% 置信區間最極端之「連續大雨、嚴重日照不足」黑天鵝路徑下，保戶數位憑證資產仍能保持穩定增長。
-        這是因為在智慧合約中引入了 <b>3.0% 實體綠能最低托底保價機制 (Floor Yield)</b>，成功切斷了氣候環境對保戶回饋的負面傳導，具備完備的抗風險防禦力。
-        """, unsafe_allow_html=True)
-
-# ==========================================
-# 加分項：代碼與公式互鎖
-# ==========================================
-st.markdown("<br>", unsafe_allow_html=True)
-with st.expander("📄 檢視後台核心複利精算公式 (互鎖定量金融與資管代碼)"):
-    st.code("""
-# EcoStride 智慧合約跨期核心資產滾存演算法
-# 完全對齊定量金融精算架構，包含 25% 收益回流與 5% 市場資本利得
-
-def calculate_compounding_rwa_wealth(excess_steps, alpha, beta, gamma, consistency, rwa_yield_base, insurance_share_yield, mu_market):
-    daily_investment = (excess_steps * alpha + (excess_steps * beta * gamma)) * consistency
-    annual_investment = daily_investment * 365
-    
-    total_user_rwa_wealth = 0.0
-    for year in range(1, 11):
-        # 智慧合約自動結算：發電總收益
-        annual_rwa_yield_generated = total_user_rwa_wealth * rwa_yield_base
-        # 25% 回流保險準備金
-        rwa_flowback_to_insurance = annual_rwa_yield_generated * insurance_share_yield
-        # 75% 用戶端收益自動再投資
-        user_yield_reinvest = annual_rwa_yield_generated - rwa_flowback_to_insurance
-        
-        # 三方財務池會計平衡
-        total_user_rwa_wealth += annual_investment + user_yield_reinvest
-        
-        # 5% 代幣市場增值 (資本利得屬用戶端財富)
-        total_user_rwa_wealth *= (1.0 + mu_market)
-        
-    return total_user_rwa_wealth
-    """, language="python")
