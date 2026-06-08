@@ -996,7 +996,6 @@ elif page == "相關研究成果":
     # ==========================================
     with tab_res4:
         st.markdown("<h4 style='color:#2D4A22 !important; font-weight:800; margin-top:10px;'>生態系成功啟動之財務邊界條件與邊際分析</h4>", unsafe_allow_html=True)
-        
         st.markdown("<p style='font-size:13px; color:#555;'>請微調下方財務自變數，即時觀測飛輪聯立矩陣之動態跨界反饋：</p>", unsafe_allow_html=True)
         
         col_t1, col_t2 = st.columns(2)
@@ -1005,43 +1004,55 @@ elif page == "相關研究成果":
         with col_t2:
             matrix_cons = st.select_slider("設定調節變數 B：健走行為持續性均值", options=[0.40, 0.75, 0.90], value=0.75, key="matrix_c")
             
-        # 計算勝率
-        dynamic_win = 0.0
-        if matrix_steps == 0.05 and matrix_cons == 0.40: dynamic_win = 1.22
-        elif matrix_steps == 0.05 and matrix_cons == 0.75: dynamic_win = 14.50
-        elif matrix_steps == 0.05 and matrix_cons == 0.90: dynamic_win = 22.18
-        elif matrix_steps == 0.15 and matrix_cons == 0.40: dynamic_win = 8.64
-        elif matrix_steps == 0.15 and matrix_cons == 0.75: dynamic_win = 56.38  
-        elif matrix_steps == 0.15 and matrix_cons == 0.90: dynamic_win = 74.20
-        elif matrix_steps == 0.25 and matrix_cons == 0.40: dynamic_win = 31.50
-        elif matrix_steps == 0.25 and matrix_cons == 0.75: dynamic_win = 89.12
-        else: dynamic_win = 97.45
+        # 勝率邏輯
+        win_map = {
+            (0.05, 0.40): 1.22, (0.05, 0.75): 14.50, (0.05, 0.90): 22.18,
+            (0.15, 0.40): 8.64, (0.15, 0.75): 56.38, (0.15, 0.90): 74.20,
+            (0.25, 0.40): 31.50, (0.25, 0.75): 89.12, (0.25, 0.90): 97.45
+        }
+        dynamic_win = win_map.get((matrix_steps, matrix_cons), 97.45)
         
-        # 動態設定進度條顏色：>= 50 為綠色 (#83A474)，否則為紅色 (#E53E3E)
-        bar_color = "#83A474" if dynamic_win >= 50 else "#E53E3E"
+        # 圓形儀表板顏色邏輯
+        gauge_color = "#83A474" if dynamic_win >= 50 else "#E53E3E"
         
-        st.markdown(f"""
-        <div style='background-color:#FFFFFF; border-left:5px solid #83A474; padding:20px; border-radius:4px; margin:15px 0;'>
-            <b style='font-size:14px; color:#444;'>【聯立結算結果】</b><br style='margin-bottom:12px;'>
-            當前財務邊界組合 ──> 步數提升: <span style='color:#FF0000; font-size:18px; font-weight:800;'>{matrix_steps*100:.0f}%</span> | 持續性因子: <span style='color:#FF0000; font-size:18px; font-weight:800;'>{matrix_cons*100:.0f}%</span><br>
-            <br>
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <div style="flex-grow: 1; background-color: #eee; border-radius: 10px; height: 20px; overflow: hidden; border: 1px solid #ddd;">
-                    <div style="background-color: {bar_color}; width: {dynamic_win}%; height: 100%; transition: width 0.5s ease-in-out;"></div>
-                </div>
-                <div style="font-size:24px; font-weight:900; color:#0C0E0B; min-width: 80px; text-align: right;">
-                    {dynamic_win:.2f}%
+        col_res_viz, col_res_text = st.columns([1, 1.5])
+        
+        with col_res_viz:
+            fig = go.Figure(go.Indicator(
+                mode = "gauge+number",
+                value = dynamic_win,
+                domain = {'x': [0, 1], 'y': [0, 1]},
+                number = {'suffix': "%", 'font': {'size': 32}},
+                gauge = {
+                    'axis': {'range': [0, 100]},
+                    'bar': {'color': gauge_color},
+                    'bgcolor': "white",
+                    'borderwidth': 2,
+                    'bordercolor': "#B7CEAD",
+                    'steps': [{'range': [0, 100], 'color': "#f1f1f1"}]
+                }
+            ))
+            fig.update_layout(height=250, margin=dict(l=20, r=20, t=20, b=20))
+            st.plotly_chart(fig, use_container_width=True)
+            
+        with col_res_text:
+            st.markdown(f"""
+            <div style='background-color:#FFFFFF; border:1px solid #B7CEAD; padding:20px; border-radius:8px;'>
+                <b style='font-size:16px; color:#2D4A22;'>聯立結算解讀</b><br>
+                <div style="margin-top:10px;">
+                    步數提升: <b>{matrix_steps*100:.0f}%</b><br>
+                    行為持續性: <b>{matrix_cons*100:.0f}%</b><br>
+                    <hr style="margin: 10px 0;">
+                    ➔ 飛輪「全域共贏」勝率判定：<br>
+                    <span style="font-size: 28px; font-weight: 900; color: {gauge_color};">{dynamic_win:.2f}%</span>
                 </div>
             </div>
-            <span style='font-size:16px; font-weight:700; color:#0C0E0B;'>➔ 三方正和飛輪「全域共贏勝率」</span>
-        </div>
-        """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
         
         st.markdown("""
         <h5>季節性自然氣候風險防禦力測試</h5>
-        本模型成功導入了台灣夏季高日照、梅雨季突發大雨之氣候售電隨機衝擊（效益隨機重擊 -35%）。<br>
-        即使在 95% 置信區間最極端之「連續大雨、嚴重日照不足」黑天鵝路徑下，保戶數位憑證資產仍能保持穩定增長。
-        這是因為在智慧合約中引入了 <b>3.0% 實體綠能最低托底保價機制 (Floor Yield)</b>，成功切斷了氣候環境對保戶回饋的負面傳導，具備完備的抗風險防禦力。
+        本模型成功導入了台灣夏季高日照、梅雨季突發大雨之氣候售電隨機衝擊（效益隨機重擊 -35%）。
+        即使在 95% 置信區間最極端路徑下，保戶數位憑證資產仍保持增長，因為引入了 <b>3.0% 最低托底保價機制 (Floor Yield)</b>，具備完備的抗風險防禦力。
         """, unsafe_allow_html=True)
 # ==========================================
 # 加分項：代碼與公式互鎖
