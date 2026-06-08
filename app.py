@@ -301,7 +301,7 @@ if page == "專案首頁":
     st.markdown("<h2 style='text-align: center; font-size: 28px; margin-bottom: 5px; color:#0C0E0B !important; font-weight:800;'>三位一體機制全局摘要</h2>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; font-size: 14px; color: #0C0E0B; opacity:0.7; margin-bottom: 20px;'>請點擊圖中的圓頂點切換核心面向（滑鼠懸停可放大查看資本與數據流轉詳情）</p>", unsafe_allow_html=True)
     
-    # 🎯 打造會動、可點選、提示文字放大的前端三位一體 Canvas 封閉經濟模型
+    # 打造會動、可點選、提示文字放大的前端三位一體 Canvas 封閉經濟模型
     html_canvas_trinity = """
     <div style="width:100%; text-align:center;">
         <canvas id="trinityCanvas" width="900" height="340" style="background:transparent; cursor:pointer;"></canvas>
@@ -401,7 +401,7 @@ if page == "專案首頁":
                 const dist = Math.sqrt((mouseX - node.x)**2 + (mouseY - node.y)**2);
                 if (dist < node.r) {
                     insideAnyNode = true;
-                    // 🎯 完美放大浮標提示框文字字體 (大於原先字體)
+                    // 完美放大浮標提示框文字字體
                     tooltip.style.display = 'block';
                     tooltip.style.left = (e.pageX + 15) + 'px';
                     tooltip.style.top = (e.pageY + 15) + 'px';
@@ -443,29 +443,19 @@ if page == "專案首頁":
     # 載入動態機制 Canvas 組件
     component_value = components.html(html_canvas_trinity, height=350)
     
-    # 透過隱藏的隱形選取機制來接收 HTML Canvas 發送回來的點擊變數，動態調整底色顏色
     if component_value is not None:
         st.session_state.selected_node = component_value
 
-    # 三方卡片區塊 - 會根據 Canvas 點選狀態「即時動態更換底色、變更亮度」
+    # 三方卡片區塊 - 🎯 依照最新指令：將底色、文字顏色完全復原成最愛的原版狀態 (純白底色、不淡化)，僅用邊框粗細高亮點選項目
+    border_consumer = "2px solid #2D4A22" if st.session_state.selected_node == "consumer" else "1px solid #B7CEAD"
+    border_insurance = "2px solid #2D4A22" if st.session_state.selected_node == "insurance" else "1px solid #B7CEAD"
+    border_energy = "2px solid #2D4A22" if st.session_state.selected_node == "energy" else "1px solid #B7CEAD"
+
     col_card1, col_card2, col_card3 = st.columns(3)
     
-    # 決定各個面向的動態底色與透明度外觀樣式
-    bg_consumer = "#EBF3E8" if st.session_state.selected_node in ["consumer", "all"] else "#FFFFFF"
-    opacity_consumer = "1.0" if st.session_state.selected_node in ["consumer", "all"] else "0.4"
-    border_consumer = "2px solid #83A474" if st.session_state.selected_node == "consumer" else "1px solid #B7CEAD"
-
-    bg_insurance = "#EBF3E8" if st.session_state.selected_node in ["insurance", "all"] else "#FFFFFF"
-    opacity_insurance = "1.0" if st.session_state.selected_node in ["insurance", "all"] else "0.4"
-    border_insurance = "2px solid #83A474" if st.session_state.selected_node == "insurance" else "1px solid #B7CEAD"
-
-    bg_energy = "#EBF3E8" if st.session_state.selected_node in ["energy", "all"] else "#FFFFFF"
-    opacity_energy = "1.0" if st.session_state.selected_node in ["energy", "all"] else "0.4"
-    border_energy = "2px solid #83A474" if st.session_state.selected_node == "energy" else "1px solid #B7CEAD"
-
     with col_card1:
         st.markdown(f"""
-            <div class="vision-card" style="background-color: {bg_consumer} !important; opacity: {opacity_consumer}; border: {border_consumer} !important;">
+            <div class="vision-card" style="background-color: #FFFFFF !important; opacity: 1.0; border: {border_consumer} !important;">
                 <div style='width: 40px; height: 6px; background-color: #83A474; margin-bottom: 20px; border-radius: 3px;'></div>
                 <div class="dark-green-title">消費者端：生物行為資產化</div>
                 <p style='font-size: 14.5px; color: #0C0E0B; line-height: 1.7; opacity: 0.85;'>徹底打破財富階級門檻。無痛認購綠能案場份額，共享淨零轉型之資本紅利。</p>
@@ -474,7 +464,7 @@ if page == "專案首頁":
             
     with col_card2:
         st.markdown(f"""
-            <div class="vision-card" style="background-color: {bg_insurance} !important; opacity: {opacity_insurance}; border: {border_insurance} !important;">
+            <div class="vision-card" style="background-color: #FFFFFF !important; opacity: 1.0; border: {border_insurance} !important;">
                 <div style='width: 40px; height: 6px; background-color: #B7CEAD; margin-bottom: 20px; border-radius: 3px;'></div>
                 <div class="dark-green-title">保險公司端：高效率風險管理</div>
                 <p style='font-size: 14.5px; color: #0C0E0B; line-height: 1.7; opacity: 0.85;'>將既有行銷費用與理賠準備金提前折現注入綠能基金，透過資產的生產性複利增值感，實質且長期優化保戶健康品質，控制理賠損失率。</p>
@@ -483,7 +473,7 @@ if page == "專案首頁":
             
     with col_card3:
         st.markdown(f"""
-            <div class="vision-card" style="background-color: {bg_energy} !important; opacity: {opacity_energy}; border: {border_energy} !important;">
+            <div class="vision-card" style="background-color: #FFFFFF !important; opacity: 1.0; border: {border_energy} !important;">
                 <div style='width: 40px; height: 6px; background-color: #92BA80; margin-bottom: 20px; border-radius: 3px;'></div>
                 <div class="dark-green-title">綠能產業端：去中心化普惠資本</div>
                 <p style='font-size: 14.5px; color: #0C0E0B; line-height: 1.7; opacity: 0.85;'>底層資產錨定「陽光綠益」等 STO 售電收益權。引入散戶碎金流以降低開發商資金成本（WACC），同時維護電廠之經營自主權。</p>
@@ -514,7 +504,7 @@ elif page == "提案動機與模式介紹":
             <tr>
                 <th>保險機構</th>
                 <th>核心量化計費模式</th>
-                <th>主要經濟激激励機制類型</th>
+                <th>主要經濟激勵機制類型</th>
                 <th>學術限制判讀</th>
             </tr>
             <tr>
@@ -549,7 +539,7 @@ elif page == "提案動機與模式介紹":
         st.markdown("""
             <div class="alert-card">
                 <span style="color:#83A474; font-weight:800; font-size:16px;">邊際效用遞減與長期價值缺失</span><br style="margin-bottom:8px;">
-                現行點數 or 現金券在核發與使用的瞬間，其經濟價值即告終結，缺乏資產增值所需之<b>複利效應</b>。
+                現行點數 or 現金券在核發與使用的瞬間，其經濟價值即告終見，缺乏資產增值所需之<b>複利效應</b>。
                 由於獎勵無法轉化為長期資本，用戶難以將健康行為視為一種「投資」，誘因隨時間呈對數曲線下滑。
             </div>
             """, unsafe_allow_html=True)
@@ -600,7 +590,7 @@ elif page == "提案動機與模式介紹":
         <b>三方共贏博弈分析：</b><br>
         1. <b>用戶端</b>：提供經過驗證之健康行為數據，藉此交換取得實體資產代幣化之收益權份額。<br>
         2. <b>保險公司端</b>：投入既有之行銷預算或理賠準備金作為資產認購資金，換取保戶理賠率之降低與 ESG 評級之提升。<br>
-        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金。<b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金 standard 同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
+        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金。<b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
         """, unsafe_allow_html=True)
 
     st.markdown("<br>---<br>", unsafe_allow_html=True)
@@ -751,7 +741,6 @@ elif page == "APP 介面展示":
 # 6. 分頁四：相關研究成果
 # ==========================================
 elif page == "相關研究成果":
-    # 🎯 依照指令：將此行標題包裝於深綠色（#2D4A22）的 HTML 標籤中
     st.markdown("<h2 style='color:#2D4A22 !important; font-size:32px; font-weight:800;'>相關研究成果 ── 彭博精算終端動態沙盤</h2>", unsafe_allow_html=True)
     st.markdown("<p style='font-size:14px; color:#0C0E0B; opacity:0.8; font-weight:500;'>本組成果已深度嵌入後台 Python 多執行緒精算核心。調整左方邊界條件後，點擊按鈕即可立刻呼叫全域 5,000 次隨機清算引擎。</p>", unsafe_allow_html=True)
     st.markdown("---")
@@ -845,7 +834,6 @@ elif page == "相關研究成果":
         st.markdown("<h4 style='color:#2D4A22 !important; font-weight:800; margin-top:10px;'>財富分化與生產性資產跨期對比</h4>", unsafe_allow_html=True)
         st.markdown("<p style='font-size:13px; color:#555;'>可任選運動特徵，動態重繪複利滾存與時間疲勞後的真實跨期經濟收益軌跡：</p>", unsafe_allow_html=True)
         
-        # 🎯 依照指令：調整單選按鈕的擺放順序，改為低、中、高排列
         selected_profile = st.radio("選擇要觀測的用戶運動特徵：", ["Low 低活躍族群", "Medium 典型保戶", "High 高活躍族群"], horizontal=True)
         
         alpha_optimized = 0.00065
@@ -910,7 +898,7 @@ elif page == "相關研究成果":
         <div class='alert-card'>
             <b>【精算學理解讀陳述】</b><br>
             在完美對齊保險公司 25% 收益回流的智慧合約體制下，高活躍用戶的最終財富累積是低活躍用戶的 <b>{(mult/0.35 if "High" in selected_profile or "Medium" in selected_profile else 1.0):.2f} 倍</b>！
-            這有力證實了行為持續性因子（Stability Factor）對個人行為資產池 the 財富滾存具有極為顯著的乘數放大效應。
+            這有力證實了行為持續性因子（Stability Factor）對個人行為資產池的財富滾存具有極為顯著的乘數放大效應。
         </div>
         """, unsafe_allow_html=True)
 
@@ -997,7 +985,7 @@ elif page == "相關研究成果":
             st.markdown("""
             <div style='background-color:#FFFFFF; border:1px solid #B7CEAD; padding:20px; border-radius:12px; min-height:160px;'>
                 <b style='color:#2D4A22; font-size:15px;'>加權平均資金成本（WACC）減輕分析</b><br><br>
-                碎金流募集模式直接對接發發電售電收益憑證，WACC 降低 0.70%；<br>
+                碎金流募集模式直接對接發電售電收益憑證，WACC 降低 0.70%；<br>
                 • 綠能業者年度利息支出實質省下：<span style='color:#83A474; font-weight:800; font-size:18px;'>NT$ 210,000 / 年</span><br>
                 • 經營自主權判讀：分散投資散戶不具備組織力，電廠主導權極高。
             </div>
