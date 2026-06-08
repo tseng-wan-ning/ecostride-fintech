@@ -298,8 +298,10 @@ if page == "專案首頁":
     st.markdown("<hr style='border: none; border-top: 1px solid #B7CEAD; margin: 20px 0;'>", unsafe_allow_html=True)
     
     # 區塊 C：三位一體願景摘要 (Ecosystem Glimpse)
-    st.markdown("<h2 style='text-align: center; font-size: 28px; margin-bottom: 5px; color:#0C0E0B !important; font-weight:800;'>三位一體機制全局摘要</h2>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; font-size: 14px; color: #0C0E0B; opacity:0.7; margin-bottom: 20px;'>請點擊圖中的圓頂點切換核心面向（滑鼠懸停可放大查看資本與數據流轉詳情）</p>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center; font-size: 28px; margin-bottom: 15px; color:#0C0E0B !important; font-weight:800;'>三位一體機制全局摘要</h2>", unsafe_allow_html=True)
+    
+    # 🎯 依照指令：只保留後半句提示
+    st.markdown("<p style='text-align: center; font-size: 14px; color: #0C0E0B; opacity:0.7; margin-bottom: 20px;'>滑鼠懸停可放大查看資本與數據流轉詳情</p>", unsafe_allow_html=True)
     
     # 打造會動、可點選、提示文字放大的前端三位一體 Canvas 封閉經濟模型
     html_canvas_trinity = """
@@ -313,18 +315,27 @@ if page == "專案首頁":
         const ctx = canvas.getContext('2d');
         const tooltip = document.getElementById('customTooltip');
 
-        // 定義三方核心頂點 (三角形正循環配置)
+        // 定義三方核心頂點 (🎯 依照指令：半徑 r 從 40 加大到 52)
         const nodes = [
-            { id: 'insurance', name: '🏥 保險公司', x: 450, y: 55, r: 40, color: '#83A474', activeColor: '#2D4A22', title: '🏥 保險公司端', desc: '注入預防成本資本化之準備金，透過資產複利控制並調降大盤理賠損失率。' },
-            { id: 'consumer', name: '🌿 消費者(用戶)', x: 230, y: 255, r: 40, color: '#92BA80', activeColor: '#2D4A22', title: '🌿 消費者端', desc: '上傳經過 ZKP 驗證之生物健走行為數據，零門檻共享綠能轉型紅利。' },
-            { id: 'energy', name: '⚡ 綠能產業', x: 670, y: 255, r: 40, color: '#0C0E0B', activeColor: '#2D4A22', title: '⚡ 綠能產業端', desc: '錨定發電售電權，吸收散戶碎片化微型資本，調降 WACC 並維持開發商自主權。' }
+            { id: 'insurance', name: '🏥 保險公司', x: 450, y: 65, r: 52, color: '#83A474', activeColor: '#2D4A22', title: '🏥 保險公司端', desc: '注入預防成本資本化之準備金，透過資產複利控制並調降大盤理賠損失率。' },
+            { id: 'consumer', name: '🌿 消費者(用戶)', x: 230, y: 265, r: 52, color: '#92BA80', activeColor: '#2D4A22', title: '🌿 消費者端', desc: '上傳經過 ZKP 驗證之生物健走行為數據，零門檻共享綠能轉型紅利。' },
+            { id: 'energy', name: '⚡ 綠能產業', x: 670, y: 265, r: 52, color: '#0C0E0B', activeColor: '#2D4A22', title: '⚡ 綠能產業端', desc: '錨定發電售電權，吸收散戶碎片化微型資本，調降 WACC 並維持開發商自主權。' }
         ];
 
-        // 資本與金錢流動粒子配置 (順時針正循環流動)
+        // 資本與金錢流動粒子配置 (🎯 依照指令：粒子數量增加兩倍，每條路線配置 3 個不同間隔的光點)
         let particles = [
-            { from: 0, to: 2, progress: 0.0, speed: 0.005 }, // 保險 -> 綠能
-            { from: 2, to: 1, progress: 0.0, speed: 0.005 }, // 綠能 -> 消費者
-            { from: 1, to: 0, progress: 0.0, speed: 0.005 }  // 消費者 -> 保險
+            // 路線 1：保險 -> 綠能
+            { from: 0, to: 2, progress: 0.0, speed: 0.005 },
+            { from: 0, to: 2, progress: 0.33, speed: 0.005 },
+            { from: 0, to: 2, progress: 0.66, speed: 0.005 },
+            // 路線 2：綠能 -> 消費者
+            { from: 2, to: 1, progress: 0.0, speed: 0.005 },
+            { from: 2, to: 1, progress: 0.33, speed: 0.005 },
+            { from: 2, to: 1, progress: 0.66, speed: 0.005 },
+            // 路線 3：消費者 -> 保險
+            { from: 1, to: 0, progress: 0.0, speed: 0.005 },
+            { from: 1, to: 0, progress: 0.33, speed: 0.005 },
+            { from: 1, to: 0, progress: 0.66, speed: 0.005 }
         ];
 
         let selectedNodeId = "all";
@@ -347,7 +358,7 @@ if page == "專案首頁":
             // 2. 繪製動態流動的金錢與數據光點粒子 (動態動畫效果)
             particles.forEach(p => {
                 p.progress += p.speed;
-                if (p.progress > 1.0) p.progress = 0.0;
+                if (p.progress > 1.0) p.progress -= 1.0;
 
                 const startNode = nodes[p.from];
                 const endNode = nodes[p.to];
@@ -383,7 +394,7 @@ if page == "專案首頁":
 
                 // 寫入頂點內核文字
                 ctx.fillStyle = (node.id === 'energy' && !isSelected) ? '#F5F7F4' : '#FFFFFF';
-                ctx.font = 'bold 13px sans-serif';
+                ctx.font = 'bold 14px sans-serif'; // 微調字體大小配合大圓圈
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText(node.name, node.x, node.y);
@@ -446,7 +457,7 @@ if page == "專案首頁":
     if component_value is not None:
         st.session_state.selected_node = component_value
 
-    # 三方卡片區塊 - 🎯 依照最新指令：將底色、文字顏色完全復原成最愛的原版狀態 (純白底色、不淡化)，僅用邊框粗細高亮點選項目
+    # 三方卡片區塊 - 完全保持原版狀態（純白底色、不進行淡化），僅透過邊框粗細與顏色進行點擊互鎖高亮
     border_consumer = "2px solid #2D4A22" if st.session_state.selected_node == "consumer" else "1px solid #B7CEAD"
     border_insurance = "2px solid #2D4A22" if st.session_state.selected_node == "insurance" else "1px solid #B7CEAD"
     border_energy = "2px solid #2D4A22" if st.session_state.selected_node == "energy" else "1px solid #B7CEAD"
@@ -539,7 +550,7 @@ elif page == "提案動機與模式介紹":
         st.markdown("""
             <div class="alert-card">
                 <span style="color:#83A474; font-weight:800; font-size:16px;">邊際效用遞減與長期價值缺失</span><br style="margin-bottom:8px;">
-                現行點數 or 現金券在核發與使用的瞬間，其經濟價值即告終見，缺乏資產增值所需之<b>複利效應</b>。
+                現行點數 or 現金券在核發與使用的瞬間，其經濟價值即告終結，缺乏資產增值所需之<b>複利效應</b>。
                 由於獎勵無法轉化為長期資本，用戶難以將健康行為視為一種「投資」，誘因隨時間呈對數曲線下滑。
             </div>
             """, unsafe_allow_html=True)
