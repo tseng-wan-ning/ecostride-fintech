@@ -261,11 +261,10 @@ def run_trinity_simulation(steps_inc=0.20, consistency=0.75, num_sims=100):
     sim_wealth_list = []
     
     for _ in range(num_sims):
-        rand_loss_shock = np.random.normal(0, 0.015) # 動態平滑隨機震盪
+        rand_loss_shock = np.random.normal(0, 0.015) 
         rand_wacc_shock = np.random.uniform(0.98, 1.02)
         rand_wealth_shock = np.random.uniform(0.95, 1.05)
         
-        # 保險公司理賠損失率對齊公式
         target_reduction = abs(steps_inc * elasticity)
         optimized_loss_ratio = base_loss_ratio * (1.0 - target_reduction) + rand_loss_shock
         sim_loss_ratios.append(optimized_loss_ratio)
@@ -284,8 +283,36 @@ def run_trinity_simulation(steps_inc=0.20, consistency=0.75, num_sims=100):
     win_ratio = (sim_win_count / num_sims) * 100
     return win_ratio, np.mean(sim_loss_ratios), np.mean(sim_wacc_list), np.mean(sim_wealth_list)
 
+
 # ==========================================
-# 3. 專案網頁首頁
+# 🎯 3. 側邊欄與分頁導覽（安全全域變數架構修復）
+# ==========================================
+# 修正重點：將 page = st.radio 宣告移到側邊欄之外的最頂層，確保其生命週期為全域，徹底解決 NameError。
+with st.sidebar:
+    st.markdown("<div style='padding: 20px 0 10px 0;'><h3 style='margin:0; font-size: 20px;'>專案選單</h3></div>", unsafe_allow_html=True)
+
+# 宣告全域分頁導覽變數
+page = st.sidebar.radio(
+    "請選擇要調閱的章節：",
+    ["專案首頁", "提案動機與模式介紹", "APP 介面展示", "相關研究成果"]
+)
+
+with st.sidebar:
+    st.markdown("---")
+    st.markdown("""
+        <div style='font-size: 12px; line-height: 1.8;'>
+        <b style='font-size:14px; color:#2D4A22;'>研究團隊</b><br>
+        蔡宜伶 | 計量財務金融學系<br>
+        賀舜禹 | 計量財務金融學系<br>
+        曾琬甯 | 計量財務金融學系<br><br>
+        <b style='font-size:14px; color:#2D4A22;'>指導教授</b><br>
+        韓傳祥 教授
+        </div>
+        """, unsafe_allow_html=True)
+
+
+# ==========================================
+# 4. 分頁一：專案首頁
 # ==========================================
 if page == "專案首頁":
     if "selected_node" not in st.session_state:
@@ -304,7 +331,7 @@ if page == "專案首頁":
     st.markdown("</div>", unsafe_allow_html=True)
     st.markdown("<hr style='border: none; border-top: 1px solid #B7CEAD; margin: 20px 0;'>", unsafe_allow_html=True)
     
-    st.markdown("<h2 style='text-align: center; font-size: 28px; margin-bottom: 15px; color:#0C0E0B !important; font-weight:800;'>三位一體機制全局摘要</h2></h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center; font-size: 28px; margin-bottom: 15px; color:#0C0E0B !important; font-weight:800;'>三位一體機制全局摘要</h2>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; font-size: 14px; color: #0C0E0B; opacity:0.7; margin-bottom: 20px;'>滑鼠懸停可放大查看資本與數據流轉詳情</p>", unsafe_allow_html=True)
     
     html_canvas_trinity = """
@@ -569,7 +596,7 @@ elif page == "提案動機與模式介紹":
         <b>三方共贏博弈分析：</b><br>
         1. <b>用戶端</b>：提供經過驗證之健康行為數據，藉此交換取得實體資產代幣化之收益權份額。<br>
         2. <b>保險公司端</b>：投入既有之行銷預算或理賠準備金作為資產認購資金，換取保戶理賠率之降低與 ESG 評級之提升。<br>
-        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金。<b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
+        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金.<b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
         """, unsafe_allow_html=True)
 
     st.markdown("<br>---<br>", unsafe_allow_html=True)
@@ -587,7 +614,7 @@ elif page == "提案動機與模式介紹":
         """, unsafe_allow_html=True)
 
 # ==========================================
-# 6. 分頁三：APP 介面展示 (🎯 全面重構為實時聯動清算架構)
+# 6. 分頁三：APP 介面展示 (全域實時清算對齊架構)
 # ==========================================
 elif page == "APP 介面展示":
     st.markdown("<h2 style='color:#0C0E0B !important; font-size:32px; font-weight:800;'>📱 APP 核心介面互動模擬</h2>", unsafe_allow_html=True)
@@ -612,21 +639,18 @@ elif page == "APP 介面展示":
         ui_cons = st.slider("設定您的行為持續性因子 (Consistency)：", 0.1, 1.0, init_cons, 0.1)
         st.markdown("</div>", unsafe_allow_html=True)
         
-    # 🎯🎯🎯 【關鍵修正位置】將精算運算提升至全域層級，確保變數能被 col_ui_right 即時捕捉 🎯🎯🎯
+    # 精算與對齊數據流
     alpha, beta, gamma = 0.00065, 0.0001, 0.20
     step_threshold = 5000
     excess = max(0, ui_steps - step_threshold)
     
-    # 計算當前的雙引擎數據
     engine_A_val = excess * alpha * ui_cons
     engine_B_val = excess * beta * gamma * ui_cons
     total_daily_val = engine_A_val + engine_B_val
     
-    # 100% 呼叫文檔核心資產滾存代碼
     calc_eco = calculate_compounding_rwa_wealth(excess, alpha, beta, gamma, consistency=ui_cons)
     
-    # 100% 呼叫文檔精算模型，將你設定的 slider 持續性因子即時乘入損失率降幅中！
-    # 這裡的邏輯是：步數提升率越高、習慣越穩定，理賠損失率就下降越多
+    # 動態計算理賠損失率降幅
     base_loss_ratio = 0.75
     elasticity = -0.15
     target_reduction = abs(sim_steps_inc * elasticity) * ui_cons
