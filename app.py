@@ -14,7 +14,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 隱藏 Streamlit 預設元素並注入 60-30-10 極簡美學 CSS + 側邊欄「強制去圈、整條變白」高級黑科技
+# 隱藏 Streamlit 預設元素並注入 60-30-10 極簡美學 CSS + 側邊欄特化 Tabs「全區塊換色」高級黑科技
 st.markdown("""
     <style>
     /* 全局背景色與文字色 */
@@ -31,68 +31,6 @@ st.markdown("""
     }
     .stSidebar *, .stSidebar p, .stSidebar h3 {
         color: #0C0E0B !important;
-    }
-    
-    /* 🎯🎯🎯 【無痛終極去圈黑科技】直接消滅所有原生的單選小圓圈 🎯🎯🎯 */
-    /* 1. 強制消滅 Streamlit 內建的偽元素、圓圈圖標和選取框外殼空間 */
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label [data-testid="stFiberManualRecord"],
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label input[type="radio"],
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label div[class*="st-c"],
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label div[class*="st-b"],
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label div[data-testid="stRadioButtonUI"] {
-        display: none !important;
-        width: 0 !important;
-        height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        visibility: hidden !important;
-    }
-    
-    /* 2. 重置整個 Radio 群組的間距 */
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] {
-        gap: 8px !important;
-        width: 100% !important;
-    }
-    
-    /* 3. 將每一個選項的外殼包裝成一個「整條大按鈕」的外觀 */
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] > label {
-        background-color: transparent !important;
-        border-radius: 8px !important;
-        padding: 12px 18px !important;
-        margin: 0 !important;
-        transition: all 0.25s ease-in-out !important;
-        cursor: pointer !important;
-        width: 100% !important;
-        display: flex !important;
-        align-items: center !important;
-    }
-    
-    /* 滑鼠懸停 Hover 時：變半透明的淡白底色，增強互動感 */
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] > label:hover {
-        background-color: rgba(255, 255, 255, 0.4) !important;
-    }
-    
-    /* 4. 強制內層文字靠最左，並寬度填滿 100% */
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label div[data-testid="stMarkdownContainer"] {
-        width: 100% !important;
-        margin-left: 0 !important;
-        padding-left: 0 !important;
-    }
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label div[data-testid="stMarkdownContainer"] p {
-        font-size: 15px !important;
-        font-weight: 500 !important;
-        margin: 0 !important;
-        color: #0C0E0B !important;
-    }
-    
-    /* 5. 🎯 當該項目被點選到（Checked）時，強制將「整條標籤」染成純白底色、墨綠字、加粗與柔和陰影 */
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label:has(input[type="radio"]:checked) {
-        background-color: #FFFFFF !important;
-        box-shadow: 0 4px 12px rgba(45, 74, 34, 0.08) !important;
-    }
-    div[data-testid="stSidebarRadio"] div[role="radiogroup"] label:has(input[type="radio"]:checked) p {
-        color: #2D4A22 !important;
-        font-weight: 700 !important;
     }
     
     /* 核心亮點按鈕：使用 Primary 綠色 */
@@ -231,6 +169,23 @@ st.markdown("""
         font-weight: 800 !important;
         border-top: 3px solid #83A474 !important;
     }
+
+    /* 側邊欄特化選單按鈕，強制讓其上下堆疊填滿 */
+    .stSidebar div[data-testid="stTabs"] [role="tablist"] {
+        flex-direction: column !important;
+        gap: 6px !important;
+    }
+    .stSidebar div[data-testid="stTabs"] button {
+        border-radius: 8px !important;
+        border: 1px solid #83A474 !important;
+        text-align: left !important;
+        justify-content: flex-start !important;
+        width: 100% !important;
+    }
+    .stSidebar div[data-testid="stTabs"] button[aria-selected="true"] {
+        border-top: 1px solid #83A474 !important;
+        border-left: 4px solid #83A474 !important; /* 選中時左側加重線條 */
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -250,15 +205,22 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # ==========================================
-# 2. 側邊欄個人化導覽切換 (底色亮白高亮定製版)
+# 2. 側邊欄個人化導覽切換 (與主視窗面向一致的 Tabs 進階設計)
 # ==========================================
 with st.sidebar:
     st.markdown("<div style='padding: 20px 0 10px 0;'><h3 style='margin:0; font-size: 20px;'>專案選單</h3></div>", unsafe_allow_html=True)
     
-    page = st.radio(
-        "請選擇要調閱的章節：",
-        ["專案首頁", "提案動機與模式介紹", "APP 介面展示", "相關研究成果"]
-    )
+    # 使用與主視窗完全相同的設計語言，點選後整塊變色高亮
+    tab_menu1, tab_menu2, tab_menu3, tab_menu4 = st.tabs(["🏠 專案首頁", "💡 提案動機與模式介紹", "📱 APP 介面展示", "📈 相關研究成果"])
+    
+    with tab_menu1:
+        page = "專案首頁"
+    with tab_menu2:
+        page = "提案動機與模式介紹"
+    with tab_menu3:
+        page = "APP 介面展示"
+    with tab_menu4:
+        page = "相關研究成果"
     
     st.markdown("---")
     st.markdown("""
@@ -372,7 +334,7 @@ if page == "專案首頁":
             </div>
             """, unsafe_allow_html=True)
 
-    # 區塊 D：頁腳 (Footer) - 🎯 依照指令更新為乾淨的名單
+    # 區塊 D：頁腳 (Footer)
     st.markdown("<div style='margin-top: 100px;'></div>", unsafe_allow_html=True)
     st.markdown("""
         <div style='border-top: 1px solid #B7CEAD; padding: 35px 0; text-align: center; font-size: 12px; color: #0C0E0B; background-color: #FFFFFF; margin: 0 -4rem;'>
@@ -382,7 +344,7 @@ if page == "專案首頁":
         """, unsafe_allow_html=True)
 
 # ==========================================
-# 4. 分頁二：提案動機與模式介紹
+# 4. 分頁二：提案動機與模式介紹 (🎯 已修復階層遞進編號)
 # ==========================================
 elif page == "提案動機與模式介紹":
     st.markdown("<h2 style='color:#0C0E0B !important; font-size:32px; font-weight:800;'>💡 提案動機與模式介紹</h2>", unsafe_allow_html=True)
@@ -455,14 +417,16 @@ elif page == "提案動機與模式介紹":
     
     col_stepn1, col_stepn2 = st.columns(2)
     with col_stepn1:
+        # 🎯 已修正編號為：二、
         st.markdown("<h4 style='color:#0C0E0B !important; font-weight:800; border-bottom: 2px solid #83A474; padding-bottom: 6px;'>二、 STEPN Move-to-Earn 模式之反思</h4>", unsafe_allow_html=True)
         st.markdown("""
             STEPN 雖透過 Web3 遊戲化驅動健康行為，吸引超過 200 萬用戶。然而，其核心崩盤原因在於
-            <b>「死亡螺旋經濟模型」</b>──高度依賴新用戶流入以支撐舊用戶收益（龐氏結構），代幣（GST）通膨嚴重且缺乏真實資產背書，導致資產價值最終崩盤.
+            <b>「死亡螺旋經濟模型」</b>──高度依賴新用戶流入以支撐舊用戶收益（龐氏結構），代幣（GST）通膨嚴重且缺乏真實資產背書，導致資產價值最終崩盤。
             <br><br>
             <b>EcoStride 的改良路徑：</b>借鏡其健康驅動與碎片化參與之優勢，但<b>轉向實體資產（RWA）背書</b>，將步數代幣（STRIDE）錨定綠能收益權，徹底避免純投機風險。
             """, unsafe_allow_html=True)
     with col_stepn2:
+        # 🎯 已修正編號為：三、
         st.markdown("<h4 style='color:#0C0E0B !important; font-weight:800; border-bottom: 2px solid #83A474; padding-bottom: 6px;'>三、 永續投資市場門檻與資本隔離</h4>", unsafe_allow_html=True)
         st.markdown("""
             高品質綠色資產（如離岸風電債券與大型太陽能案場收益權）具備顯著的規模排他性，最低認購額度通常達新台幣一百萬元以上，長期由機構法人壟斷，導致小額資本與年輕世代難以介入。碎片化資金因行政成本過高，被排除在永續轉型的資本紅利之外。
@@ -470,7 +434,8 @@ elif page == "提案動機與模式介紹":
 
     st.markdown("<br>---<br>", unsafe_allow_html=True)
 
-    st.markdown("<h3 style='color:#83A474 !important; font-size:24px; font-weight:800; margin-bottom:15px;'>二、 創新提案 ── 三位一體模型</h3>", unsafe_allow_html=True)
+    # 🎯 已修正編號為：四、創新提案 ── 三位一體模型
+    st.markdown("<h3 style='color:#83A474 !important; font-size:24px; font-weight:800; margin-bottom:15px;'>四、 創新提案 ── 三位一體模型</h3>", unsafe_allow_html=True)
     st.markdown("""
         本專案提出一套將個體健康行為直接轉化為資本累積之流轉模式。核心在於重構流動機制：<b>將消耗性獎勵重構為生產性累積</b>。
         保戶之健康行為不再僅是換取一次性消費憑證，而是轉化為具備增值潛力之生產性資本投入，建立長期且具備複利效應之資產池。
@@ -478,15 +443,16 @@ elif page == "提案動機與模式介紹":
         <b>三方共贏博弈分析：</b><br>
         1. <b>用戶端</b>：提供經過驗證之健康行為數據，藉此交換取得實體資產代幣化之收益權份額。<br>
         2. <b>保險公司端</b>：投入既有之行銷預算或理賠準備金作為資產認購資金，換取保戶理賠率之降低與 ESG 評級之提升。<br>
-        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金。<b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金 the 同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
+        3. <b>綠能產業端</b>：獲取來自廣大受眾、碎片化且低成本之建設資金。<b>碎片化資本具備純粹之財務投資屬性</b>，投資者人數眾多卻不具備干涉經營之組織力。這能讓綠能業者在獲取穩定建設資金的同時，<b>保有更高之經營獨立性與獲利分配主導權</b>。
         """, unsafe_allow_html=True)
 
     st.markdown("<br>---<br>", unsafe_allow_html=True)
 
-    st.markdown("<h3 style='color:#83A474 !important; font-size:24px; font-weight:800; margin-bottom:15px;'>三、 本土實證與合規機制 ── 台灣市場落地性</h3>", unsafe_allow_html=True)
+    # 🎯 已修正編號為：五、本土實證與合規機制 ── 台灣市場落地性
+    st.markdown("<h3 style='color:#83A474 !important; font-size:24px; font-weight:800; margin-bottom:15px;'>五、 本土實證與合規機制 ── 台灣市場落地性</h3>", unsafe_allow_html=True)
     st.markdown("""
         <b>1. 法規政策演進與監管試驗環境分析</b><br>
-        金管會自 2023 年起放寬證券型代幣（STO）規範，並於 2024 年正式成立實體資產代幣化小裝。2025 年 9 月之概念驗證報告成功驗證債券與基金代幣化之可行性，落實券款對付之即時交割機制。此項技術突破，為本計畫中生物行為資產化後之即時權益分配，奠定了關鍵的技術與法理基礎。
+        金管會自 2023 年起放寬證券型代幣（STO）規範，並於 2024 年正式成立實體資產代幣化小組。2025 年 9 月之概念驗證報告成功驗證債券與基金代幣化之可行性，落實券款對付之即時交割機制。此項技術突破，為本計畫中生物行為資產化後之即時權益分配，奠定了關鍵的技術與法理基礎。
         <br><br>
         <b>2. 國泰證券「陽光綠益」STO 案例研究（底層資產實證）</b><br>
         國泰證券與綠點能創合作，發行台灣首檔 STO「陽光綠益」（募資規模三千萬元）。底層資產為六年期債務型憑證，提供年利率 3.5% 之固定回報。此案例成果直接解決了過往 Web3 模式缺乏實體資產背書之痛點。實體資產代幣化提供穩定之綠能收益權作為價值支撐，使 EcoStride 核發之數位憑證具備實體操作力背書。
@@ -625,7 +591,7 @@ elif page == "APP 介面展示":
             st.markdown("<p style='text-align:center; font-size:13px; font-weight:700; color:#0C0E0B; margin-top:10px;'>畫面 C：實體資產與財富面板</p>", unsafe_allow_html=True)
 
 # ==========================================
-# 6. 分頁四：相關研究成果 (🎯 已去除了原有的 📊 貼圖)
+# 6. 分頁四：相關研究成果
 # ==========================================
 elif page == "相關研究成果":
     # 🎯 依照指令：將此行標題包裝於深綠色（#2D4A22）的 HTML 標籤中
@@ -874,7 +840,7 @@ elif page == "相關研究成果":
             st.markdown("""
             <div style='background-color:#FFFFFF; border:1px solid #B7CEAD; padding:20px; border-radius:12px; min-height:160px;'>
                 <b style='color:#2D4A22; font-size:15px;'>加權平均資金成本（WACC）減輕分析</b><br><br>
-                碎金流募集模式直接對接發發電售電收益憑證，WACC 降低 0.70%；<br>
+                碎金流募集模式直接對接發電售電收益憑證，WACC 降低 0.70%；<br>
                 • 綠能業者年度利息支出實質省下：<span style='color:#83A474; font-weight:800; font-size:18px;'>NT$ 210,000 / 年</span><br>
                 • 經營自主權判讀：分散投資散戶不具備組織力，電廠主導權極高。
             </div>
@@ -896,7 +862,6 @@ elif page == "相關研究成果":
     with tab_res4:
         st.markdown("<h4 style='color:#2D4A22 !important; font-weight:800; margin-top:10px;'>生態系成功啟動之財務邊界條件與邊際分析</h4>", unsafe_allow_html=True)
         
-        # 🎯 依照指令優化文字：拔除直白的視覺提示，改為引導學術思考的高級陳述
         st.markdown("<p style='font-size:13px; color:#555;'>請微調下方財務自變數，即時觀測飛輪聯立矩陣之動態跨界反饋：</p>", unsafe_allow_html=True)
         
         col_t1, col_t2 = st.columns(2)
