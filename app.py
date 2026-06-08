@@ -991,7 +991,7 @@ elif page == "相關研究成果":
             <b>【分析說明】</b>透過此互動模擬器，我們可以觀察到當面對重度環境風險時，EcoStride 碎金流所產生的運維儲備金如何自動調節填補率。這種「動態壓力測試」證明了即便在極端氣候情境下，去中心化資金仍能透過複利滾存提供案場高度的經營彈性。
         </div>
         """, unsafe_allow_html=True)
-    # ==========================================
+# ==========================================
     # 🔄 面向四：整體循環模式
     # ==========================================
     with tab_res4:
@@ -1005,6 +1005,8 @@ elif page == "相關研究成果":
         with col_t2:
             matrix_cons = st.select_slider("設定調節變數 B：健走行為持續性均值", options=[0.40, 0.75, 0.90], value=0.75, key="matrix_c")
             
+        # 計算勝率
+        dynamic_win = 0.0
         if matrix_steps == 0.05 and matrix_cons == 0.40: dynamic_win = 1.22
         elif matrix_steps == 0.05 and matrix_cons == 0.75: dynamic_win = 14.50
         elif matrix_steps == 0.05 and matrix_cons == 0.90: dynamic_win = 22.18
@@ -1015,11 +1017,23 @@ elif page == "相關研究成果":
         elif matrix_steps == 0.25 and matrix_cons == 0.75: dynamic_win = 89.12
         else: dynamic_win = 97.45
         
+        # 動態設定進度條顏色：>= 50 為綠色 (#83A474)，否則為紅色 (#E53E3E)
+        bar_color = "#83A474" if dynamic_win >= 50 else "#E53E3E"
+        
         st.markdown(f"""
         <div style='background-color:#FFFFFF; border-left:5px solid #83A474; padding:20px; border-radius:4px; margin:15px 0;'>
-            <b style='font-size:14px; color:#444;'>【聯立結算結果】</b><br style='margin-bottom:8px;'>
+            <b style='font-size:14px; color:#444;'>【聯立結算結果】</b><br style='margin-bottom:12px;'>
             當前財務邊界組合 ──> 步數提升: <span style='color:#FF0000; font-size:18px; font-weight:800;'>{matrix_steps*100:.0f}%</span> | 持續性因子: <span style='color:#FF0000; font-size:18px; font-weight:800;'>{matrix_cons*100:.0f}%</span><br>
-            <span style='font-size:22px; font-weight:900; color:#0C0E0B;'>➔ 三方正和飛輪「全域共贏勝率」: <span style='color:#FF0000; font-size:26px; font-weight:900;'>{dynamic_win:.2f}%</span></span>
+            <br>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div style="flex-grow: 1; background-color: #eee; border-radius: 10px; height: 20px; overflow: hidden; border: 1px solid #ddd;">
+                    <div style="background-color: {bar_color}; width: {dynamic_win}%; height: 100%; transition: width 0.5s ease-in-out;"></div>
+                </div>
+                <div style="font-size:24px; font-weight:900; color:#0C0E0B; min-width: 80px; text-align: right;">
+                    {dynamic_win:.2f}%
+                </div>
+            </div>
+            <span style='font-size:16px; font-weight:700; color:#0C0E0B;'>➔ 三方正和飛輪「全域共贏勝率」</span>
         </div>
         """, unsafe_allow_html=True)
         
@@ -1029,7 +1043,6 @@ elif page == "相關研究成果":
         即使在 95% 置信區間最極端之「連續大雨、嚴重日照不足」黑天鵝路徑下，保戶數位憑證資產仍能保持穩定增長。
         這是因為在智慧合約中引入了 <b>3.0% 實體綠能最低托底保價機制 (Floor Yield)</b>，成功切斷了氣候環境對保戶回饋的負面傳導，具備完備的抗風險防禦力。
         """, unsafe_allow_html=True)
-
 # ==========================================
 # 加分項：代碼與公式互鎖
 # ==========================================
